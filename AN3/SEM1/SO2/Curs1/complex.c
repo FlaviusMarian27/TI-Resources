@@ -1,6 +1,13 @@
+#include "complex.h"
 #include<stdio.h>
 
-int main(void){
+void print_Complex(COMPLEX a){
+    printf("%d + %dj\n",a.real,a.imaginar);
+}
 
-    return 0;
+COMPLEX add(COMPLEX a, COMPLEX b){
+    COMPLEX c;
+    c.real = a.real + b.real;
+    c.imaginar = a.imaginar + b.imaginar;
+    return c;
 }
