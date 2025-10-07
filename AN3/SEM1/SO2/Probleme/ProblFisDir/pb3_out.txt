@@ -1,0 +1,3 @@
+Minim: -5
+Maxim: 30
+Media: 11.67
