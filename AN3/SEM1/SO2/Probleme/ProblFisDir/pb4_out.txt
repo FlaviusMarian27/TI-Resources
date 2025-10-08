@@ -1,0 +1,4 @@
+test/t3.bin 12 0 REG
+test/t2.txt 7 7 REG
+test/t1.txt 11 9 REG
+test/test1 4096 0 DIR
