@@ -2,7 +2,10 @@
     "files.associations": {
         "time.h": "c",
         "stdio.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "stat.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c"
     },
     "editor.fontSize": 20
 }
