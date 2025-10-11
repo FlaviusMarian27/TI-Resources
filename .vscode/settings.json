@@ -5,7 +5,8 @@
         "pthread.h": "c",
         "stat.h": "c",
         "string.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "random": "c"
     },
     "editor.fontSize": 20
 }
