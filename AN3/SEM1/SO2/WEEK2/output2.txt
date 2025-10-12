@@ -1,0 +1,1 @@
+Numărul total de litere mici afișate este 8!
