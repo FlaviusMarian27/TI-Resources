@@ -1,3 +1,7 @@
+/*Se cere sa se parcurga un director dat ca si argument in linie de comanda in mod
+nerecursiv. Practic parcurgi o singura data directorul. Trebuie sa afisezi 
+nume cale si dimensiunea in bytes*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>

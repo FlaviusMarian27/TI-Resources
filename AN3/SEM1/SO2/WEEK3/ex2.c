@@ -1,3 +1,6 @@
+/*Sa se implementeze o functie care parcurge recursiv un director dat ca si argument
+in linie de comand. Se doreste sa se afiseze numele calea si dimensiunea in bytes.*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
