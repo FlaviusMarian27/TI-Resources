@@ -326,3 +326,65 @@ MUL AL          ; AX = [(A+1)*C]^2
 - `MUL` folosește implicit **AL/AX** pentru multiplicare.
 - `DIV` pune **catul în AL**, **restul în AH**.
 - Este recomandat să lucrezi cu valori mici, pentru a nu depăși 8 biți (**255**).
+
+
+# 🧮 Exerciții — Partea III
+
+---
+
+## 1️⃣ Exercițiu: [(A++ - B)]³
+
+### 📦 Date:
+```asm
+A DB 3
+B DB 2
+```
+
+
+### ⚙️ Cod:
+```asm
+INC A         ; A = A + 1
+MOV AL, A     ; AL ← A
+SUB AL, B     ; AL ← A - B
+MOV BL, AL    ; păstrăm (A - B) în BL
+MUL AL        ; AL = (A - B)²
+MUL BL        ; AL = (A - B)³
+```
+### 🧠 Explicație:
+
+1. `A` este incrementat.
+2. Se calculează `(A - B)` și se păstrează în BL.
+3. Se face înmulțirea de 3 ori pentru obținerea cubului.
+
+## 2️⃣ Exercițiu: [A * (B - 1)] / C
+
+### 📦 Date:
+```asm
+A DB 3 
+B DB 6 
+C DB 5
+```
+
+### ⚙️ Cod:
+```asm
+DEC B         ; B = B - 1
+MOV AL, A     ; AL ← A
+MUL B         ; AX = A * (B - 1)
+DIV C         ; AL = [A * (B - 1)] / C
+ADD AL, AH    ; AL + AH (cat + rest)
+```
+
+### 🧠 Explicație:
+
+1. Scădem 1 din B.
+2. Se calculează produsul `A * (B - 1)`.
+3. Se împarte rezultatul la `C`.
+4. Se adună câtul și restul din împărțire (AL + AH).
+
+## 💡 Observații finale:
+
+- `MUL` produce rezultate în **AX**, deci e important să știi că `AL` conține partea inferioară a rezultatului.
+- `DIV` folosește tot **AX**, cu:
+    - **AL** → câtul
+    - **AH** → restul
+- La calcule în lanț (ca puteri), e bine să salvezi valorile intermediare în registre ca **BL** sau **CL**.

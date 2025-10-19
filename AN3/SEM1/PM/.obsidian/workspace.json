@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#⚙️",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -61,7 +61,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Caută"
             }
           },
           {
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -166,7 +167,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "dec5e39d8a3fe2ca",
+  "active": "f752023ea444c822",
   "lastOpenFiles": [
     "WEEK3/image/ax_memory.png",
     "WEEK3/image/ax_register.png",
