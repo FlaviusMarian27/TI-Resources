@@ -1,0 +1,59 @@
+# --------------------------------------------------------
+# Docker Compose – setup simplu MariaDB + phpMyAdmin
+# --------------------------------------------------------
+services:
+  # ------------------------------------------------------
+  # Serviciul pentru baza de date (MariaDB)
+  # ------------------------------------------------------
+  serverudb:
+    image: mariadb:latest           # imaginea oficială MariaDB (cea mai nouă versiune)
+    container_name: curs3_db        # numele containerului din 'docker ps'
+    restart: always                 # repornește automat dacă se oprește
+
+    volumes:
+      - ./dbdata:/var/lib/mysql     # salvează datele local, în folderul ./dbdata
+
+    ports:
+      - "3000:3306"                 # mapează portul 3306 (intern) pe 3000 (pe host)
+
+    environment:                    # variabilele de configurare MariaDB
+      MARIADB_ROOT_PASSWORD: toor   # parola pentru userul root
+      MARIADB_DATABASE: abd         # baza de date creată automat
+      MARIADB_USER: abduser         # numele unui user nou
+      MARIADB_PASSWORD: abd         # parola acelui user
+
+    networks:
+      - abd                         # conectează containerul la rețeaua 'abd'
+
+
+  # ------------------------------------------------------
+  # Serviciul pentru interfața web phpMyAdmin
+  # ------------------------------------------------------
+
+  phpmyadminu:
+    image: phpmyadmin:latest       # imaginea oficială phpMyAdmin
+    container_name: curs3_admin     # numele containerului pentru phpMyAdmin
+    
+    restart: always                 # repornește automat dacă se oprește
+
+    ports:
+      - "8081:80"                   # accesezi phpMyAdmin la http://localhost:8081
+
+    environment:                    # variabile pentru conectarea la MariaDB
+      PMA_HOST: serverudb           # numele serviciului MariaDB (vezi mai sus)
+      PMA_USER: abduser             # userul definit în serverudb
+      PMA_PASSWORD: abd             # parola userului
+      MYSQL_ROOT_PASSWORD: toor     # parola de root (opțională, pentru acces root)
+
+    depends_on:
+      - serverudb                   # phpMyAdmin pornește doar după MariaDB
+
+    networks:
+      - abd                         # aceeași rețea pentru comunicare
+
+# --------------------------------------------------------
+# Definim rețeaua comună (bridge = locală între containere)
+# --------------------------------------------------------
+networks:
+  abd:
+    driver: bridge
