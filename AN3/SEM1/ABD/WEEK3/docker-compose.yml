@@ -1,0 +1,33 @@
+services:
+  web:
+    image: python:3.8-slim
+    container_name: flask_web
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && python app.py"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - mynet
+
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: exampledb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynet
+
+volumes:
+  db_data:
+
+networks:
+  mynet:
+    driver: bridge
