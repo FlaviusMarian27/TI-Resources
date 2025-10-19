@@ -136,3 +136,45 @@ MOV B AH
 ```
 
 ![AX Register](image/ax_memory.png)
+
+---
+## ➕ ADD — adunare
+
+Instrucțiunea `ADD` adună valoarea sursei (**OP2**) la destinație (**OP1**).
+
+**Sintaxă:**
+```asm
+ADD OP1, OP2 ; OP1 ← OP1 + OP2
+```
+
+
+## ➖SUB — scădere 
+
+Instrucțiunea SUB scade valoarea sursei (OP2) din destinație (OP1). 
+
+Sintaxă:
+```asm
+SUB OP1, OP2 ; OP1 ← OP1 - OP2
+```
+
+
+# 🧮 Exercițiu: (A + B) – (C – D)
+
+## 📦 Date:
+
+```asm
+A DB 5 
+B DB 6 
+C DB 8 
+D DB 9
+```
+
+## ⚙️ Cod Assembly:
+
+```asm
+MOV AL, A      ; AL ← A 
+ADD AL, B      ; AL ← A + B  
+MOV AH, C      ; AH ← C 
+SUB AH, D      ; AH ← C - D  
+SUB AL, AH     ; AL ← (A + B) - (C - D)
+```
