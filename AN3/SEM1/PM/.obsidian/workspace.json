@@ -1,0 +1,175 @@
+{
+  "main": {
+    "id": "bf3f5efd0f044c31",
+    "type": "split",
+    "children": [
+      {
+        "id": "bb984527e8ec9696",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dec5e39d8a3fe2ca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "WEEK3/Information - WEEK 3.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Information - WEEK 3"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "106f62fc24e6969e",
+    "type": "split",
+    "children": [
+      {
+        "id": "6c87b5b06ed228eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b7484ee702f4db2c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorator de fișiere"
+            }
+          },
+          {
+            "id": "f752023ea444c822",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "1ca894aabf30d7e5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "585d1e30498943f3",
+    "type": "split",
+    "children": [
+      {
+        "id": "ecdb28c00370be84",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2aa7a9dde454f2e7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "a7ae7c0d26e9308b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "1e872fb407332824",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "cb17f4ee83d20518",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Deschide comutarea rapidă": false,
+      "graph:Deschide graficul": false,
+      "daily-notes:Deschide nota de azie": false,
+      "templates:Inserează șablon": false,
+      "command-palette:Deschide paleta de comenzi": false,
+      "canvas:Create new canvas": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "b7484ee702f4db2c",
+  "lastOpenFiles": [
+    "WEEK3/Information - WEEK 3.md",
+    "Information - WEEK 3.md",
+    "WEEK3"
+  ]
+}
