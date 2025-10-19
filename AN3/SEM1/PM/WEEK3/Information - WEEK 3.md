@@ -5,7 +5,8 @@
 ### Registre generale
 Vom lucra cu registrele de bază ale microprocesorului (AX, BX, CX, DX, etc.).
 
-![[Pasted image 20251019114221.png]]
+![AX Register](image/ax_register.png)
+
 
 ---
 
@@ -134,4 +135,4 @@ MOV A AL
 MOV B AH
 ```
 
-![[Pasted image 20251019121737.png]]
+![AX Register](image/ax_memory.png)
