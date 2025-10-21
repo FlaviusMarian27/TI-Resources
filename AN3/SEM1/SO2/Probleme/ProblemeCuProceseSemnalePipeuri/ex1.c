@@ -108,7 +108,6 @@ int main(int argc, char *argv[]){
         }
     }
 
-
     printf("Total litere mici: %d\n", total);
     return 0;
 }
