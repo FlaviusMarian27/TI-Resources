@@ -65,25 +65,24 @@ Scopul este de a consolida conceptele avansate de programare la nivel de sistem:
 ---
 
 ## 📂 Structura recomandată a proiectului
-SO2-Labs/
-│
-├── Week1-3_Files/
-│ ├── ex1_copy_file.c
-│ ├── ex2_stat_info.c
-│ └── ex3_recursive_dir.c
-│
-├── Week4-6_Processes/
-│ ├── ex1_fork_wait.c
-│ ├── ex2_exec_compile.c
-│ └── ex3_pipe_sum.c
-│
-├── Week8-10_Threads/
-│ ├── ex1_threads_sum.c
-│ └── ex2_mutex_sync.c
-│
-└── Week12-13_Sockets/
-├── server.c
-└── client.c
-
+    SO2-Labs/
+    │
+    ├── Week1-3_Files/
+    │ ├── ex1_copy_file.c
+    │ ├── ex2_stat_info.c
+    │ └── ex3_recursive_dir.c
+    │
+    ├── Week4-6_Processes/
+    │ ├── ex1_fork_wait.c
+    │ ├── ex2_exec_compile.c
+    │ └── ex3_pipe_sum.c
+    │
+    ├── Week8-10_Threads/
+    │ ├── ex1_threads_sum.c
+    │ └── ex2_mutex_sync.c
+    │
+    └── Week12-13_Sockets/
+    ├── server.c
+    └── client.c
 
  📌 *Scopul acestor laboratoare este înțelegerea modului în care procesele, fișierele și thread-urile interacționează cu kernelul Linux prin apeluri de sistem și mecanisme IPC.*
