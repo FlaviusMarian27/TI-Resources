@@ -65,7 +65,6 @@ Scopul este de a consolida conceptele avansate de programare la nivel de sistem:
 ---
 
 ## 📂 Structura recomandată a proiectului
-
 SO2-Labs/
 │
 ├── Week1-3_Files/
@@ -85,5 +84,6 @@ SO2-Labs/
 └── Week12-13_Sockets/
 ├── server.c
 └── client.c
+
 
  📌 *Scopul acestor laboratoare este înțelegerea modului în care procesele, fișierele și thread-urile interacționează cu kernelul Linux prin apeluri de sistem și mecanisme IPC.*
