@@ -2,12 +2,10 @@
 Ai:
 
 un buffer comun (de exemplu o coadă / vector);
-
 mai multe threaduri producătoare care adaugă elemente;
-
 mai multe threaduri consumatoare care scot elemente.
 
- Problema:
+Problema:
 → dacă producătorul pune prea mult, bufferul se umple;
 → dacă consumatorul vrea să scoată, dar bufferul e gol, trebuie să aștepte.
 */
