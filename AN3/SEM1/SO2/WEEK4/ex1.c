@@ -2,6 +2,7 @@
     int a = 5;
     procesul copil a++ printf
     procesul parinte a-- printf
+    de 10 ori
 */
 
 #include <stdio.h>
