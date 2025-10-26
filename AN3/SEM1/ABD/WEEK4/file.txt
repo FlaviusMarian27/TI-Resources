@@ -1,4 +1,5 @@
 tar xvfz abd-replication.tar.gz
+cd lecture-replication
 docker compose up -d 
 ./setup-replication.sh
 ./test-replication.sh
