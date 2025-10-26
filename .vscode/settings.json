@@ -6,7 +6,8 @@
         "stat.h": "c",
         "string.h": "c",
         "stdlib.h": "c",
-        "random": "c"
+        "random": "c",
+        "unistd.h": "c"
     },
     "editor.fontSize": 20
 }
