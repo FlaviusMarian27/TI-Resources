@@ -7,7 +7,7 @@ int main(void){
     #pragma omp parallel
     {
         printf("Hello World from thread %d out of %d\n",
-                omp_get_thread_num(),omp_get_thread_num());
+                omp_get_thread_num(),omp_get_num_threads());
     }
 
     printf("This is AFTER parallel\n");

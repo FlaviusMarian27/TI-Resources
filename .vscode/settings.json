@@ -9,5 +9,6 @@
         "random": "c",
         "unistd.h": "c"
     },
-    "editor.fontSize": 20
+    "editor.fontSize": 20,
+    "C_Cpp.errorSquiggles": "disabled"
 }
