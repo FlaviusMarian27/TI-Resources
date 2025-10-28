@@ -1,0 +1,39 @@
+--Intrebari din saptamana 5--
+
+1. CPU_time vs GPU_time
+
+CPU_time - timpul total in care a lucrat procesorul
+GPU_time - timpul total in care a lucrat placa video cu executia kernelului
+
+2. Race Condition vs Critical Section
+
+Race Condition - momentul in care 2 sau mai multe threaduri acceseaza o bucata de cod 
+                partajata in acelasi timpul
+
+Critical section - este o parte dintr-un program partajata care este accesata de mai
+                multe threaduri
+
+3.Inlocuti barierele cu mutex
+
+for(int i = 0; i < N_THREADS; i = i + 1){
+    printf("A");
+    pthread_barrier_wait(&bar);
+}
+
+-----------------------------------------------
+
+for(int i = 0; i < N_THREADS; i = i + 1){
+    pthread_mutex_lock(&lock);
+    printf(&A);
+    pthread_mutex_unlock(&lock);
+}
+
+
+------------------------------------------------------------------
+
+->Problema de cod
+
+N producatori
+M consumatori
+k buffere de dimensiune b
+Si sa proceseze t elemente dupa care sa va opri
