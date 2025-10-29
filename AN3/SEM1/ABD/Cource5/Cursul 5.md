@@ -74,16 +74,18 @@ SHOW VARIABLES LIKE 'sync_binlog';
 1. **Tranzacțiile cât mai scurte** – nu bloca resurse inutil.
 2. **Rollback doar când e nevoie** – altfel performanța scade.
 3. **Validări în DB (triggers, constraints)** – mai rapid și sigur decât în cod.
-4. **Folosește `SELECT ... FOR UPDATE`** când vrei să blochezi rânduri pentru modificare.
-5. **Evită input de la utilizator în timpul unei tranzacții**.
-6. **Ai grijă la DDL** – `ALTER`, `DROP`, `CREATE` fac _implicit COMMIT_!
-7. **Monitorizează tranzacțiile active:**
+4. **La nivel de bază de date** este indicat să folosim pentru verificare **trigger**, pentru că este mult mai optim, decât la nivel de cod însine.
+5. **Folosește `SELECT ... FOR UPDATE`** când vrei să blochezi rânduri pentru modificare.
+6. Se folosește `SELECT ... FOR UPDATE` întotdeauna înaite de o tranzacție.
+7. **Evită input de la utilizator în timpul unei tranzacții**.
+8. **Ai grijă la DDL** – `ALTER`, `DROP`, `CREATE` fac _implicit COMMIT_!
+9. **Monitorizează tranzacțiile active:**
 
 ```sql
 SELECT * FROM information_schema.innodb_trx;
 ```
 
-1. **Evită autocommit în operații complexe:**
+10. **Evită autocommit în operații complexe:**
 
 ```SQL
 SET autocommit = 0;
