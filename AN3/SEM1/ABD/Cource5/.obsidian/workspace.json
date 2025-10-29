@@ -1,0 +1,176 @@
+{
+  "main": {
+    "id": "024d204b73ddcc21",
+    "type": "split",
+    "children": [
+      {
+        "id": "126affa8733b019c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8e6dfd59ace6f125",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cursul 5.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Cursul 5"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bafafd2007db201a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b8d1177e3e70226",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ba9de9700ff22843",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorator de fișiere"
+            }
+          },
+          {
+            "id": "59fc361feb7d433b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Caută"
+            }
+          },
+          {
+            "id": "703dc212e16fc5ac",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "61817d4de264adf1",
+    "type": "split",
+    "children": [
+      {
+        "id": "e9941ee6edcf9dd2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9a4041e3676cb434",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Cursul 5.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Referințe pentru Cursul 5"
+            }
+          },
+          {
+            "id": "ec621ad6b29f3d08",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Cursul 5.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Cursul 5"
+            }
+          },
+          {
+            "id": "1f79a6e95811bb6c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "a3c0a45456da63ff",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Cursul 5.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumar Cursul 5"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Deschide comutarea rapidă": false,
+      "graph:Deschide graficul": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Deschide nota de azie": false,
+      "templates:Inserează șablon": false,
+      "command-palette:Deschide paleta de comenzi": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "8e6dfd59ace6f125",
+  "lastOpenFiles": [
+    "Cursul 5.md"
+  ]
+}
