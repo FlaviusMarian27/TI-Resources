@@ -1,0 +1,192 @@
+{
+  "main": {
+    "id": "ed91edb56d6d3be5",
+    "type": "split",
+    "children": [
+      {
+        "id": "6837c2a7e577b47e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "12acbfc9c5f885b5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+            }
+          }
+        ]
+      },
+      {
+        "id": "9d9c40c41e8d4e94",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ec95d9fa0f1bc772",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Afișaj grafic"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1b63b1c0c8ed367c",
+    "type": "split",
+    "children": [
+      {
+        "id": "9ff5800d6b16a552",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0816cfe3175a4d9b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorator de fișiere"
+            }
+          },
+          {
+            "id": "cdf951090934ec35",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Caută"
+            }
+          },
+          {
+            "id": "c810a7f9ef629ccd",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "da8febf0e9828079",
+    "type": "split",
+    "children": [
+      {
+        "id": "e63623c057062d5b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9b75418e4ca2ab1c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Referințe pentru CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+            }
+          },
+          {
+            "id": "66046fa4b609fbb2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+            }
+          },
+          {
+            "id": "351b695fbe2cb8a8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "f007f2bd52d169ae",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumar CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Deschide comutarea rapidă": false,
+      "graph:Deschide graficul": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Deschide nota de azie": false,
+      "templates:Inserează șablon": false,
+      "command-palette:Deschide paleta de comenzi": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "12acbfc9c5f885b5",
+  "lastOpenFiles": [
+    "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md"
+  ]
+}
