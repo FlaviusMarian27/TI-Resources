@@ -155,11 +155,11 @@ def load_data_time_machine(batch_size, num_steps, max_tokens=10000):
         batch_size, num_steps, max_tokens)
     return data_iter, data_iter.vocab
 
-batch_size, num_steps = 30, 10#aici
+batch_size, num_steps = 30, 10#aici--------------------------------------------------------------------------------
 train_iter, vocab = load_data_time_machine(batch_size, num_steps)
 
-num_hiddens = 32#aici
-rnn_layer = nn.RNN(len(vocab), num_hiddens)
+num_hiddens = 32#aici----------------------------------------------------------------------------------------------
+rnn_layer = nn.RNN(len(vocab), num_hiddens, num_layers=2)#by default ii 1 deci noua ne trebuie 2
 
 
 class RNNModel(nn.Module):
@@ -271,13 +271,13 @@ def train(net, train_iter, vocab, lr, num_epochs, device):
         ppl = train_epoch(
             net, train_iter, loss, optimizer, device)
         if (epoch + 1) % 10 == 0:
-            print(predict('time traveller', 20, net, vocab, device))#aici
+            print(predict('time traveller', 20, net, vocab, device))#aici--------------------------------------
             perplexities.append(ppl)
     print(f'perplexity {ppl:.1f}, device {str(device)}')
-    print(predict('time traveller', 20, net, vocab, device))#aici
-    print(predict('traveller', 20, net, vocab, device))#aici
+    print(predict('time traveller', 20, net, vocab, device))#aici----------------------------------------------
+    print(predict('traveller', 20, net, vocab, device))#aici---------------------------------------------------
 
     return perplexities
 
-num_epochs, lr = 200, 1.5#aici
+num_epochs, lr = 200, 1.5#aici---------------------------------------------------------------------------------
 perplexities = train(net, train_iter, vocab, lr, num_epochs, device) #1 min
