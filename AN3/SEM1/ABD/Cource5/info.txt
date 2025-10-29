@@ -1,0 +1,59 @@
+Transaction
+ - o tranzactie este atomica, practic avem nevoie de mai multe operatii
+ - atomic = nu poate fi intrerupta operatia
+ - unitate logica de munca
+
+-----------------------------------------------------------------------------
+
+Basic transaction in MySQL:
+
+START Transaction;
+
+UPDATE accounts SET balance = balance - 100
+WHERE account_id = 1;
+
+!!!aici!!! ->partea de rollback este automata si implicita in toate cazurile in caz ca 
+se ia curentul spre exemplu
+
+UPDATE accounts SET balance = balance + 100
+WHERE account_id = 2;
+
+COMMIT; -> se persita pe disk dupa COMMIT
+
+------------------------------------------------------------
+
+ACID Guarantes:
+- Atomicity
+- Consistency
+- Isolation
+- Durability
+
+Atomicity
+- exista cate o copie in memorie pt fiecare client.
+
+Consistency
+- bazele de date relationale sunt consistente
+- cheia primara trebuie sa fie unica
+- cheia straina trebuie sa nu fie NULL
+
+Isolation
+
+Durability
+- deci dac se ia curentul dupa COMMIT; + ENTER 
+s-a facut tranzactia in memorie, nu pe disk
+
+- InnoDB si MyIsSum???
+
+BINERY LOGS
+- putem sa ne intoarce la orice sec din trecut
+- replicare
+- auditing
+
+Tips and tricks
+
+- tranzactiile cat mai scurte
+- rollback trebuie folosit cand trebuie, nu tot timpul
+- daca fac la nivel de baza de date berificare cu trigger este mult mai optim
+decat daca am fi facut la nivel de cod.
+- trebuie folosit mereu UPDATE FOR inainte de tranzactie
+- si intr o tranzactie nu trebuie sa existe ... 
