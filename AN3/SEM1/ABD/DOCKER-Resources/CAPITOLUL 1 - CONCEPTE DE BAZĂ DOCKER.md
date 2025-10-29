@@ -16,7 +16,7 @@
 ---
 ## 🔹Primul container
 
-```Terminal
+```bash
 flavius@flavius-Katana-GF66-12UEO:~$ docker run hello-world
 ```
 
@@ -33,13 +33,13 @@ Dacă vezi „Hello from Docker!”, înseamnă că sistemul funcționează.
 
 ##### Listează imaginile descărcate:
 
-```Terminal
+```bash
 flavius@flavius-Katana-GF66-12UEO:~$ docker images
 ```
 
 ##### Listează toate containerele (inclusiv cele oprite):
 
-```Terminal
+```bash
 flavius@flavius-Katana-GF66-12UEO:~$ docker ps -a
 ```
 
