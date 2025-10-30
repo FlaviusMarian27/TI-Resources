@@ -50,3 +50,70 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker ps -a
 
 ---
 ---
+### 🔹 4. Rulează un container interactiv
+
+Acum pornește un **Ubuntu real**:
+
+```bash
+docker run -it ubuntu bash
+```
+
+🟢 Ești acum **în interiorul** unui container Ubuntu.  
+
+Testează câteva comenzi:
+```bash
+ls cat /etc/os-release
+```
+
+Apoi ieși:
+```bash
+ls cat /etc/os-release
+```
+
+---
+
+### 🔹 5. Analizează rezultatul
+
+După ce ieși, rulează:
+
+```bash
+docker ps -a
+```
+
+Observă că acel container există, dar e „Exited”.
+
+Dacă vrei să-l pornești din nou:
+
+```bash
+docker start -ai <container_id>
+```
+
+Dacă vrei să-l ștergi:
+
+```bash
+docker rm <container_id>
+```
+
+---
+
+### 🔹 6. Curățare și informații suplimentare
+
+Pentru informații generale:
+
+```bash
+docker info
+```
+
+Pentru a șterge toate containerele oprite și imaginile nefolosite:
+
+```bash
+docker system prune -a
+```
+
+---
+
+✅ **După capitolul 1 trebuie să știi:**
+
+- diferența dintre _imagine_ și _container_;
+- cum pornești, oprești și verifici un container;
+- că totul e izolat de sistemul tău real.
