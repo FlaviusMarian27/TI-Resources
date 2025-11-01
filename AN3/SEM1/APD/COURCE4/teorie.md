@@ -87,7 +87,6 @@ for (int i = 0; i < n; i++)
 ### ✅ e) private / shared / firstprivate
 
 Controlează vizibilitatea variabilelor:
-
 shared(x)       – toți threadurile folosesc aceeași variabilă  
 private(x)      – fiecare are propria copie neinițializată  
 firstprivate(x) – copie privată inițializată cu valoarea globală
@@ -108,6 +107,7 @@ Controlează cum se împart iterațiile:
 ```
 
 Opțiuni:
+
 static   – blocuri fixe pentru fiecare thread  
 dynamic  – threadurile iau dinamic următorul bloc liber  
 guided   – blocuri mari la început, mici spre final  
