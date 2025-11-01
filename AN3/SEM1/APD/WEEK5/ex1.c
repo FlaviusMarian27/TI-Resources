@@ -3,6 +3,8 @@
 #include <time.h>
 #include <omp.h>
 
+#define THREAD_COUNT 8
+
 /**
  *  Checks if  num is prime
  */
@@ -48,6 +50,62 @@ int count_prime_serial(int a[], int n)
     return count;
 }
 
+int count_prime_parallel_v1(int a[], int n){
+    int count = 0;
+    #pragma omp parallel num_threads(THREAD_COUNT)
+    {
+        int my_rank = omp_get_thread_num();
+        int local_n = n / THREAD_COUNT;
+        int start = my_rank * local_n;
+        int end = start + local_n;
+
+        int local_count = 0;
+        for(int i = start; i < end; i++){
+            if(is_prime(a[i]) == 1){
+                local_count = local_count + 1;
+            }
+        }
+
+        #pragma omp critical
+        {
+            count = count + local_count;
+        }
+    }
+
+    return count;
+}
+
+int count_prime_parallel_v2(int a[], int n){
+    int count = 0;
+    #pragma omp parallel num_threads(THREAD_COUNT) reduction(+: count)
+    {
+        int my_rank = omp_get_thread_num();
+        int local_n = n / THREAD_COUNT;
+        int start = my_rank * local_n;
+        int end = start + local_n;
+        for(int i = start; i < end; i++){
+            if(is_prime(a[i]) == 1){
+                count = count + 1;
+            }
+        }
+    }
+
+    return count;
+}
+
+int count_prime_parallel_v3(int a[], int n){
+    int count = 0;
+
+    #pragma omp parallel for num_threads(THREAD_COUNT) reduction(+: count)
+    for(int i = 0; i < n; i++){
+        if(is_prime(a[i]) == 1){
+            count = count + 1;
+        }
+    }
+
+    return count;
+}
+
 int main()
 {
     int n, count = 0;
@@ -72,19 +130,19 @@ int main()
     printf("Serial time =%f\n", time);
 
     start = omp_get_wtime();
-    //count = count_prime_parallel_v1(arr, n);  TO BE ADDED
+    count = count_prime_parallel_v1(arr, n);  //TO BE ADDED
     time = omp_get_wtime() - start;
     printf("\nTotal prime numbers in the array: %d\n", count);
     printf("Parallel V1 time =%f\n", time);
 
     start = omp_get_wtime();
-    //count = count_prime_parallel_v2(arr, n);   TO BE ADDED
+    count = count_prime_parallel_v2(arr, n);   //TO BE ADDED
     time = omp_get_wtime() - start;
     printf("\nTotal prime numbers in the array: %d\n", count);
     printf("Parallel V2 time =%f\n", time);
 
     start = omp_get_wtime();
-    //count = count_prime_parallel_v3(arr, n);   TO BE ADDED
+    count = count_prime_parallel_v3(arr, n);   //TO BE ADDED
     time = omp_get_wtime() - start;
     printf("\nTotal prime numbers in the array: %d\n", count);
     printf("Parallel V3 time =%f\n", time);
