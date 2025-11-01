@@ -87,6 +87,7 @@ for (int i = 0; i < n; i++)
 ### ✅ e) private / shared / firstprivate
 
 Controlează vizibilitatea variabilelor:
+
 shared(x)       – toți threadurile folosesc aceeași variabilă  
 private(x)      – fiecare are propria copie neinițializată  
 firstprivate(x) – copie privată inițializată cu valoarea globală
