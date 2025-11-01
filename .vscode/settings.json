@@ -7,7 +7,8 @@
         "string.h": "c",
         "stdlib.h": "c",
         "random": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "omp.h": "c"
     },
     "editor.fontSize": 20,
     "C_Cpp.errorSquiggles": "disabled"
