@@ -1,3 +1,9 @@
+/*
+4. Să se scrie un program C, care își definește un comportament nou la recepția semnalului SIGUSR1.
+Programul va afișa un mesaj de fiecare dată când acest semnal este primit.
+Testarea programului se va face prin trimiterea semnalului SIGUSR1 dintr-un alt terminal, folosind comanda ps aux pentru a afla PIDul și comanda kill pentru a trimite semnalul.
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<signal.h>
