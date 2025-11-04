@@ -48,6 +48,7 @@ Practic nu mai trebuie să faci anumite configurări pentru sistemul tău de ope
 
 ![Dimensiiuni](images/DOCKERDESKTOP.png)
 
+---
 ## 4. Docker Images vs Docker Containers
 
 - Docker-ul poate împacheta în artefact, cum ar fi zip, tar, jar etc și să trimită direct către server imaginea.
@@ -83,3 +84,60 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker ps
 
 ![Docker](images/DockerPs.png)
 
+---
+
+## 5. Docker Registries
+
+- reprezintă un storage pentru toate Docker images de tip artefact. Un exemplu ar putea fi Docker Hub-ul.
+
+![Docker3](images/DockerRegistries.png)
+
+- o altă comandă esențială ar putea fi **pull**. 
+
+##### docker pull {nume_imagine}:{tag/versiune}
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker pull nginx:1.29
+```
+
+- practic clientul va contacta Docker Hub că vrea imaginea nginx cu tagul specificat, totul local.
+
+![Docker4](images/DockerPull.png)
+- pentru ce curioși pot folosi comanda images.
+
+---
+## 6. Run an Image
+
+- dacă dorim să rulăm o imagine avem nevoie de comanda run.
+
+##### docker run {nume_imagine}:{tag/versiune}
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker run nginx:1.29
+```
+
+- practic știm că un container a rulat cu succes atunci când vedem logurile.
+
+![Docker4](images/DockerRun.png)
+
+- **Atenție**!!! Terminalul este practic blocat. Dacă deschidem o altă fereastră pentru un nou terminal și vom tasta comanda **ps** vom vedea ce containere rulează. Pentru  a opri rularea apasă combinația de taste ***CTRL + C***, iar procesul moare.
+
+![Docker5](images/DockerRunPs.png)
+
+-  Pentru a evita ***detached mode*** sau blocarea terminalului adăugam ***-d***.
+
+##### docker run -d {nume_imagine}:{tag/versiune}
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker run -d nginx:1.29
+```
+
+![Docker5](images/DockerRunD.png)
+
+- practic rezultatul opținut este id-ul full al container-ului. Astfel cu comanda ***ps*** verificăm containerele care rulează și cu ***logs*** logurile din container.
+
+![Docker5](images/DockerRunPsLogs.png)
+
+---
+
+## 7. Port Binding
