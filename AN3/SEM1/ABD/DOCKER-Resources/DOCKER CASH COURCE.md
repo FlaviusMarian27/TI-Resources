@@ -81,5 +81,5 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker images
 flavius@flavius-Katana-GF66-12UEO:~$ docker ps
 ```
 
-![Docker1](images/DockerPS.png)
+![Docker](images/DockerPs.png)
 
