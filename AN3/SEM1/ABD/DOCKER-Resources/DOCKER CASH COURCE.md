@@ -28,4 +28,6 @@ Practic nu mai trebuie să faci anumite configurări pentru sistemul tău de ope
 - folosește amble layere, practic are complet acces la sistemul de operare.
 - când descarci o imagine, atunci se folosește kernel-uș propriu zis.
 
+---
+
 ## 3. Diferența dintre Docker și VM
