@@ -209,3 +209,22 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker run --name web-app -d -p 9000:80 ngi
 ---
 
 ## 9. Public and Private Docker Registries
+
+### Public
+
+- un exemplu bun ar putea fi chiar Docker Hub
+
+![Docker10](images/DockerHub.png)
+
+- de ce este o variantă public? Pentru că toată lumea are acces, având permisiunea să caute și să descarce fără vreo problemă.
+
+### Private
+- un exemplu bun ar putea să fie furnizorii mari de cloud, aceștia oferă private registeries.
+- practic ai nevoie de un cont, cu care să te autentifici înainte de a accesa registrul.
+
+![Docker11](images/Cloud.png)
+
+
+---
+
+## 10. Create own Images

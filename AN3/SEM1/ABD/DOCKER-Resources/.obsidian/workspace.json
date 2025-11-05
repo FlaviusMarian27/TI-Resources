@@ -200,6 +200,8 @@
   },
   "active": "0816cfe3175a4d9b",
   "lastOpenFiles": [
+    "images/Cloud.png",
+    "images/DockerHub.png",
     "images/DockerRunNameDP.png",
     "images/DockerPsAAll.png",
     "images/MySQLPort.png",
@@ -210,9 +212,7 @@
     "images/DockerRunDP.png",
     "images/DockerRunPsLogs.png",
     "images/DockerRunD.png",
-    "images/DockerRunPs.png",
     "Untitled.canvas",
-    "images/DockerRun.png",
     "images",
     "CAPITOLUL 2 – Imagini și Dockerfile.md",
     "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md"
