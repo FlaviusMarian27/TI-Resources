@@ -25,7 +25,7 @@ Practic nu mai trebuie să faci anumite configurări pentru sistemul tău de ope
 - practic când rulezi container-ul, acesta conține aplicațiile din layer-ul de aplicații al sistemului de operare și alte aplicații instalate în vârful layerului de aplicații, cum ar fi pentru Java la runtime sau în alte limbaje cum ar fi python.
 
 #### VM
-- folosește amble layere, practic are complet acces la sistemul de operare.
+- folosește ambele layere, practic are complet acces la sistemul de operare.
 - când descarci o imagine, atunci se folosește kernel-uș propriu zis.
 
 ---
@@ -43,8 +43,8 @@ Practic nu mai trebuie să faci anumite configurări pentru sistemul tău de ope
 
 ### Oare de ce apare o astfel de incompatibilitate? 
 
-- Răspunsul este unul simplu, practic având layer-ul de aplicații pentru Linux, avem nevoie de Kernelul de Linux, nu de windows/MAC OS, astfel de aici apare incompatinilitatea. 
--  O rezolvare a fost practic **Docker Desktop**, care un ***Hypervisor***, care oferă o compatibilitate cu **Windows** și **MAC OS** pentru a putea rula imaginia pe Linux fără vreo problemă.
+- Răspunsul este unul simplu, practic având layer-ul de aplicații pentru Linux, avem nevoie de Kernelul de Linux, nu de windows/MAC OS, astfel de aici apare incompatibilitatea. 
+-  O rezolvare a fost practic **Docker Desktop**, care are un ***Hypervisor***, care oferă o compatibilitate cu **Windows** și **MAC OS** pentru a putea rula imaginia pe Linux fără vreo problemă.
 
 ![Dimensiiuni](images/DOCKERDESKTOP.png)
 
@@ -138,6 +138,36 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker run -d nginx:1.29
 
 ![Docker5](images/DockerRunPsLogs.png)
 
+- pentru a opri un anumit container avem o funcție dedicată pentru aceasta, comanda ***stop***.
+- practic cu aceasta putem să oprim unul sau mai multe containere care rulează.
+
+##### docker stop id_container
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker stop a5032524b655
+```
+
 ---
 
 ## 7. Port Binding
+
+#### Container Port vs Host Port
+- practic, fiecare aplicație rulează într-un anumit port.
+- astfel dacă dorim, putem să specificicăm portul dorit cu comanda ***-p*** sau ***-publish*** un port public pentru host.
+
+##### docker run -d -p {Host_port}:{container_port} image:tag
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker run -d -p 9000:80 nginx:1.29
+```
+
+![Docker6](images/DockerRunDP.png)
+
+![Docker7](images/LocalHost.png)
+
+- astfel ce se poate observa, este faptul că după ce am rulat comanda ***docker ps***, apre portul pe care l-am selectat.
+- totuși este recomandat să folosim pentru portul dedicat host-ului același port ca cel al containerului.
+- de exemplu pentru MySQL, dacă portul containerului este 3306, atunci și portul pentru host va fi 3306. Practic este un standard.
+
+![Docker8](images/MySQLPort.png)
+
