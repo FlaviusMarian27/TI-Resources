@@ -1,0 +1,7 @@
+MySQL are 2 metode de stocare
+ - MyISAM 
+ - InnoDB 
+
+- la InnoDB din loguri poti sa recuperezi fisierul daca este corupt
+- la MyISAM nu ii asa
+
