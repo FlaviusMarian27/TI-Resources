@@ -165,9 +165,47 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker run -d -p 9000:80 nginx:1.29
 
 ![Docker7](images/LocalHost.png)
 
-- astfel ce se poate observa, este faptul că după ce am rulat comanda ***docker ps***, apre portul pe care l-am selectat.
+- astfel ce se poate observa, este faptul că după ce am rulat comanda ***docker ps***, apare portul pe care l-am selectat.
 - totuși este recomandat să folosim pentru portul dedicat host-ului același port ca cel al containerului.
 - de exemplu pentru MySQL, dacă portul containerului este 3306, atunci și portul pentru host va fi 3306. Practic este un standard.
 
 ![Docker8](images/MySQLPort.png)
 
+---
+
+## 8. Start and  stop container
+
+- Atenție!! Cu comanda ***run*** practic putem să rulă un container, dar de ficecare dată când alegem să rulăm acel container, practic noi creăm un al container nou, cum un alt id, astfel ducând la umplerea memoriei de pe dispozitivul nostru.
+- nu refolosește același container de fiecare dată.
+- astfel dacă folosim comanda ***ps -a*** ne va lista toate containerele existente, oprite sau pornite.
+
+##### docker ps -a or -all
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker ps -a
+```
+
+![Docker9](images/DockerPsAAll.png)
+
+- astfel dacă dorim să pornim același Docker container, ne folosim de comanda ***start*** cu care putem să pornim unul sau mai multe containere.
+
+##### docker start {container_id / nume container}
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker start 6c5e76295c5f
+```
+
+- o altă comandă, ar fi ***--name*** care ne permite să asignăm un nume pentru containerul nostru.
+##### docker run --name nume -d -p {Host_port}:{container_port} image:tag
+
+
+```bash
+flavius@flavius-Katana-GF66-12UEO:~$ docker run --name web-app -d -p 9000:80 nginx:1.29
+```
+
+
+![Docker9](images/DockerRunNameDP.png)
+
+---
+
+## 9. Public and Private Docker Registries
