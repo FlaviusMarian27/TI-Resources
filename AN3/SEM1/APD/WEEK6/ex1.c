@@ -254,12 +254,9 @@ void parallel_temp_manual()
         #pragma omp parallel num_threads(NTHREADS) default(none) shared(grid, new_grid)
         {
             int my_rank = omp_get_thread_num();
-            int chunk = (N - 2 - 1)/ omp_get_num_threads();
-            int start = 1 + my_rank *chunk;
-            int end = start + chunk;
-            if(end > N-2){
-                end = N-2;
-            }
+            int local_n = (N-1) / NTHREADS;
+            int start = 1 + my_rank * local_n;
+            int end = start + local_n - 1;
 
             for (int i = start; i < end; i++) // iterate grid but skip boundary
                 for (int j = 1; j < N - 1; j++)
