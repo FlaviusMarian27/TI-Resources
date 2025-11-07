@@ -231,3 +231,34 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker run --name web-app -d -p 9000:80 ngi
 
 - pentu a creea o imaginie proprie, ai nevoie, de un DockerFile, care reprezintă un document text, care conține comenzi specifice pentru asamblarea propriu zisă a imaginii.
 
+- astfel o să ne creăm propria imagine.
+- mai jos avem structura cu fișierele însine și conținutul acestora.
+
+![Docker12](images/Directoare.png)
+
+- codul pentru server.
+
+```js
+const express = require('express');
+const app = express()
+
+app.get('/',(req,res)=>{
+	res.and("Welcome to my awesome app!");
+});
+
+app.listen(3000, function () {
+	console.log("app listening on port 3000");
+});
+```
+
+- codul pentru package
+
+```js
+{
+	"name": "my-app",
+	"version": "1.0",
+	"dependencies": {
+		"express": "4.18.2"
+	}
+}
+```
