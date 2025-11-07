@@ -198,8 +198,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "0816cfe3175a4d9b",
+  "active": "271fb54cc295e255",
   "lastOpenFiles": [
+    "DockerImage/src/server.js",
+    "DockerImage/package.json",
+    "DockerImage/src",
+    "DockerImage",
     "images/Cloud.png",
     "images/DockerHub.png",
     "images/DockerRunNameDP.png",
@@ -211,7 +215,6 @@
     "images/LocalHost.png",
     "images/DockerRunDP.png",
     "images/DockerRunPsLogs.png",
-    "images/DockerRunD.png",
     "Untitled.canvas",
     "images",
     "CAPITOLUL 2 – Imagini și Dockerfile.md",

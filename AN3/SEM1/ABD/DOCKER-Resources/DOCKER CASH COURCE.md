@@ -228,3 +228,6 @@ flavius@flavius-Katana-GF66-12UEO:~$ docker run --name web-app -d -p 9000:80 ngi
 ---
 
 ## 10. Create own Images
+
+- pentu a creea o imaginie proprie, ai nevoie, de un DockerFile, care reprezintă un document text, care conține comenzi specifice pentru asamblarea propriu zisă a imaginii.
+
