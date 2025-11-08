@@ -54,4 +54,4 @@ Dacă semnalul de activare (CE) este **activ-high**, ecuațiile sunt:
 
 Dacă semnalul CE este **activ-low**, se inversează toate ecuațiile de mai sus.
 
-![[Decouder.png]]
+![Decouder](Decouder.png)
