@@ -262,3 +262,25 @@ app.listen(3000, function () {
 	}
 }
 ```
+
+- dockerfile-ul
+
+```Dockerfile
+FROM node:19-alpine
+
+COPY package.json /app/
+COPY src /app/
+
+WORKDIR /app
+
+RUN npm install
+CMD ["node", "server.js"]
+```
+
+- comanda pentru a creea imaginea
+
+```bash
+docker build -t node-app:1.0 .
+```
+
+![Docker12](images/NodeApp.png)
