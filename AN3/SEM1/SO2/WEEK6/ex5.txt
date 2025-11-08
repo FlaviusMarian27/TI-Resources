@@ -1,0 +1,15 @@
+Producator-Consumator:
+
+-Program1: genereaza N numere aleatoare si le scrie intr-un named pipe
+-Program2: citeste numerele si afiseaza suma lor
+
+Primul pas
+rm -f myfifo
+mkfifo myfifo
+chmod 666 myfifo
+
+Terminalul 1:
+./consumer myfifo
+
+Terminalul 2:
+./producer myfifo 10
