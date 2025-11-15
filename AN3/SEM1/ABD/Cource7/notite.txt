@@ -1,0 +1,22 @@
+PostgreSQL
+
+- putem avea si obiecte, practic un obiect poate sa fie un camp, dar in MySQL 
+nu poti
+
+Avantaje
+- JSON -> cum pot reprezenta un obiect in javascript
+
+{
+    name: "ABD"
+    year: 3
+    section: "TI"
+}
+
+- SQL pot sa scriu cod 
+- procedura stocata este o functie 
+
+SELECT * FROM X JOIN Y ON X.id = Y.id
+
+                VS
+
+SELECT * FROM X,Y WHERE X.id = Y.id
