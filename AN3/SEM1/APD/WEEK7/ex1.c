@@ -6,7 +6,7 @@
 #define NUMTHREADS 8
 
 /* size of array */
-#define N 1000000
+#define N 10000000
 
 
 /* if DEBUG prints arrays */
@@ -67,6 +67,11 @@ void mergeSort_parallel(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
+    if (right - left < 30000){
+        mergeSort_serial(arr,left,right);
+        return;
+    }
+
 #pragma omp task shared(arr) firstprivate(left,mid)
     {
         mergeSort_parallel(arr, left, mid);
@@ -79,6 +84,14 @@ void mergeSort_parallel(int arr[], int left, int right) {
 
 #pragma omp taskwait
         merge(arr, left, mid, right);
+    }
+}
+
+void merge_p(int arr[], int size){
+    #pragma omp parallel num_threads(8)
+    {
+        #pragma omp single nowait
+        mergeSort_parallel(arr,0,size - 1);
     }
 }
 
@@ -112,7 +125,7 @@ int main() {
 
     printf("Serial MergeSort ... \n");
     start = omp_get_wtime();
-    mergeSort_serial(array, 0, N - 1);
+    mergeSort_serial(array,0,N-1);
     run_time = omp_get_wtime() - start;
     printf("Serial time = %lf seconds\n ", run_time);
 #ifdef DEBUG
@@ -132,7 +145,7 @@ int main() {
 
     printf("Parallel MergeSort ... \n");
     start = omp_get_wtime();
-    mergeSort_parallel(array, 0, N - 1);
+    merge_p(array, N);
     run_time = omp_get_wtime() - start;
     printf("Parallel time = %lf seconds\n ", run_time);
     if (!is_sorted(array,N-1))

@@ -58,7 +58,7 @@ int height(binary_tree *tree)
 }
 
 // parallel version binary tree height - TO DO
-int height_p(binary_tree *tree)
+int height_p(binary_tree *tree, int level)
 {
     //printf("Parallel not yet implemented !!!\n");
     
@@ -66,15 +66,18 @@ int height_p(binary_tree *tree)
         return 0;
 
     int left, right;
+    if(level >= 10){
+        return height(tree);
+    }
 
     #pragma omp task shared(left)
     {
-        left = height_p(tree->left);
+        left = height_p(tree->left,level + 1);
     }
 
     #pragma omp task shared(right)
     {
-        right = height_p(tree->right);
+        right = height_p(tree->right, level + 1);
     }
 
     #pragma omp taskwait
@@ -87,7 +90,7 @@ int make_task(binary_tree *tree){
     {
         #pragma omp single
         {
-            h = height_p(tree);
+            h = height_p(tree,0);
         }
     }
     return h;
