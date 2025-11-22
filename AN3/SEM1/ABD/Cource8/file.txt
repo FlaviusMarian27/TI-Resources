@@ -1,0 +1,35 @@
+password postgres
+5432 postgres
+
+--creearea bazei de date
+
+- createdb -U postgres abd (creeare baza de date)
+- dropdb -U postgres abd (stergere baza de date)
+- psql (pt conectare ca si client)
+- \q (sa se iasa din client)
+- \d+
+- \d+ test;
+- create index test_idx on test(id)
+- \? (help)
+
+- insert into test(id) values (1), (2), (3)
+
+========================================================
+
+- in postgres putem sa vedem valoarea curenta a id-ului
+
+========================================================
+pgrestore - google
+
+- pg_dump si pg_restore
+
+pg_dump -U postgres -Fp --file=abd.sql abd
+cat abd
+
+pg_dump -U postgres -Fc --file=abd-custom.sql abd (pentru caractere speciale cu ar fi s,t,a,a,i - practic ii in binar)
+cat abd-custom
+
+pg_dump -U postgres -Fc --file=abd-inserts.sql --inserts abd
+cat abd-inserts (in caz ca va crapa copy ul de la custom, dar are si dezavantajul sau)
+
+nu sterge postgres si template1 cand facem drop!!!!!!!!!!!!!!

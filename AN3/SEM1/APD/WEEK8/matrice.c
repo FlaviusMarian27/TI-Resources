@@ -248,15 +248,27 @@ void serial_blocked(int N, double **A, double **B, double **C_serial, int q){
         i_start = i_block * block_size;
         i_end = (i_block + 1) * block_size;
 
+        if (i_start == q - 1){
+            i_end = N;
+        }
+
         for (j_block = 0; j_block < q; j_block++){
 
             j_start = j_block * block_size;
             j_end = (j_block + 1) * block_size;
 
+            if (j_start == q - 1){
+                j_end = N;
+            }
+
             for (k_block = 0; k_block < q; k_block++){
 
                 k_start = k_block * block_size;
                 k_end = (k_block + 1) * block_size;
+
+                if (k_start == q - 1){
+                    k_end = N;
+                }
 
                 for (i = i_start; i < i_end; i++){
                     for (k = k_start; k < k_end; k++){
@@ -285,15 +297,27 @@ void parallel_blocked(int N, double **A, double **B, double **C_parallel, int q,
         i_start = i_block * block_size;
         i_end = (i_block + 1) * block_size;
 
+        if (i_start == q - 1){
+            i_end = N;
+        }
+
         for (j_block = 0; j_block < q; j_block++){
 
             j_start = j_block * block_size;
             j_end = (j_block + 1) * block_size;
 
+            if (j_start == q - 1){
+                j_end = N;
+            }
+
             for (k_block = 0; k_block < q; k_block++){
 
                 k_start = k_block * block_size;
                 k_end = (k_block + 1) * block_size;
+
+                if (k_start == q - 1){
+                    k_end = N;
+                }
 
                 for (i = i_start; i < i_end; i++){
                     for (k = k_start; k < k_end; k++){
