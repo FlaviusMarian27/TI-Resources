@@ -1,0 +1,207 @@
+# 🐳 Docker Compose – Baza + Comenzi esențiale
+
+## 🔹 Ce este Docker Compose?
+
+Docker Compose este un fișier + un tool care îți permite să pornești **mai multe containere** (servicii) împreună.
+
+- `docker-compose.yml` = descrierea serviciilor (web, db, cache etc.)
+- `docker compose` = comanda cu care pornești/oprești totul
+
+💡 Imaginează-ți:
+- `Dockerfile` → rețeta pentru o **imagine**
+- `docker-compose.yml` → planul pentru o **aplicație formată din mai multe servicii**
+
+---
+
+## 🔹 1. Creează un proiect de test cu Docker Compose
+
+```bash
+mkdir -p ~/docker-learning/compose-basics
+cd ~/docker-learning/compose-basics```
+
+---
+
+##  🔹 2. Creează un docker-compose.yml minimal (Nginx + MariaDB)
+
+```bash
+cat << 'EOF' > docker-compose.yml
+services:
+  web:
+    image: nginx:1.29
+    container_name: demo_web
+    ports:
+      - "8080:80"        # http://localhost:8080
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:latest
+    container_name: demo_db
+    environment:
+      MARIADB_ROOT_PASSWORD: toor
+      MARIADB_DATABASE: demo
+      MARIADB_USER: demouser
+      MARIADB_PASSWORD: demopass
+    ports:
+      - "3307:3306"      # port DB accesibil de pe host (opțional)
+
+EOF
+```
+
+
+### Ce ai definit aici:
+
+- `services:` – două servicii: `web` și `db`
+- `web`:
+    - folosește imaginea `nginx:1.29
+    - expune containerul pe `localhost:8080
+    - pornește **după** `db` (prin `depends_on`) 
+- `db`:
+    - folosește imaginea `mariadb:latest`
+    - are variabile de mediu pentru user, parolă, DB etc.
+    - expune portul DB pe `localhost:3307`
+
+---
+## 🔹 3. Pornește stack-ul
+
+```bash
+docker compose up -d
+```
+
+- descarcă imaginile (dacă nu există),
+- creează și pornește containerele,
+- creează o rețea implicită (ex: `compose-basics_default`).
+
+Verifica:
+
+```bash
+docker compose ps
+```
+
+Ar trebui să vezi ceva de genul:
+
+```text
+NAME        IMAGE            STATUS            PORTS
+demo_web    nginx:1.29       Up ...            0.0.0.0:8080->80/tcp
+demo_db     mariadb:latest   Up ...            0.0.0.0:3307->3306/tcp
+```
+
+---
+## 🔹 4. Comenzile de bază Docker Compose
+
+▶ `up` – pornește serviciile
+
+```bash
+docker compose up          # pornește și arată logurile în terminal
+docker compose up -d       # pornește în fundal (detached)
+docker compose up --build  # reconstruiește imaginile (pentru servicii cu build:)
+```
+
+⏹ `down` – oprește și șterge stack-ul
+
+```bash
+docker compose down             # oprește containerele + șterge rețeaua
+docker compose down --volumes   # șterge și volumele (pierzi datele DB!)
+```
+
+- Imaginile NU sunt șterse de `down`.
+
+📋 `ps` – vezi serviciile
+
+```bash
+docker compose ps
+```
+
+- vezi ce servicii rulează, status, porturi expuse.
+
+📜 `logs` – loguri din servicii
+
+```bash
+docker compose logs            # loguri pentru toate serviciile
+docker compose logs -f         # urmărești logurile live (follow)
+docker compose logs -f web     # doar pentru serviciul "web"
+```
+
+🐚 `exec` – intră într-un container care rulează
+
+```bash
+docker compose exec web sh     # shell în containerul "web"
+docker compose exec db bash    # dacă există bash în imagine
+```
+
+Exemplu: vezi DB din container:
+
+```bash
+docker compose exec db mysql -u demouser -pdemopass demo
+```
+
+🧱 `build` – construiește imaginile (pentru servicii cu `build:`)
+
+```bash
+docker compose build        # toate serviciile
+docker compose build web    # doar serviciul "web"
+```
+
+📥 `pull` – trage imaginile
+
+```bash
+docker compose pull         # trage imaginile declarate în YAML
+```
+
+⏸ / ▶ `stop`, `start`, `restart`
+
+```bash
+docker compose stop         # oprește containerele, dar NU le șterge
+docker compose start        # repornește containerele oprite
+docker compose restart      # restart rapid
+```
+
+✅ `config` – verifică și vezi config-ul final
+
+```bash
+docker compose config
+```
+
+- validează YAML-ul,
+- arată fișierul final (după ce aplică `.env` etc.),
+- foarte util când ceva nu pornește și nu știi de ce.
+
+---
+## 🔹 5. Verificări utile
+
+### Vezi rețelele create
+
+```bash
+docker network ls
+```
+
+Compose creează o rețea de tip `bridge` pentru proiectul tău (`<folder>_default`).
+
+### Vezi imaginile și volumele
+
+```bash
+docker images
+docker volume ls
+```
+
+---
+
+## 🔹 6. Mini-recapitulare Docker Compose
+
+- **Fișier**: `docker-compose.yml
+- **Elemente esențiale** într-un service:
+    - `image` sau `build
+    - `ports
+    - `environment
+    - `volumes
+    - `depends_on`
+        
+- **Comenzi esențiale**:
+    - `docker compose up -d`
+    - `docker compose down` (sau `down --volumes`)
+    - `docker compose ps`
+    - `docker compose logs -f [service]`
+    - `docker compose exec service sh`
+    - `docker compose build`
+    - `docker compose config`
+
