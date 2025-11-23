@@ -141,3 +141,64 @@ Din container, intri în MariaDB ca `user_imdb`:
 mariadb --local-infile=1 -u user_imdb -p imdb
 # parola: user_pass
 ```
+
+![Img](images/img8.png)
+
+```bash
+LOAD DATA LOCAL INFILE '/tmp/name.basics.tsv'
+INTO TABLE name_basics
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(
+  nconst,
+  primaryName,
+  birthYear,
+  deathYear,
+  primaryProfession,
+  knownForTitles
+);
+```
+
+![Img](images/img9.png)
+
+```SQL
+SELECT COUNT(*) FROM name_basics;
+```
+
+![Img](images/img10.png)
+
+```SQL
+SELECT * FROM name_basics WHERE primaryName LIKE '%onnor' LIMIT 20;
+```
+
+![Img](images/img11.png)
+
+```SQL
+SELECT * FROM name_basics WHERE primaryName LIKE '%alley%' LIMIT 20;
+```
+
+![Img](images/img12.png)
+
+
+### Când pui indexurile **ÎNAINTE**:
+
+- Tabel **mic/mediu**.
+- Scrieri **puține, constante** (aplicație normală, nu import mare).
+- Ai nevoie de **PK/UNIQUE** ca să blochezi dublurile chiar la import.
+
+### Când pui indexurile **DUPĂ**:
+
+- Faci un **import mare (LOAD DATA, milioane de rânduri)**.
+- Vrei ca importul să meargă **cât mai repede**.
+- Workflow:
+    1. Creezi tabelul cu minimul necesar (de obicei doar PK).
+    2. Faci `LOAD DATA`.
+    3. Apoi `CREATE INDEX ...` pe coloanele de căutare.
+
+În cazul tău cu `name_basics` (14M rânduri) → **import fără index pe `primaryName`, apoi index după** (exact ce faci acum).
+
+```SQL
+CREATE INDEX idx_name_primaryName ON name_basics(primaryName);
+```
+

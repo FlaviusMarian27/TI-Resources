@@ -183,8 +183,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "4ab6c69cec96454d",
+  "active": "ace8960ac6caebc1",
   "lastOpenFiles": [
+    "images/img12.png",
+    "images/img11.png",
+    "images/img10.png",
+    "images/img9.png",
+    "images/img8.png",
     "images/img7.png",
     "images/img6.png",
     "images/img5.png",
@@ -192,7 +197,6 @@
     "images/img3.png",
     "images/img2.png",
     "images",
-    "images/img1.png",
     "MariaDB problema.md"
   ]
 }
