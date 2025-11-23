@@ -70,3 +70,48 @@ docker compose ps
 
 ![Img](images/img1.png)
 
+Astfel o sa avem:
+
+- test_abd_imdb → MariaDB
+- test1-adminer-1 → Adminer
+
+Accesam `http://localhost:8080/`:
+
+![Img](images/img2.png)
+
+- Sistem: lasă MySQL / MariaDB
+- Server: db
+- Nume de utilizator: user_imdb
+- Parolă: user_pass
+- Baza de date: poți lăsa gol sau scrii imdb
+
+
+Click pe imdb:
+![Img](images/img3.png)
+
+Click SQL query:
+![Img](images/img4.png)
+
+![Img](images/img5.png)
+
+Rezultatul corect:
+![Img](images/img6.png)
+
+```SQL
+CREATE TABLE name_basics(
+	nconst VARCHAR(12) NOT NULL PRIMARY KEY,
+	primaryName VARCHAR(255) NOT NULL,
+	birthYear INT NULL,
+	deathYear INT NULL,
+	primaryProfession VARCHAR(255) NULL,
+	knownForTitles TEXT NULL
+)
+```
+
+Urmează să descărcăm arhiva dorită. O să facem un director special:
+
+```bash
+mkdir data
+cd data
+wget https://datasets.imdbws.com/name.basics.tsv.gz
+```
