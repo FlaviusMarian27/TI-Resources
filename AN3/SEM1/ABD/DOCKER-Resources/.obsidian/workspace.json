@@ -64,7 +64,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -212,12 +212,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "afca012d3f051546",
+  "active": "9760c01906770949",
   "lastOpenFiles": [
+    "3. TRANSACTION.md",
     "2. DOCKER COMPOSE.md",
     "1. DOCKER CASH COURCE.md",
     "CAPITOLUL 2 – Imagini și Dockerfile.md",
-    "3. TRANSACTION.md",
     "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
     "images/NodeApp.png",
     "DockerImage/Dockerfile",
