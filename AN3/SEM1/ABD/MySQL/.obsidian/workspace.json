@@ -1,84 +1,41 @@
 {
   "main": {
-    "id": "ed91edb56d6d3be5",
+    "id": "78b7c36b4350f0a6",
     "type": "split",
     "children": [
       {
-        "id": "6837c2a7e577b47e",
+        "id": "fafa7642ace91149",
         "type": "tabs",
         "children": [
           {
-            "id": "12acbfc9c5f885b5",
+            "id": "ace8960ac6caebc1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "file": "MariaDB problema.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
-            }
-          },
-          {
-            "id": "01177fb70d47c44a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1. DOCKER CASH COURCE.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "1. DOCKER CASH COURCE"
-            }
-          },
-          {
-            "id": "9760c01906770949",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2. DOCKER COMPOSE.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2. DOCKER COMPOSE"
-            }
-          },
-          {
-            "id": "afca012d3f051546",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3. TRANSACTION.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "3. TRANSACTION"
+              "title": "MariaDB problema"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "1b63b1c0c8ed367c",
+    "id": "17033a1836983506",
     "type": "split",
     "children": [
       {
-        "id": "9ff5800d6b16a552",
+        "id": "06e03d8e0f27a55a",
         "type": "tabs",
         "children": [
           {
-            "id": "0816cfe3175a4d9b",
+            "id": "4ab6c69cec96454d",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -91,7 +48,7 @@
             }
           },
           {
-            "id": "cdf951090934ec35",
+            "id": "c0e8cabf76f8226c",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -108,7 +65,7 @@
             }
           },
           {
-            "id": "c810a7f9ef629ccd",
+            "id": "297f15809d3e084b",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -124,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "da8febf0e9828079",
+    "id": "076670984d5f13d5",
     "type": "split",
     "children": [
       {
-        "id": "e63623c057062d5b",
+        "id": "1c9768bd5f7ceb47",
         "type": "tabs",
         "children": [
           {
-            "id": "9b75418e4ca2ab1c",
+            "id": "45f61ecbde7afd0d",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "file": "MariaDB problema.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Referințe pentru CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+              "title": "Referințe pentru MariaDB problema"
             }
           },
           {
-            "id": "66046fa4b609fbb2",
+            "id": "62b1fdce098ff1f5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "file": "MariaDB problema.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+              "title": "Outgoing links from MariaDB problema"
             }
           },
           {
-            "id": "351b695fbe2cb8a8",
+            "id": "20f9613a44358604",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -180,18 +137,32 @@
             }
           },
           {
-            "id": "f007f2bd52d169ae",
+            "id": "737ee0d078da63dc",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "ed90be245cc9ac0d",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
+                "file": "MariaDB problema.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sumar CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER"
+              "title": "Sumar MariaDB problema"
             }
           }
         ]
@@ -212,30 +183,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "9760c01906770949",
+  "active": "4ab6c69cec96454d",
   "lastOpenFiles": [
-    "1. DOCKER CASH COURCE.md",
-    "2. DOCKER COMPOSE.md",
-    "3. TRANSACTION.md",
-    "CAPITOLUL 2 – Imagini și Dockerfile.md",
-    "CAPITOLUL 1 - CONCEPTE DE BAZĂ DOCKER.md",
-    "images/NodeApp.png",
-    "DockerImage/Dockerfile",
-    "Dockerfile",
-    "images/Package.png",
-    "images/Server.png",
-    "images/Directoare.png",
-    "Pasted image 20251107123527.png",
-    "DockerImage/src/server.js",
-    "DockerImage/package.json",
-    "DockerImage/src",
-    "DockerImage",
-    "images/Cloud.png",
-    "images/DockerHub.png",
-    "images/DockerRunNameDP.png",
-    "images/DockerPsAAll.png",
-    "images/MySQLPort.png",
-    "Untitled.canvas",
-    "images"
+    "images",
+    "images/img1.png",
+    "MariaDB problema.md"
   ]
 }
