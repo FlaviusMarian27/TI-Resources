@@ -94,9 +94,6 @@ Click SQL query:
 
 ![Img](images/img5.png)
 
-Rezultatul corect:
-![Img](images/img6.png)
-
 ```SQL
 CREATE TABLE name_basics(
 	nconst VARCHAR(12) NOT NULL PRIMARY KEY,
@@ -107,6 +104,9 @@ CREATE TABLE name_basics(
 	knownForTitles TEXT NULL
 )
 ```
+
+Rezultatul corect:
+![Img](images/img6.png)
 
 Urmează să descărcăm arhiva dorită. O să facem un director special:
 
