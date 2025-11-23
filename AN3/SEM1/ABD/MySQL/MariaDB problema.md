@@ -115,3 +115,29 @@ mkdir data
 cd data
 wget https://datasets.imdbws.com/name.basics.tsv.gz
 ```
+
+```bash
+gunzip name.basics.tsv.gz
+
+ls -lh
+```
+
+Copiază fișierul în containerul MariaDB. Pe **host** (nu în container), din orice folder:
+
+```bash
+docker cp ~/Documents/ABD/test1/data/name.basics.tsv test_abd_imdb:/tmp/name.basics.tsv
+```
+
+### Intrare în MariaDB folosind _docker compose_
+
+```bash
+docker compose exec db bash
+```
+
+![Img](images/img7.png)
+Din container, intri în MariaDB ca `user_imdb`:
+
+```bash
+mariadb --local-infile=1 -u user_imdb -p imdb
+# parola: user_pass
+```
