@@ -29,32 +29,32 @@ flavius@flavius-Katana-GF66-12UEO:~/Documents/ABD/test1$ code docker-compose.yam
 
 ```yaml
 # Use root/example as user/password credentials
-
 services:
+
   db: #serverul de baze de date (MariaDB)
-	image: mariadb:latest #pentru ultima versiune
-	container_name: test_abd_imdb
-	restart: always
-	environment:
-	  MARIADB_ROOT_PASSWORD: toor
-	  MARIADB_DATABASE: imdb
-	  MARIADB_USER: user_imdb
-	  MARIADB_PASSWORD: user_pass
-	ports:
-	  - 3306:3306
-	volumes:
-	  - db_data:/var/lib/mysql #folderul din container unde MariaDB își ține toate datele (tabele, indexuri, etc.)
+    image: mariadb:latest #pentru ultima versiune
+    container_name: test_abd_imdb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: toor
+      MARIADB_DATABASE: imdb
+      MARIADB_USER: user_imdb
+      MARIADB_PASSWORD: user_pass
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql #folderul din container unde MariaDB își ține toate datele (tabele, indexuri, etc.)
 
   adminer: #interfata web (client) pentru DB
-	image: adminer
-	restart: always
-	ports:
-	  - 8080:8080
-	environment:
-	  ADMINER_DEFAULT_SERVER: db
-	depends_on:
-	  - db
-
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    depends_on:
+      - db
+  
 volumes:
   db_data:
 ```
