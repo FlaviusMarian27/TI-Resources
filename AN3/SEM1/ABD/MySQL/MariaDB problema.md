@@ -202,3 +202,59 @@ SELECT * FROM name_basics WHERE primaryName LIKE '%alley%' LIMIT 20;
 CREATE INDEX idx_name_primaryName ON name_basics(primaryName);
 ```
 
+Solutie am ales sa fac o alta coloana cu numele scrise invers pt 'onnor':
+
+```SQL
+ALTER TABLE name_basics
+ADD COLUMN rev_name VARCHAR(255)
+  GENERATED ALWAYS AS (REVERSE(primaryName)) STORED;
+```
+
+```SQL
+CREATE INDEX idx_rev_name ON name_basics(rev_name);
+```
+
+```SQL
+SET profiling = 1;
+```
+
+```SQL
+SELECT COUNT(*)
+FROM name_basics
+WHERE rev_name LIKE 'ronno%';
+```
+
+```SQL
+SHOW PROFILES;
+```
+
+- Pentru căutarea numelor care se termină cu `onnor`, condiția `primaryName LIKE '%onnor'` este foarte grea de optimizat: wildcard-ul de la început (`%`) nu permite motorului să folosească eficient indexul clasic pe `primaryName`, așa că trebuie să scaneze multe rânduri (≈ 2.8s pentru 14.8M înregistrări).
+
+- În acest fel, căutarea „se termină cu `onnor`” devine o căutare de tip prefix (`'ronno%'`) pe coloana indexată `rev_name`, iar MariaDB poate folosi indexul B-Tree. Timpul de execuție a scăzut de la ~2.8 secunde la ~0.08 secunde (sub 1 secundă, cum cere enunțul).
+
+Pentru „alley”
+
+Pentru căutarea numelor care conțin „alley”, varianta directă:
+
+```SQL
+SELECT COUNT(*) FROM name_basics WHERE primaryName LIKE '%alley%';
+```
+
+a durat aproximativ 3 secunde pe ~14.8M de rânduri, deoarece motorul trebuie să facă un scan mare al tabelei și nu poate folosi eficient indexul B-Tree.
+
+Pentru a optimiza, am adăugat un index FULLTEXT pe coloana `primaryName`:
+
+```SQL
+ALTER TABLE name_basics
+  ADD FULLTEXT INDEX ft_primaryName (primaryName);
+```
+
+și am folosit:
+
+```SQL
+SELECT COUNT(*)
+FROM name_basics
+WHERE MATCH(primaryName) AGAINST ('+alley*' IN BOOLEAN MODE);
+```
+
+Timpul a scăzut la ~0.24 secunde (sub 1 secundă), îndeplinind cerința. FULLTEXT nu este echivalent 100% cu `LIKE '%alley%'`, dar este mult mai eficient pentru căutări de tip text.
