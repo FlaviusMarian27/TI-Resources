@@ -19,10 +19,11 @@ int main(int argc, char *argv[]){
         int sum;
 
         MPI_Send(v, 2, MPI_INT, 1, 0, MPI_COMM_WORLD);
+        printf("Procesul 0: am trimis %d si %d\n", a, b);
 
         MPI_Recv(&sum, 1, MPI_INT, 1, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        printf("Procesul 0: am trimis %d si %d, am primit suma = %d\n", a, b, sum);
+        printf("Procesul 0: am primit suma = %d\n", sum);
     }else if(my_rank == 1){
         int v[2];
         int sum;

@@ -35,3 +35,8 @@ int main(int argc, char *argv[])
     
     MPI_Finalize();
 }
+
+/*
+mpicc -o ex3 ex3.c
+mpirun -np 4 ./ex3
+*/
