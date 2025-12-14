@@ -157,7 +157,6 @@ int main(int argc, char *argv[])
         int next = 0;
         int num_workers = size - 1;
 
-        // send initial tasks
         for (int w = 1; w <= num_workers && next < num_tasks; w++)
         {
             MPI_Send(tasks[next], k, MPI_INT, w, WORK_TAG, MPI_COMM_WORLD);
