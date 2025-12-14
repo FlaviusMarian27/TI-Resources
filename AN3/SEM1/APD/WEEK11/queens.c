@@ -166,9 +166,7 @@ int main(int argc, char *argv[])
 
         // asteptam pt prima solutie
         int *solution = malloc(N * sizeof(int));
-        MPI_Recv(solution, N, MPI_INT,
-                 MPI_ANY_SOURCE, MPI_ANY_TAG,
-                 MPI_COMM_WORLD, &status);
+        MPI_Recv(solution, N, MPI_INT,MPI_ANY_SOURCE, MPI_ANY_TAG,MPI_COMM_WORLD, &status);
 
         double t = MPI_Wtime();
         printf("First solution found by worker %d\n", status.MPI_SOURCE);
