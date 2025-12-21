@@ -39,6 +39,7 @@ services:
       - ./config/primary/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
       # Initialization script (creates replication user)
       - ./scripts/init-primary.sh:/docker-entrypoint-initdb.d/init-primary.sh:ro
+	  - ./data:/import:ro
       # Persistent data
       - pg_primary_data:/var/lib/postgresql/data
     command: postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
@@ -191,4 +192,89 @@ docker compose up -d
 
 ```bash
 docker compose ps
+```
+
+```bash
+docker exec -it pg_primary psql -U postgres -d imdb
+```
+
+secretpassword
+
+```SQL
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+```
+
+```bash
+mkdir -p data
+cd data
+wget https://datasets.imdbws.com/name.basics.tsv.gz
+gunzip name.basics.tsv.gz
+cd ..
+```
+
+```bash
+docker exec -it pg_primary ls -lh /import
+```
+
+```bash
+docker exec -it pg_primary psql -U postgres -d imdb
+```
+
+```SQL
+DROP TABLE IF EXISTS name_basics;
+
+CREATE TABLE name_basics (
+  nconst            VARCHAR(12) PRIMARY KEY,
+  primaryName       TEXT,
+  birthYear         INT,
+  deathYear         INT,
+  primaryProfession TEXT,
+  knownForTitles    TEXT
+);
+```
+
+```SQL
+COPY name_basics
+FROM '/import/name.basics.tsv'
+WITH (FORMAT text, DELIMITER E'\t', NULL '\N', HEADER true);
+```
+
+```bash
+\timing on
+```
+
+```SQL
+SELECT COUNT(*) FROM name_basics WHERE primaryName LIKE '%onnor';
+428 ms = 0.428 s
+```
+
+```SQL
+CREATE INDEX idx_rev_primaryname_like
+ON name_basics ((reverse(primaryName) COLLATE "C") text_pattern_ops);
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM name_basics 
+WHERE (reverse(primaryName) COLLATE "C") LIKE 'ronno%';
+37 ms
+```
+
+Alley
+```SQL
+SELECT COUNT(*) FROM name_basics WHERE primaryName ILIKE '%alley%';
+1.632
+```
+
+```SQL
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX idx_primaryname_trgm
+ON name_basics USING GIN (primaryName gin_trgm_ops);
+
+ANALYZE name_basics;
+```
+
+```SQL
+EXPLAIN ANALYZE
+SELECT COUNT(*) FROM name_basics
+WHERE primaryName ILIKE '%alley%';
+0.062s
 ```
