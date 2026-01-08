@@ -1,0 +1,10 @@
+Descărcați un dataset de pe https://developer.imdb.com/non-commercial-datasets/ : title.basics.tsv.gz 
+Creați tabela corespunzătoare într-o bază de date PostgreSQL și încărcați datele de mai sus. 
+
+Faceți un studiu de caz asupra căutării în această tabelă 
+	• căutare după nume care se termină cu "things" 
+	• căutare după nume care conțin "stars" 
+
+Scopul exercițiului este să reduceți timpul de căutare sub 1 secundă pentru exemplele de mai sus. 
+Baza de date trebuie să fie replicată într-o instanță slave. Se va nota ordinea în care ați făcut operațiile 
+(de ex dacă ați creat mai întâi slave sau ați încărcat informațiile în baza de date master mai întâi).

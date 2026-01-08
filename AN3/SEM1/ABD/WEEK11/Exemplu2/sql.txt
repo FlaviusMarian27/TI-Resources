@@ -1,0 +1,60 @@
+MASTER
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+
+imdb=# SELECT client_addr, state, sync_state FROM pg_stat_replication;
+ client_addr |   state   | sync_state 
+-------------+-----------+------------
+ 172.19.0.4  | streaming | async
+ 172.19.0.6  | streaming | async
+ 172.19.0.5  | streaming | async
+(3 rows)
+
+quit
+
+MASTER----------------------------------------
+\timing on
+\pset pager off
+
+DROP TABLE IF EXISTS title_basics;
+
+CREATE TABLE title_basics (
+  tconst         VARCHAR(12) PRIMARY KEY,
+  titleType      TEXT,
+  primaryTitle   TEXT,
+  originalTitle  TEXT,
+  isAdult        INT,
+  startYear      INT,
+  endYear        INT,
+  runtimeMinutes INT,
+  genres         TEXT
+);
+
+COPY title_basics
+FROM '/import/title.basics.tsv'
+WITH (FORMAT text, DELIMITER E'\t', NULL '\N', HEADER true);
+
+ANALYZE title_basics;
+
+SELECT COUNT(*) FROM title_basics;
+
+Care se termian in things-----------------------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(primaryTitle) LIKE '%things';
+
+DROP INDEX IF EXISTS idx_rev_things;
+CREATE INDEX idx_rev_things ON title_basics ((reverse(lower(primaryTitle)) COLLATE "C") text_pattern_ops);
+ANALYZE title_basics;
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics
+WHERE (reverse(lower(primaryTitle)) COLLATE "C") LIKE 'sgniht%';
+
+Care contin star-------------------------------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(primaryTitle) LIKE '%stars%';
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+DROP INDEX IF EXISTS idx_trgm_stars;
+
+CREATE INDEX idx_trgm_stars ON title_basics USING GIN (lower(primaryTitle) gin_trgm_ops);
+ANALYZE title_basics;
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(primaryTitle) LIKE '%stars%';
+
