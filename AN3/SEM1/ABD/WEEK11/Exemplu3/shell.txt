@@ -1,0 +1,14 @@
+ls -R config scripts
+docker compose down -v
+docker compose up -d
+docker compose ps
+docker exec -it pg_primary psql -U postgres -d imdb
+
+mkdir -p data
+cd data
+wget https://datasets.imdbws.com/name.basics.tsv.gz
+gunzip name.basics.tsv.gz
+cd ..
+
+docker exec -it pg_primary psql -U postgres -d imdb
+docker compose down -v

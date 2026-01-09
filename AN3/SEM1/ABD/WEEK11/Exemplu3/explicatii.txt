@@ -1,0 +1,3 @@
+ONNOR: „LIKE '%onnor' forțează scan pe tabel, așa că am transformat sufixul în prefix folosind reverse(lower(primaryName)) și am creat un index pe expresie; query-ul devine reverse(...) LIKE 'ronno%' și folosește indexul.”
+
+ALLEY: „Pentru LIKE '%alley%' (substring) am folosit pg_trgm + index GIN pe lower(primaryName), astfel același query rămâne neschimbat dar folosește trigram index și scade sub 1 secundă.”

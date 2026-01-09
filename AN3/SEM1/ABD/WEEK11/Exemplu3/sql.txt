@@ -1,0 +1,54 @@
+Master------------------------------------------------------------------------
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+quit
+
+Master------------------------------------------------------------------------
+\timing on
+\pset pager off
+
+DROP TABLE IF EXISTS name_basics;
+
+CREATE TABLE name_basics (
+  nconst            VARCHAR(12) PRIMARY KEY,
+  primaryName       TEXT,
+  birthYear         INT,
+  deathYear         INT,
+  primaryProfession TEXT,
+  knownForTitles    TEXT
+);
+
+-- TSV, nu CSV
+COPY name_basics
+FROM '/import/name.basics.tsv'
+WITH (FORMAT text, DELIMITER E'\t', NULL '\N', HEADER true);
+
+ANALYZE name_basics;
+
+SELECT COUNT(*) FROM name_basics;
+
+ONNOR-------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM name_basics WHERE lower(primaryName) LIKE '%onnor';
+1.226 sec
+
+DROP INDEX IF EXISTS idx_rev_primaryname_onnor;
+
+CREATE INDEX idx_rev_primaryname_onnor ON name_basics ((reverse(lower(primaryName)) COLLATE "C") text_pattern_ops);
+
+ANALYZE name_basics;
+EXPLAIN ANALYZE SELECT COUNT(*) FROM name_basics WHERE (reverse(lower(primaryName)) COLLATE "C") LIKE 'ronno%';
+0.015 secunde
+
+ALLEY-------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM name_basics WHERE lower(primaryName) LIKE '%alley%';
+1.237 secunde
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+DROP INDEX IF EXISTS idx_primaryname_trgm;
+CREATE INDEX idx_primaryname_trgm ON name_basics USING GIN (lower(primaryName) gin_trgm_ops);
+
+ANALYZE name_basics;
+EXPLAIN ANALYZE SELECT COUNT(*) FROM name_basics WHERE lower(primaryName) LIKE '%alley%';
+0.042 secunde
+
+
