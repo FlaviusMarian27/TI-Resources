@@ -91,7 +91,8 @@ void *inc_count(void *t)
     count++;
     printf("Thread %d incremented count to %d \n", my_id, count);
     return NULL;
-}```
+}
+```
 
 Critical section este o parte de cod, dintr-un program care accesează date partajate și care nu trebuie rulată simultan de mai multe thread-uri, doar de unul singur. De obicei, astfel de zone trebuie protejate, cu un mutex spre exemplu.
 
