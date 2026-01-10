@@ -8,27 +8,34 @@ If for example 20% of a program cannot be parallelized because it is intrinsec s
 # **Answer**:
 
 $$
-S = \frac{T_{serial}}{T_{paralel}}
+S = \frac{T_{serial}}{T_{parallel}}
 $$
+
 $$
-T_{paralel} = (1 - r)\left(\frac{T_{serial}}{p}\right) + r \cdot T_{serial}
+T_{parallel} = (1 - r)\left(\frac{T_{serial}}{p}\right) + r \cdot T_{serial}
 $$
+
 $$
 S = \frac{T_{serial}}
-{(1-r)\frac{T_{serial}}{p} + rT_{serial}}
+{(1 - r)\frac{T_{serial}}{p} + rT_{serial}}
 $$
+
 $$
 S(p) = \frac{T_{serial}}
 {T_{serial}\left(r + \frac{1-r}{p}\right)}
 = \frac{1}{r + \frac{1-r}{p}}
 $$
+
 $$
-S_{max} = \lim_{p \to \infty} \frac{1}{r + \frac{1-r}{p}}
+S_{max} = \lim_{p \to \infty}
+\frac{1}{r + \frac{1-r}{p}}
 = \frac{1}{r}
 $$
+
 $$
 S_{max} = \frac{1}{0.2} = 5
 $$
+
 ---
 # **Question:**
 
