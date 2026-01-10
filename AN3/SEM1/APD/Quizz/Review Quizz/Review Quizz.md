@@ -278,6 +278,8 @@ int height(binary_tree *tree) {
 h1=height(t1);
 ```
 
+# **Answer:**
+
 Da se poate paraleliza, cu ajutorul task-urilor. Practic atât apelul height(tree->left), cât și apelul
 height(tree->right) pot rula în paralel.  Astfel pentru cele 2  apeluri folosim `#pragma omp task`, iar pentru maximum folosim taskwait. Pentru performanță vom folosi un cutoff cu care vom evita overhead-ul mare, pe care îl creează task-urile, trecând în metoda serială.
 
@@ -316,3 +318,100 @@ int make_task(binary_tree *tree){
 	}
 }
 ```
+
+---
+
+# **Question:**  
+
+Given an array `A` of `n` integers, construct a **Binary Search Tree** such that for every node `x,` all keys in the left subtree of `x` are smaller than `x->key` and all keys in the right subtree of `x` are greater than `x->key`
+
+Can you find **a parallel strategy for the construction of the Binary Search Tree?** You do not have to write code,  pseudocode or textual description is OK.
+
+# **Answer:**
+
+1. Alege o cheie ca rădăcină( de exemplu A[0])
+2. Partiționăm vectorul în două submulțimi:
+	- L = { a ∈ A | a < root }
+	- R = { a ∈ A | a > root }
+3. Construiești în paralel după:
+	- `root->left = buildBST(L)`
+	- `root->right = buildBST(R)`
+4. După repetăm recursiv. Punem și un cutoff: când subvectorul devine mic, construiești serial.
+
+De ce e paralelizabil:
+- după partiționare, **subarborele stâng și drept sunt independente**, deci pot fi făcute simultan (task-uri OpenMP / fork-join).
+
+---
+
+# **Question.**
+
+What will be the output printed in the console where the following program is launched with  the command mpiexec -n 2 prog. c 
+Explain your answer.
+
+```c
+/* prog.c */
+void main(int argc, char *argv[])
+{
+    int rank, size;
+    int x=0;
+   
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+   if (rank ==0) {
+    printf("%d ", rank); fflush(stdout);
+    x=1;
+   }
+   if (rank ==1){
+    while (x==0) {;}
+    printf("%d", rank);   fflush(stdout);
+   }
+    MPI_Finalize();
+}
+```
+
+# **Answer:**
+
+_ = spatiu 
+Rezultatul va fi: 0__
+
+`mpiexec -n 2` pornește 2 **procese** cu **spații de adrese separate**, deci `x` nu e shared (fiecare rank are propria copie). Rank 0 afișează `0` și își pune `x=1`, dar rank 1 vede în continuare `x=0` în procesul lui și rămâne blocat în `while` deoarece nu există `MPI_Send/MPI_Recv` care să transmită valoarea.
+
+---
+
+# **Question:**
+
+What is the output of the following program? Explain your answer. The program is launched with mpiexec -n 3 prog
+
+```c
+int main(int argc, char **argv) {
+	MPI_Init(&argc, &argv);
+	
+	int rank, size;
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	
+	int msg;
+	int next = (rank + 1) % size; // next process
+	int prev = (rank + 2) % size; // previous process
+	
+	MPI_Recv(&msg, 1, MPI_INT, prev, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	MPI_Send(&rank, 1, MPI_INT, next, 0, MPI_COMM_WORLD);
+	
+	printf("Process %d received %d from process %d\n", rank, msg, prev);
+	
+	MPI_Finalize();
+	return 0;
+}
+```
+
+# **Answer:**
+
+Avem trei procese lansate în execuție și fiecare face prima oară recv blocking, ceea ce duce la un deadlock. Ca și o soluție ar fi un if, în care luam spre exemplu rank 0, care să înceapă cu un Send, iar ceilalți cu un recv. 
+- rank 0: `Send` → `Recv` 
+- rank 1,2: `Recv` → `Send`
+Asta rupe așteptarea circulară.
+
+---
+
