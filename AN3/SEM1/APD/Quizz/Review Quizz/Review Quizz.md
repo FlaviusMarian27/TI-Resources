@@ -374,6 +374,7 @@ void main(int argc, char *argv[])
 # **Answer:**
 
 _ = spatiu 
+
 Rezultatul va fi: 0__
 
 `mpiexec -n 2` pornește 2 **procese** cu **spații de adrese separate**, deci `x` nu e shared (fiecare rank are propria copie). Rank 0 afișează `0` și își pune `x=1`, dar rank 1 vede în continuare `x=0` în procesul lui și rămâne blocat în `while` deoarece nu există `MPI_Send/MPI_Recv` care să transmită valoarea.
