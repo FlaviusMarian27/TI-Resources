@@ -161,3 +161,158 @@ int main(int argc, char* argv[]) {
 
 # **Answer:**
 
+Pe parcursul execuție programului se creează doar 2 thread-uri. Practic la prima iterație, după întâlnirea directivei `pragma omp parallel for`,  se creează un grup de 2 thread-uri, iar pentru restul de iterații se refolosesc din nou cele 2 thread-uri fără să mai fie altele create.
+
+Pentru fiecare $a[i][j]$ avem 2 thread-uri:
+
+thread 0 -> j = 0, j = 2
+thread 1 -> j = 1, j = 3
+
+---
+# **Question:**
+
+**_Explain_** the concept of _**parallel reduction**_.  When is it useful?  Which ones of the following technologies support the parallel reduction concept: POSIX threads, OpenMP, MPI?
+
+# **Answer:**
+
+Parallel reduction înlocuiește secțiunile critice pentru acumulări. Fiecare thread calculează un rezultat parțial apoi le combină la final într-un singur rezultat(suma, maxim etc). Este specific pentru OpenMP (reduce(op:var)) și MPI prin MPI_Reduce / MPI_Allreduce.
+
+---
+# **Question.** 
+
+Which form of parallelization is best for the following sequence of code?  _**Explain**_ your answer.
+
+```c
+#define N 1000
+int a[N];  
+// ... a[i] initialized with some random values, details omitted
+
+for (int i=0; i<N; i++) {  
+  int p=1;  
+  for (int j=0; j<i; j++)  
+      p=p*a[i];  
+  a[i]=p;  
+}
+```
+
+# **Answer** 
+
+Cea mai bun paralelizare este pe bucla exterioară, adică pe primul for. Fiecare iterație calculează independent $a[i]$, deci nu există dependențe între valori diferite de `i`. Pentru că numărul de iterații în bucla interioară crește cu `i`, e recomandat `schedule(dynamic/guided)` pentru load balancing.
+
+---
+
+# **Question.**   
+
+The code below computes how many times x occurs in each quarter of an array.  Are there any improvements that should be made in order to have a better performance? _**Explain.**_
+
+```c
+int arr[N];
+
+// ... init arr[i] with some values
+int x = 2; // Value to count occurencies
+int quarter_counts[4] = {0, 0, 0, 0};
+
+#pragma omp parallel num_threads(4){
+	int tid = omp_get_thread_num();
+	int start = tid * (n / 4);
+	int end = start + (n / 4);
+	int count = 0;
+	
+	for (int i = start; i < end; i++) {
+		if (arr[i] == x) {
+			quarter_counts[tid]++;
+		}
+	}
+}
+
+// Print counts for each quarter
+for (int i = 0; i < 4; i++) {
+	printf("Quarter %d count of %d: %d\n", i+1, x, quarter_counts[i]);
+}
+```
+
+# **Answer:**
+
+- **Folosește contor local** (`count`) în buclă și scrie o singură dată la final: `quarter_counts[tid] = count;` (eviți multe scrieri în memorie shared).
+- Așa reduci și **false sharing** pe `quarter_counts[ ]` (altfel thread-urile se invalidează reciproc pe aceeași linie de cache).
+- Corectează împărțirea: dacă `N` nu e divizibil cu 4, ultimul thread trebuie să ia **restul** (`end = (tid==3 ? N : start+N/4)`).
+- (opțional) poți folosi și `#pragma omp parallel for` cu `schedule(static)` și să calculezi pe quarters fără manual `start/end`, dar varianta de mai sus e suficientă.
+
+---
+
+# **Question:**
+
+Can you parallelize the following sequence of code using openMP ? _**Explain**_ your answer.
+
+```c
+previousFib = 0;       
+currentFib  = 1;       
+for (i = 2; i <= n; i++) {  
+    nextFib     = previousFib + currentFib;    
+    previousFib = currentFib;                
+    currentFib  = nextFib;  
+}  
+fibonacciN = currentFib;
+```
+
+# **Answer**
+
+Nu poate fi paralelizată direct cum ar fi cu `#pragma omp parallel for` spre exemplu sau altă directivă, deoarece există dependențe de date între iterații: la pasul i, previousFib și currentFib sunt rezultatele pasului i-1. Deci ordinea execuției trebuie să fie secvențială. 
+
+---
+
+# **Question.** 
+
+Can you parallelize computing the height of a binary tree using openMP? _**Explain**_ your answer.
+
+```c
+int height(binary_tree *tree) {
+	if (tree == NULL)
+		return 0;
+	int left, right;
+	left = height(tree->left);
+	right = height(tree->right);
+	return maximum(left, right) + 1;
+}
+...
+h1=height(t1);
+```
+
+Da se poate paraleliza, cu ajutorul task-urilor. Practic atât apelul height(tree->left), cât și apelul
+height(tree->right) pot rula în paralel.  Astfel pentru cele 2  apeluri folosim `#pragma omp task`, iar pentru maximum folosim taskwait. Pentru performanță vom folosi un cutoff cu care vom evita overhead-ul mare, pe care îl creează task-urile, trecând în metoda serială.
+
+```c
+int height_parallel(binary_tree *tree, int level) {
+	if (tree == NULL)
+		return 0;
+		
+	int left, right;
+	if(level >= 10){
+		return height(tree);
+	}
+	
+	#pragma omp task
+	{
+		left = height(tree->left);
+	}
+	
+	#pragma omp task
+	{
+		right = height(tree->right);
+	}
+	
+	#pragma omp taskwait
+		return maximum(left, right) + 1;
+}
+
+int make_task(binary_tree *tree){
+	int h = 0;
+	#pragma omp parallel num_threads(NUMTHREADS) shared(h)
+	{
+		#pragma omp single
+		{
+			h = height_p(tree,0);
+		}
+	}
+}
+```
