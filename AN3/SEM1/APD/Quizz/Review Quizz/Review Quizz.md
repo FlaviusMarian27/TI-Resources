@@ -412,6 +412,7 @@ int main(int argc, char **argv) {
 Avem trei procese lansate în execuție și fiecare face prima oară recv blocking, ceea ce duce la un deadlock. Ca și o soluție ar fi un if, în care luam spre exemplu rank 0, care să înceapă cu un Send, iar ceilalți cu un recv. 
 - rank 0: `Send` → `Recv` 
 - rank 1,2: `Recv` → `Send`
+
 Asta rupe așteptarea circulară.
 
 ---
