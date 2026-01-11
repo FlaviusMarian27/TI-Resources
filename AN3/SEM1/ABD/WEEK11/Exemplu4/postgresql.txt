@@ -1,0 +1,53 @@
+MASTER-------------------------------------------
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+quit
+
+Slave1-------------------------------------------
+SELECT client_addr, state, sync_state FROM pg_stat_replication;
+quit
+
+MASTER-------------------------------------------
+\timing on
+\pset pager off
+
+DROP TABLE IF EXISTS title_basics;
+
+CREATE TABLE title_basics (
+  tconst         VARCHAR(12) PRIMARY KEY,
+  titleType      TEXT,
+  primaryTitle   TEXT,
+  originalTitle  TEXT,
+  isAdult        INT,
+  startYear      INT,
+  endYear        INT,
+  runtimeMinutes INT,
+  genres         TEXT
+);
+
+COPY title_basics FROM '/import/title.basics.1M.tsv' WITH (FORMAT text, DELIMITER E'\t', NULL '\N', HEADER true);
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics;
+
+care contin Comedy in genres--------------------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(genres) LIKE '%comedy%';
+0.083 secunde
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+DROP INDEX IF EXISTS idx_trgm_comedy;
+CREATE INDEX idx_trgm_comedy ON title_basics USING GIN (lower(genres) gin_trgm_ops);
+ANALYZE title_basics;
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(genres) LIKE '%comedy%';
+
+0.057 secunde
+
+
+Care se termian in family-----------------------------------------------------------------------------------------
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE lower(genres) LIKE '%family';
+0.041 secunde
+
+DROP INDEX IF EXISTS idx_rev_family;
+CREATE INDEX idx_rev_family ON title_basics ((reverse(lower(genres)) COLLATE "C") text_pattern_ops);
+ANALYZE title_basics;
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM title_basics WHERE (reverse(lower(genres)) COLLATE "C") LIKE 'ylimaf%';
+0.035 secunde

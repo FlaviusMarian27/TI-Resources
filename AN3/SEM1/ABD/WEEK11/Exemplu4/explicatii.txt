@@ -1,0 +1,8 @@
+Pe eșantionul de 1M înregistrări, interogările sunt deja sub 1 secundă datorită scanării paralele și faptului că 
+tabela nu este enormă; totuși, EXPLAIN ANALYZE arată schimbarea planului de execuție (de la scan la index), iar 
+pe dataset complet (zeci de milioane) diferența devine mult mai mare.”
+
+Am urmărit nu doar timpul, ci și planul de execuție: pentru substring am trecut la Bitmap Index Scan prin GIN + pg_trgm, 
+iar pentru sufix am transformat căutarea într-un prefix indexabil cu reverse(...) + index B-tree.
+
+Prin urmare, chiar dacă pe 1M diferența de timp e mică, metoda e scalabilă și garantează performanță mult mai bună pe volume mari.

@@ -1,0 +1,18 @@
+mkdir -p data
+cd data
+wget https://datasets.imdbws.com/title.basics.tsv.gz
+gunzip -f title.basics.tsv.gz
+head -n 1000001 title.basics.tsv > title.basics.1M.tsv
+wc -l title.basics.1M.tsv
+cd ..
+
+ls -R config scripts
+docker compose down -v
+docker compose up -d
+docker compose ps
+docker exec -it pg_primary psql -U postgres -d imdb
+
+docker exec -it pg_primary ls -lh /import  --> ca sa vedem daca masterul vede cele 2 files
+docker exec -it pg_primary psql -U postgres -d imdb
+
+docker compose down -v
