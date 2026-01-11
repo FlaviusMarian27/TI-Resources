@@ -446,3 +446,145 @@ int main(int argc, char *argv[]) {
 
 # **Answer**
 
+Root este rank 2, deci doar el folosește `x=[2,3,4]`. `MPI_Scatter` cu `sendcount=recvcount=1` trimite câte un element: rank0 primește 2, rank1 primește 3, rank2 primește 4, și îl scrie în `y[0]` (restul lui `y` rămâne neschimbat). Se afișează liniile `2 1 2`, `3 2 3`, `4 3 4` în ordine nedeterministă.
+
+---
+
+# **Question.** 
+
+Exploratory decomposition algorithms (based on the exploration of a solution space) are implemented using:  
+a.) OpenMP - #pragma omp parallel for  
+b.) OpenMP - #pragma omp parallel  
+c.) Openmp - #pragma omp task  
+d.) MPI  
+Can you _rank these methods_ from the _best suited_ to the _least suited_? Justify your answer.
+
+# **Answer:**
+
+1. #pragma omp task - cel mai potrivit, ideal pentru programe recursive. `Task` permite **scheduling dinamic / work stealing**, deci load balancing bun.
+2.  MPI (foarte bun, dar mai greu/overhead) - Se pot implementa **master–worker / work pool** pentru distribuire dinamică pe procese; merge pe cluster, dar are **overhead de comunicare** și cod mai complex.
+3.  `#pragma omp parallel` (mai puțin potrivit)
+4. `#pragma omp parallel for` (cel mai puțin potrivit)
+
+---
+
+# **Question:**  
+
+Enumerate a few reasons why programmers should use collective communication  operations instead of achieving the same semantics using only point-to-point messages.
+
+# **Answer:**
+
+- **Cod mai simplu și mai puține bug-uri:** mai puține apeluri, logică mai clară.
+- **Performanța:** colectivele sunt optimizate în implementările MPI, de obicei mai rapide decât un set manual de `Send/Recv`.
+- **Portabilitate**: același apel colectiv rulează bine pe hardware diferit
+
+---
+
+# **Question:** 
+
+Explain the difference between  block partitioning and block-cyclic partitioning. When would you use one or the other?
+
+# **Answer:**
+
+- **Block partitioning (block):** datele sunt împărțite în bucăți contigue, practic fiecare proces primește ce un subinterval. Vom avea: 
+	- Subintervalul = dimensiunea_totala/nr_de_procese.
+- **Block-cyclic:** împarți în **blocuri mici**, apoi le distribui **round-robin** între procese.
+
+---
+
+# **Question:**
+
+Compare 1D and 2D decomposition for a 2D matrix. How does it affect performance of a stencil computation like the Heat simulation?
+
+# **Answer:**
+
+Pentru varianta 1D decomposition, împărțirea se face pe linii/coloane, unde fiecare proces are 2 vecini fiecare (sus/jos). Mesajele sunt mai lungi(lungime N).
+
+Pentru varianta 2D decomposition, împărțirea se face pe blocuri, unde fiecare proces are 4 vecini fiecare(sus/jos/stânga/dreapta). Mesajele sunt mai scurte(lungime N/sqrt(p)).
+
+Astfel de obicei 2D scalează mult mai bine.
+
+---
+
+# **Question:**
+
+Discuss strategies to overlap communication with computation by using non-blocking  (asynchronous) communication in a typical stencil computation like the Heat simulation. You do not have to write code, it is expected that you use diagrams or pseudocode and textual explanations.
+
+# **Answer:**
+
+Într-un stencil/Heat, fiecare proces are o submatrice locală + **halo/ghost cells**. La fiecare iterație trebuie să schimbe marginile cu vecinii. Ca să **suprapui comunicarea cu calculul**, folosești comunicație **non-blocking** (`MPI_Isend/Irecv`) și calculezi cât timp mesajele sunt în tranzit.
+### Strategia (overlap comm/comp)
+1. **Postezi recepțiile non-blocking** pentru halo (sus/jos, și stânga/dreapta la 2D).
+2. **Trimiți non-blocking** marginile tale către vecini.
+3. **Calculezi interiorul** submatricei (celule care nu depind de halo).
+4. **Aștepți** finalizarea comunicării (`MPI_Waitall`).
+5. **Calculezi border-ul** (celulele care depind de halo).
+6. Swap `old/new` și treci la iterația următoare.
+
+### Pseudocod (1 iterație)
+
+```scss
+MPI_Irecv(halo_up,    from up)
+MPI_Irecv(halo_down,  from down)
+MPI_Isend(my_top_row, to up)
+MPI_Isend(my_bot_row, to down)
+
+compute interior cells (not using halo)
+
+MPI_Waitall(all requests)
+
+compute border cells (need halo)
+
+swap(old, new)
+```
+
+### Diagramă (timp)
+
+```diff
+comm halo:   [===========]
+compute int:     [========]
+wait+border:              [===]
+```
+
+---
+
+# **Question:**  
+
+An array of N numbers is held by a process P0.  Design a distributed-memory algorithm to sort this array. You do not have to write code, it is OK to use pseudocode or textual explanations.
+
+# **Answer:**
+
+1. Avem un vector A de dimensiune N la P0.
+2. **Distribuția:** P0 împarte vectorul A în p procese aproape egale și le trimite cu MPI_Scatter, unde fiecare proces primeste N/p elemente.
+3. **Sortarea:** sortarea se face local, unde fiecare proces va face sortarea pe bucata sa(quicksort/mergesort).
+4. În log_2 p pași, procesele fac **pairwise merge**:
+	- la pasul s, procesele cu rank multiplu de $2^{s+1}$ primesc lista de la vecinul lor și fac merge; celelalte trimit și “ies”.
+5. La final, P0 are lista complet sortată.
+
+---
+
+# **Question:**
+
+**_Compare:_** sending data over a TCP socket vs sending data with MPI_Send, MPI_Recv
+
+# **Answer:**
+
+La TCP trimiți practic bucăți de octeți. Dacă vrei să trimiți un vector de numere, trebuie să îl transformi tu în bytes și să îl refaci la destinație. La MPI este nevoie această operație, practic trimiți normal cei 100 de întregi și se ocupă biblioteca de restul.
+
+Din punct de vedere al colectivității TCP este strict punct-la-punct, pe când MPI este și el punct-la-punct, dar mai oferă și operații colective(Broadcast, Scatter, Gather, Reduction).
+
+---
+
+# **Question:** 
+
+Explain the difference between an iterative server and a concurrent server. Ennumerate 2 possible ways to  implement a concurrent server using BSD sockets.
+
+# **Answer:**
+
+**Iterative server:** acceptă doar un client, îl servește complet(read/write) apoi după ce a terminat cu acesta, îl acceptă pe următorul, iar ceilalți clienți așteaptă.
+
+**Concurrent server:**  poate suporta gestionarea mai multor clienți în același timp, practic acceptă un client, server-ul nu se blochează pe acel client, apoi îl delegă și revine imediat la `accept` ca să poată servi mai mulți clienți în paralel.
+
+BSD sockets:
+- process per connection: `accept`, faci `fork()`; copilul tratează clientul, părintele revine la `accept`.
+- thread per connection: după `accept`, creezi un thread (pthreads) care tratează clientul, iar thread-ul principal revine la `accept`.
