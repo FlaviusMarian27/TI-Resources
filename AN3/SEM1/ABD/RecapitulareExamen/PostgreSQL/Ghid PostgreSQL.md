@@ -336,7 +336,7 @@ The result: 0.004 sec
 
 ---
 
-## Now we will look for all the words that contain "une":
+###  2) Now we will look for all the words that contain "une":
 
 #### Primitive/banal version:
 ```SQL
