@@ -1,0 +1,15 @@
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/bin/Debug/net10.0/lab6
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/bin/Debug/net10.0/lab6.deps.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/bin/Debug/net10.0/lab6.runtimeconfig.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/bin/Debug/net10.0/lab6.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/bin/Debug/net10.0/lab6.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.GeneratedMSBuildEditorConfig.editorconfig
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.AssemblyInfoInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.AssemblyInfo.cs
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.csproj.CoreCompileInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.sourcelink.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/refint/lab6.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/lab6.genruntimeconfig.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab6/obj/Debug/net10.0/ref/lab6.dll
