@@ -17,7 +17,7 @@ public static class Exercitiul1{
             int number2 = Convert.ToInt32(Console.ReadLine());
 
             Console.Write("Alege operatia(+,-,*,/): ");
-            string operand = Console.ReadLine();
+            string operand = Console.ReadLine()!;
 
             int rezultat = 0;
 

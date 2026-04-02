@@ -1,1 +1,1 @@
-﻿Exercitiul1.Rezolvare();
+﻿Exercitiul3.Rezolvare();
