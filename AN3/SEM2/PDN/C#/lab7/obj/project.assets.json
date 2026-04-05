@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab2/lab2.csproj",
-      "projectName": "lab2",
-      "projectPath": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab2/lab2.csproj",
+      "projectUniqueName": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab7/lab7.csproj",
+      "projectName": "lab7",
+      "projectPath": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab7/lab7.csproj",
       "packagesPath": "/home/flavius/.nuget/packages/",
-      "outputPath": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab2/obj/",
+      "outputPath": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/lab7/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/flavius/.nuget/NuGet/NuGet.Config"

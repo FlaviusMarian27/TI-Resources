@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Filme>
+  <Film>
+    <Titlu>The Hangover</Titlu>
+    <Gen>Comedy</Gen>
+    <An>2009</An>
+  </Film>
+  <Film>
+    <Titlu>21 Jump Street</Titlu>
+    <Gen>Comedy</Gen>
+    <An>2012</An>
+  </Film>
+  <Film>
+    <Titlu>Inception</Titlu>
+    <Gen>Sci-Fi</Gen>
+    <An>2010</An>
+  </Film>
+  <Film>
+    <Titlu>Deadpool</Titlu>
+    <Gen>Comedy</Gen>
+    <An>2016</An>
+  </Film>
+</Filme>
