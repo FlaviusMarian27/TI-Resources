@@ -1,0 +1,15 @@
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.GeneratedMSBuildEditorConfig.editorconfig
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.AssemblyInfoInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.AssemblyInfo.cs
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.csproj.CoreCompileInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.sourcelink.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/bin/Debug/net10.0/tema
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/bin/Debug/net10.0/tema.deps.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/bin/Debug/net10.0/tema.runtimeconfig.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/bin/Debug/net10.0/tema.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/bin/Debug/net10.0/tema.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/refint/tema.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/tema.genruntimeconfig.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/C#/tema/obj/Debug/net10.0/ref/tema.dll

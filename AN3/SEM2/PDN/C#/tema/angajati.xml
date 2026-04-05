@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Angajati>
+  <Angajat>
+    <Nume>Flavius</Nume>
+    <Departament>IT</Departament>
+    <Salariu>8500</Salariu>
+  </Angajat>
+  <Angajat>
+    <Nume>Ana</Nume>
+    <Departament>HR</Departament>
+    <Salariu>5000</Salariu>
+  </Angajat>
+  <Angajat>
+    <Nume>Andrei</Nume>
+    <Departament>IT</Departament>
+    <Salariu>7200</Salariu>
+  </Angajat>
+</Angajati>
