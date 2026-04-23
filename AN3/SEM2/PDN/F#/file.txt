@@ -1,0 +1,11 @@
+dotnet new sln -n Laborator14
+dotnet new classlib -lang C# -n CSharpLib
+dotnet new console -lang F# -n FSharpApp
+dotnet sln add CSharpLib/CSharpLib.csproj
+dotnet sln add FSharpApp/FSharpApp.fsproj
+dotnet add FSharpApp/FSharpApp.fsproj reference CSharpLib/CSharpLib.csproj
+
+---------------------------------------------------------------------------
+dotnet fsi program.fsx
+dotnet run --project FSharpApp
+dotnet run --project CSharpApp2

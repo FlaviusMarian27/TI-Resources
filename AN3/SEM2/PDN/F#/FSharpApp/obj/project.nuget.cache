@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "LAXttNhd3Tk=",
+  "success": true,
+  "projectFilePath": "/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpApp/FSharpApp.fsproj",
+  "expectedPackageFiles": [
+    "/home/flavius/.nuget/packages/fsharp.core/10.0.106/fsharp.core.10.0.106.nupkg.sha512"
+  ],
+  "logs": []
+}

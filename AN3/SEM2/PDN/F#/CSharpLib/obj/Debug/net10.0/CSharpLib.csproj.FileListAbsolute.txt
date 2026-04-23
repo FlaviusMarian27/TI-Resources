@@ -1,0 +1,12 @@
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/bin/Debug/net10.0/CSharpLib.deps.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/bin/Debug/net10.0/CSharpLib.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/bin/Debug/net10.0/CSharpLib.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.GeneratedMSBuildEditorConfig.editorconfig
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.AssemblyInfoInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.AssemblyInfo.cs
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.csproj.CoreCompileInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.sourcelink.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/refint/CSharpLib.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/CSharpLib.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/CSharpLib/obj/Debug/net10.0/ref/CSharpLib.dll

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Angajat>
+    <Nume>Flavius</Nume>
+    <Departament>IT</Departament>
+    <Salariu>11000</Salariu>
+  </Angajat>
+  <Angajat>
+    <Nume>Andrei</Nume>
+    <Departament>IT</Departament>
+    <Salariu>8500</Salariu>
+  </Angajat>
+  <Angajat>
+    <Nume>Maria</Nume>
+    <Departament>HR</Departament>
+    <Salariu>5000</Salariu>
+  </Angajat>
+  <Angajat>
+    <Nume>Ioana</Nume>
+    <Departament>Design</Departament>
+    <Salariu>7000</Salariu>
+  </Angajat>
+</Root>

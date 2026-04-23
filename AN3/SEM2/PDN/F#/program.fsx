@@ -1,6 +1,9 @@
-module Program
+#r "nuget: FSharp.Data"
+//module Program
 
 open System
+open System.IO
+open FSharp.Data
 
 //============================Laboratorul 8===========================
 
@@ -190,3 +193,77 @@ let dataInvalida = parseDate "Salut!"
 
 printfn "Corect: %A" dataValida
 printfn "Incorect: %A" dataInvalida
+
+//============================Laboratorul 13===========================
+printfn ""
+printfn "============================Laboratorul 13==========================="
+printfn ""
+
+printfn "-------------Problema 1-------------"
+//1. Creați un fișier CSV care conține informații despre produse 
+//(nume, categorie, preț) și utilizați funcțiile din modulele Seq, 
+//List sau Array pentru a calcula prețul mediu al produselor pentru 
+//fiecare categorie.
+type Produs = {
+    Nume: string
+    Categorie: string
+    Pret: float
+}
+
+let citesteProdus filePath =
+    File.ReadAllLines(filePath)
+    |> Array.skip 1
+    |> Array.map (fun linie ->
+        let coloane = linie.Split(',')
+        {
+            Nume = coloane.[0]
+            Categorie = coloane.[1]
+            Pret = float coloane.[2]
+        }
+    )
+    |> Array.toList
+
+let listaProduse = citesteProdus "produse.csv"
+
+let mediePeCategorie = 
+    listaProduse
+    |> List.groupBy (fun p -> p.Categorie)
+    |> List.map (fun (categorie,produseDinGrup) ->
+        let media = produseDinGrup |> List.averageBy (fun p -> p.Pret)
+        (categorie,media) 
+    )
+
+printfn "Pretul mediu pe categorii:"
+mediePeCategorie 
+|> List.iter (fun (categorie, medie) ->
+    printfn " - Categoria: %s -> Pret Mediu: %.2f RON" categorie medie
+)
+
+printfn ""
+printfn "-------------Problema 2-------------"
+//2. Având  un  fișier  XML  care  conține  date  despre  angajați  (nume,  
+//departament, salariu),  utilizați  biblioteca  FSharp.Data  pentru  a  
+//afișa  numele  și  salariul angajaților din departamentul IT. 
+type AngajatiSchema = XmlProvider<"angajati.xml">
+
+let date = AngajatiSchema.Load("angajati.xml")
+
+let angajatiIT = 
+    date.Angajats
+    |> Array.filter (fun a -> a.Departament = "IT")
+
+printfn "Angajatii din departamentul IT sunt:"
+angajatiIT 
+|> Array.iter (fun a -> 
+    printfn " - %s are salariul de %d RON" a.Nume a.Salariu
+)
+
+//============================Laboratorul 14===========================
+printfn ""
+printfn "============================Laboratorul 14==========================="
+printfn ""
+
+printfn "-------------Problema 1-------------"
+
+printfn ""
+printfn "-------------Problema 2-------------"

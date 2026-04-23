@@ -1,0 +1,14 @@
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.fsproj.AssemblyReference.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.AssemblyInfoInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.AssemblyInfo.fs
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.fsproj.CoreCompileInputs.cache
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.sourcelink.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/bin/Debug/net10.0/FSharpLib2.deps.json
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/bin/Debug/net10.0/FSharpLib2.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/bin/Debug/net10.0/FSharpLib2.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/bin/Debug/net10.0/FSharpLib2.xml
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/refint/FSharpLib2.dll
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.xml
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/FSharpLib2.pdb
+/home/flavius/Documents/TI-Resources/AN3/SEM2/PDN/F#/FSharpLib2/obj/Debug/net10.0/ref/FSharpLib2.dll

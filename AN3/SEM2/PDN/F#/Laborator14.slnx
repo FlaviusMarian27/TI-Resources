@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CSharpApp2/CSharpApp2.csproj" />
+  <Project Path="CSharpLib/CSharpLib.csproj" />
+  <Project Path="FSharpApp/FSharpApp.fsproj" />
+  <Project Path="FSharpLib2/FSharpLib2.fsproj" />
+</Solution>
