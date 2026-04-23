@@ -8,7 +8,6 @@ let main argv =
     
     let textulMeu = "Salutari din C# si F#!"
     
-    // Apelăm funcția din C#
     let textInversat = StringUtils.ReverseString(textulMeu)
     
     printfn "Textul original: %s" textulMeu

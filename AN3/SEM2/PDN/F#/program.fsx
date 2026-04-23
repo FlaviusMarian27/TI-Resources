@@ -257,13 +257,3 @@ angajatiIT
 |> Array.iter (fun a -> 
     printfn " - %s are salariul de %d RON" a.Nume a.Salariu
 )
-
-//============================Laboratorul 14===========================
-printfn ""
-printfn "============================Laboratorul 14==========================="
-printfn ""
-
-printfn "-------------Problema 1-------------"
-
-printfn ""
-printfn "-------------Problema 2-------------"
