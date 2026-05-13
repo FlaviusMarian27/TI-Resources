@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("FSharpLib2")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ba34a11c6a81c4d2e05df5ca7bebf4d51498683")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b1f58fecee3a10b2439e7d91984d16f0a6b1f27")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("FSharpLib2")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("FSharpLib2")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]
