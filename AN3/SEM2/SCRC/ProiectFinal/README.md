@@ -342,9 +342,13 @@ Am activat procesul OSPF și am anunțat strict rețeaua de legătură WAN (folo
 ```cisco
 enable
 configure terminal
+
+! Activam procesul OSPF 1
 router ospf 1
- network 220.110.0.0 0.0.0.3 area 0
- exit
+! Anuntam reteaua legaturii WAN catre ISP
+network 220.110.0.0 0.0.0.3 area 0
+exit
+
 end
 copy running-config startup-config
 ```
@@ -352,13 +356,18 @@ copy running-config startup-config
 ### 2. Configurarea OSPF pe Router_ISP
 Pe routerul furnizorului am anunțat atât legătura WAN, cât și rețeaua Internetului simulat (10.0.0.0/8 cu Wildcard 0.255.255.255), permițând astfel propagarea rutei externe către routerul firmei.
 
-```
+```cisco
 enable
 configure terminal
+
+! Activam procesul OSPF 1
 router ospf 1
- network 220.110.0.0 0.0.0.3 area 0
- network 10.0.0.0 0.255.255.255 area 0
- exit
+! Anuntam reteaua legaturii WAN
+network 220.110.0.0 0.0.0.3 area 0
+! Anuntam reteaua in care se afla Server-Extern
+network 10.0.0.0 0.255.255.255 area 0
+exit
+
 end
 copy running-config startup-config
 ```
