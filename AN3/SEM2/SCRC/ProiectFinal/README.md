@@ -160,7 +160,7 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
 
 ---
 
-## Faza 3: Inter-VLAN Routing (Router-on-a-Stick)
+# Faza 3: Inter-VLAN Routing (Router-on-a-Stick)
 
 [cite_start]**Obiectiv:** Permiterea comunicării între diferitele VLAN-uri prin intermediul unei singure conexiuni fizice la router, folosind tehnica "Router-on-a-Stick" [cite: 26-27].
 
