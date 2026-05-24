@@ -448,3 +448,111 @@ copy running-config startup-config
 S-a inițiat un test de conectivitate *(Ping)* de pe PC1-IT (IP privat: *192.168.10.2*) către *Server-Extern* (IP public: *10.0.0.10*). Răspunsul favorabil confirmă că routerul preia pachetele, le traduce corect și le rutează înapoi către sursă.
 
 ---
+
+# Faza 8: Securitate și Reguli de Acces (ACL-uri)
+
+**Obiectiv:** Implementarea politicilor de securitate între VLAN-uri folosind liste de acces extinse (Extended ACLs) pe router, pentru a restrânge traficul nedorit și a permite doar serviciile necesare.
+
+### 1. Definirea Politicilor pentru Departamentul HR (ACL 120)
+Conform cerințelor, departamentul HR nu trebuie să aibă acces la rețeaua IT, dar trebuie să poată comunica cu restul resurselor (Servere, Guest, Internet).
+
+```cisco
+enable
+configure terminal
+
+! =========================================================
+! ACL 120 pentru HR (VLAN 20)
+! =========================================================
+! Regula 5: HR nu acceseaza IT
+access-list 120 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+
+! Permitem restul traficului (HR poate accesa servere, net, guest, etc.)
+access-list 120 permit ip any any
+
+! =========================================================
+! ACL 130 pentru GUEST (VLAN 30)
+! =========================================================
+! Regula 1: Guest nu acceseaza IT
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+
+! Regula 2: Guest nu acceseaza HR
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.20.0 0.0.0.255
+
+! Regula 3: Guest are acces la server DOAR prin HTTP (port 80)
+access-list 130 permit tcp 192.168.30.0 0.0.0.255 host 192.168.40.10 eq 80
+
+! Extra (necesar tehnic): Guest are voie DNS (port 53) ca sa traduca numele site-ului
+access-list 130 permit udp 192.168.30.0 0.0.0.255 host 192.168.40.10 eq 53
+
+! Regula 4: Blocam restul traficului spre rețeaua de servere (Asta blocheaza implicit PING-ul)
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.40.0 0.0.0.255
+
+! Regula 7: Guest are acces la Internet (permitem orice altceva a ramas)
+access-list 130 permit ip any any
+
+! =========================================================
+! Aplicarea listelor "la usa" routerului (pe subinterfețe)
+! =========================================================
+
+! Aplicam "paza" la intrarea traficului dinspre HR
+interface gig0/0.20
+ip access-group 120 in
+exit
+
+! Aplicam "paza" la intrarea traficului dinspre GUEST
+interface gig0/0.30
+ip access-group 130 in
+exit
+
+! Regula 6: IT are acces complet (nu punem niciun ACL pe gig0/0.10)
+
+end
+copy running-config startup-config
+```
+
+### 2. Izolarea Vizitatorilor / GUEST (ACL 130)
+
+Rețeaua destinată oaspeților este cea mai restrictivă — nu au acces în rețelele angajaților (IT și HR) și au acces extrem de limitat la serverul intern.
+
+#### Logica regulilor (în ordine)
+
+| # | Regulă | Detaliu |
+|---|---|---|
+| 1 | **Blocare către departamente** | Respinge orice trafic dinspre Guest către IT și HR |
+| 2 | **Permisiune HTTP (Web)** | Permite TCP port 80 doar către `192.168.40.10` (serverul intern) |
+| 3 | **Permisiune DNS** | Permite UDP port 53 către `192.168.40.10` — necesar pentru rezolvarea `www.firma.local` |
+| 4 | **Blocare generală spre Servere** | Taie orice alt trafic dinspre Guest către `192.168.40.0` (inclusiv Ping) |
+| 5 | **Liber spre Internet** | Tot ce nu a fost interzis mai sus este permis |
+
+### 3. Configurare ACL 130
+
+```cisco
+! Definim lista 130 pentru GUEST
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.20.0 0.0.0.255
+access-list 130 permit tcp 192.168.30.0 0.0.0.255 host 192.168.40.10 eq 80
+access-list 130 permit udp 192.168.30.0 0.0.0.255 host 192.168.40.10 eq 53
+access-list 130 deny ip 192.168.30.0 0.0.0.255 192.168.40.0 0.0.0.255
+access-list 130 permit ip any any
+```
+
+### 4. Aplicarea regulilor „La Ușă"
+
+Listele de acces sunt inutile dacă nu sunt atribuite unei interfețe. Regulile se aplică pe subinterfețele corespunzătoare fiecărui VLAN, în direcția **IN** (la intrare) — routerul verifică și distruge pachetele interzise **exact în momentul în care acestea intră în router**, fără să le mai lase să circule prin restul rețelei.
+
+> ⚠️ Rețeaua IT nu are niciun ACL aplicat, bucurându-se de acces complet conform cerințelor.
+
+```cisco
+! Aplicam filtrul pe "teava" departamentului HR
+interface gig0/0.20
+ip access-group 120 in
+exit
+
+! Aplicam filtrul pe "teava" vizitatorilor
+interface gig0/0.30
+ip access-group 130 in
+exit
+
+end
+copy running-config startup-config
+```
