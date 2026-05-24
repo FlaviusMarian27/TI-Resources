@@ -272,7 +272,63 @@ exit
 
 end
 copy running-config startup-config
+```
+
+---
+
+## Faza 5: Configurarea Rețelei Externe (ISP) și a Conexiunii WAN
+
+**Obiectiv:** Stabilirea legăturii fizice și alocarea adreselor IP publice pentru conexiunea dintre rețeaua firmei și furnizorul de Internet, inclusiv configurarea adresei pentru Serverul Extern.
+
+### 1. Configurarea interfeței WAN pe Router_Firma
+Am configurat portul Serial ce face legătura cu ISP-ul cu prima adresă IP din clasa publică alocată (`220.110.0.0/30`):
+
+```cisco
+enable
+configure terminal
+
+interface serial0/1/0
+ip address 220.110.0.1 255.255.255.252
+no shutdown
+exit
+
+end
+copy running-config startup-config
+```
+
+### 2. Configurarea interfețelor pe Router_ISP
+Pe routerul furnizorului am setat capătul opus al legăturii WAN (inclusiv stabilirea ratei de ceas clock rate 64000, Router_ISP fiind echipamentul DCE) și interfața LAN către rețeaua de Internet simulată (10.0.0.0/8):
 
 ```
+enable
+configure terminal
+
+! Configurarea interfeței WAN (spre Firmă)
+interface serial0/1/0
+ip address 220.110.0.2 255.255.255.252
+clock rate 64000
+no shutdown
+exit
+
+! Configurarea interfeței LAN (spre Server-Extern)
+interface gig0/1
+ip address 10.0.0.1 255.0.0.0
+no shutdown
+exit
+
+end
+copy running-config startup-config
+```
+### 3. Configurarea Serverului Extern
+
+Pentru a simula o resursă din Internet, Serverul Extern a primit o adresă IP statică din clasa publică alocată de ISP:
+
+| Parametru | Valoare |
+|---|---|
+| IPv4 Address | `10.0.0.10` |
+| Subnet Mask | `255.0.0.0` |
+| Default Gateway | `10.0.0.1` |
+
+**Verificare:** Link-ul fizic (cablul Serial) a devenit activ (`up/up`), confirmând stabilitatea conexiunii dintre Firmă și ISP.
 
 ---
