@@ -376,3 +376,75 @@ copy running-config startup-config
     * Afișarea tabelei de rutare pe Router_Firma (folosind comanda show ip route) a validat succesul configurării. Ruta 10.0.0.0/8 apare învățată prin protocolul OSPF (notată cu litera O), iar adiacența între vecini a fost stabilită cu succes (LOADING to FULL).
 
 ---
+
+# Faza 7: NAT Overload / PAT (Network Address Translation)
+
+**Obiectiv:** Configurarea traducerii adreselor de rețea (NAT) pe `Router_Firma` pentru a permite stațiilor cu adrese IP private din VLAN-urile interne să comunice cu exteriorul (Internetul).
+
+### 1. Definirea interfețelor (Inside / Outside)
+Am specificat direcția traficului marcând interfața WAN ca ieșire (`outside`) și subinterfețele VLAN-urilor ca intrare (`inside`).
+
+```cisco
+enable
+configure terminal
+
+! 1. Definim interfața de iesire spre Internet (Outside)
+interface serial0/1/0
+ip nat outside
+exit
+
+! 2. Definim interfețele de intrare dinspre firmă (Inside)
+interface gig0/0.10
+ip nat inside
+exit
+
+interface gig0/0.20
+ip nat inside
+exit
+
+interface gig0/0.30
+ip nat inside
+exit
+
+interface gig0/0.40
+ip nat inside
+exit
+
+! 3. Creăm lista de acces (ACL 1) cu rețelele care au voie să fie traduse
+! Folosim wildcard mask (inversul lui 255.255.255.0)
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+access-list 1 permit 192.168.30.0 0.0.0.255
+access-list 1 permit 192.168.40.0 0.0.0.255
+
+! 4. Activăm regula generală de NAT Overload
+ip nat inside source list 1 interface serial0/1/0 overload
+
+! Ieșim și salvăm
+end
+copy running-config startup-config
+```
+
+### 2. Crearea listei de acces pentru NAT (ACL)
+*   Am creat o listă de acces standard (ACL 1) care definește exact ce clase de IP-uri private sunt autorizate să iasă pe Internet (VLAN 10, 20, 30 și 40), folosind wildcard mask.
+
+```cisco CLI
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+access-list 1 permit 192.168.30.0 0.0.0.255
+access-list 1 permit 192.168.40.0 0.0.0.255
+```
+
+### 3. Activarea PAT (Port Address Translation)
+* Am legat lista de acces (traficul permis) de interfața externă (serial0/1/0), adăugând parametrul overload pentru a masca toate adresele interne sub singura adresă IP publică disponibilă.
+
+```cisco CLI
+ip nat inside source list 1 interface serial0/1/0 overload
+exit
+copy running-config startup-config
+```
+
+**Verificare:**
+S-a inițiat un test de conectivitate *(Ping)* de pe PC1-IT (IP privat: *192.168.10.2*) către *Server-Extern* (IP public: *10.0.0.10*). Răspunsul favorabil confirmă că routerul preia pachetele, le traduce corect și le rutează înapoi către sursă.
+
+---
