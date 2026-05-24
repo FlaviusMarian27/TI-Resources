@@ -186,33 +186,33 @@ configure terminal
 ! --- 1. Activarea portului fizic magistral ---
 ! Subinterfețele nu pot funcționa dacă interfața principală este oprită
 interface gig0/0
- no shutdown
- exit
+no shutdown
+exit
 
 ! --- 2. Configurarea Default Gateway-urilor pentru fiecare VLAN ---
 ! Gateway pentru VLAN 10 - Departamentul IT
 interface gig0/0.10
- encapsulation dot1Q 10
- ip address 192.168.10.1 255.255.255.0
- exit
+encapsulation dot1Q 10
+ip address 192.168.10.1 255.255.255.0
+exit
 
 ! Gateway pentru VLAN 20 - Departamentul HR
 interface gig0/0.20
- encapsulation dot1Q 20
- ip address 192.168.20.1 255.255.255.0
- exit
+encapsulation dot1Q 20
+ip address 192.168.20.1 255.255.255.0
+exit
 
 ! Gateway pentru VLAN 30 - Rețeaua GUEST
 interface gig0/0.30
- encapsulation dot1Q 30
- ip address 192.168.30.1 255.255.255.0
- exit
+encapsulation dot1Q 30
+ip address 192.168.30.1 255.255.255.0
+exit
 
 ! Gateway pentru VLAN 40 - Zona SERVERS
 interface gig0/0.40
- encapsulation dot1Q 40
- ip address 192.168.40.1 255.255.255.0
- exit
+encapsulation dot1Q 40
+ip address 192.168.40.1 255.255.255.0
+exit
 
 ! --- 3. Salvarea permanentă a setărilor ---
 end
