@@ -1,4 +1,4 @@
-## Pasul 1: Topologia Fizică și Conectarea Echipamentelor
+# Pasul 1: Topologia Fizică și Conectarea Echipamentelor
 
 [cite_start]**Obiectiv:** Implementarea topologiei hardware conform scenariului, delimitând rețeaua internă a firmei de rețeaua externă (ISP / Internet)[cite: 95, 103].
 
@@ -31,8 +31,9 @@
 * S-a folosit cablu **Copper Straight-Through** (negru continuu) pentru conexiunile locale LAN (de mare viteză).
 * Pentru conexiunea WAN dintre rețeaua firmei și ISP, routerele au fost oprite temporar pentru instalarea modulelor hardware **HWIC-2T**. Conexiunea s-a realizat cu un cablu **Serial DCE**, inițiat dinspre `Router_ISP` spre `Router_Firma`, stabilind astfel ISP-ul ca echipament care va dicta lățimea de bandă (clock rate).
 
+---
 
-## Faza 2: Configurarea Switch-urilor (VLAN și Trunking)
+# Faza 2: Configurarea Switch-urilor (VLAN și Trunking)
 
 [cite_start]**Obiectiv:** Segmentarea logică a rețelei fizice în 4 rețele virtuale izolate (VLAN-uri) pentru a grupa echipamentele pe departamente [cite: 96, 107-108]. [cite_start]Configurarea porturilor în modurile **Access** (pentru stațiile finale) și **Trunk** (pentru legăturile dintre echipamentele de rețea) [cite: 112-117].
 
