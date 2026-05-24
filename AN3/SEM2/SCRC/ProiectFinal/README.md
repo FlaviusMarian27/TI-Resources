@@ -14,7 +14,7 @@
   * 1x Server - `Server-Extern`
 
 ### 2. Tabelul Conexiunilor Fizice
-[cite_start]Toate legăturile au fost realizate exact în următoarea ordine, respectând porturile specifice pentru a facilita configurarea ulterioară [cite: 113-117]:
+* Toate legăturile au fost realizate exact în următoarea ordine, respectând porturile specifice pentru a facilita configurarea ulterioară:
 
 | Ordine | Echipament Sursă | Port Sursă | Echipament Destinație | Port Destinație | Tip Cablu | Observații |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -48,7 +48,7 @@
 
 ### 2. Ghid de Configurare Pas cu Pas
 
-Oricine dorește să replice această configurație trebuie să deschidă consola CLI a fiecărui switch și să introducă blocurile de comenzi de mai jos.
+* Oricine dorește să replice această configurație trebuie să deschidă consola CLI a fiecărui switch și să introducă blocurile de comenzi de mai jos.
 
 #### 🖥️ Pasul A: Configurația pe Switch-ul 1 (SW1)
 Pe acest switch creăm cele 4 VLAN-uri, asociem portul `Fa0/1` pentru PC-ul de IT, portul `Fa0/2` pentru PC-ul de HR și deschidem portul de Trunk `Fa0/3` către celălalt switch.
@@ -140,9 +140,9 @@ copy running-config startup-config
 ```
 #### 3. Comenzi de Verificare (Cum validăm munca?)
 
-După rularea comenzilor de mai sus, oricine poate verifica dacă configurarea a fost făcută corect folosind următoarele comenzi în modul privilegiat (Switch#):
+* După rularea comenzilor de mai sus, oricine poate verifica dacă configurarea a fost făcută corect folosind următoarele comenzi în modul privilegiat (Switch#):
 
-După rularea comenzilor de mai sus, verifică configurarea în modul privilegiat (`Switch#`):
+* După rularea comenzilor de mai sus, verifică configurarea în modul privilegiat (`Switch#`):
 
 ##### 1. `show vlan brief`
 
@@ -162,7 +162,7 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
 
 # Faza 3: Inter-VLAN Routing (Router-on-a-Stick)
 
-[cite_start]**Obiectiv:** Permiterea comunicării între diferitele VLAN-uri prin intermediul unei singure conexiuni fizice la router, folosind tehnica "Router-on-a-Stick" [cite: 26-27].
+**Obiectiv:** Permiterea comunicării între diferitele VLAN-uri prin intermediul unei singure conexiuni fizice la router, folosind tehnica "Router-on-a-Stick".
 
 ---
 
@@ -175,7 +175,7 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
 
 ### 2. Ghid de Configurare Pas cu Pas
 
-**Atenție:** Atunci când accesați CLI-ul unui router nou și apare mesajul `Would you like to enter the initial configuration dialog? [yes/no]:`, tastați mereu **no** pentru a putea face configurările manual.
+* **Atenție:** Atunci când accesați CLI-ul unui router nou și apare mesajul `Would you like to enter the initial configuration dialog? [yes/no]:`, tastați mereu **no** pentru a putea face configurările manual.
 
 #### 🖥️ Configurația pe `Router_Firma`
 
@@ -232,7 +232,7 @@ copy running-config startup-config
 **Obiectiv:** Configurarea `Server-Intern` pentru a oferi servicii web și rezoluție de nume (DNS), precum și alocarea dinamică de adrese IP (DHCP) pentru stațiile din rețea, folosind funcția de DHCP Relay pe router.
 
 ### 1. Configurarea de bază a Serverului Intern
-Deoarece acest server oferă servicii esențiale, i-a fost alocat un IP static în VLAN 40:
+* Deoarece acest server oferă servicii esențiale, i-a fost alocat un IP static în VLAN 40:
 * **IP Address:** `192.168.40.10`
 * **Subnet Mask:** `255.255.255.0`
 * **Default Gateway:** `192.168.40.1`
@@ -243,7 +243,7 @@ Deoarece acest server oferă servicii esențiale, i-a fost alocat un IP static �
 * **DNS:** A fost creat un *A Record* care mapează numele `www.firma.local` la adresa IP a serverului (`192.168.40.10`).
 
 ### 3. Configurarea Bazinelor DHCP (DHCP Pools)
-Pe server au fost create 3 bazine distincte pentru a oferi IP-uri automate departamentelor:
+* Pe server au fost create 3 bazine distincte pentru a oferi IP-uri automate departamentelor:
 
 | Nume Pool | Default Gateway | DNS Server | Start IP | Subnet Mask | Max Users |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -252,7 +252,7 @@ Pe server au fost create 3 bazine distincte pentru a oferi IP-uri automate depar
 | **GUEST_POOL**| 192.168.30.1 | 192.168.40.10 | 192.168.30.2 | 255.255.255.0 | 100 |
 
 ### 4. Configurarea DHCP Relay (IP Helper) pe Router
-Deoarece broadcast-urile DHCP nu trec de la sine dintr-un VLAN în altul (clienții fiind în VLAN 10, 20, 30, iar serverul în VLAN 40), am configurat funcția de DHCP Relay pe subinterfețele routerului `Router_Firma`:
+* Deoarece broadcast-urile DHCP nu trec de la sine dintr-un VLAN în altul (clienții fiind în VLAN 10, 20, 30, iar serverul în VLAN 40), am configurat funcția de DHCP Relay pe subinterfețele routerului `Router_Firma`:
 
 ```cisco
 enable
@@ -281,7 +281,7 @@ copy running-config startup-config
 **Obiectiv:** Stabilirea legăturii fizice și alocarea adreselor IP publice pentru conexiunea dintre rețeaua firmei și furnizorul de Internet, inclusiv configurarea adresei pentru Serverul Extern.
 
 ### 1. Configurarea interfeței WAN pe Router_Firma
-Am configurat portul Serial ce face legătura cu ISP-ul cu prima adresă IP din clasa publică alocată (`220.110.0.0/30`):
+* Am configurat portul Serial ce face legătura cu ISP-ul cu prima adresă IP din clasa publică alocată (`220.110.0.0/30`):
 
 ```cisco
 enable
@@ -297,7 +297,7 @@ copy running-config startup-config
 ```
 
 ### 2. Configurarea interfețelor pe Router_ISP
-Pe routerul furnizorului am setat capătul opus al legăturii WAN (inclusiv stabilirea ratei de ceas clock rate 64000, Router_ISP fiind echipamentul DCE) și interfața LAN către rețeaua de Internet simulată (10.0.0.0/8):
+* Pe routerul furnizorului am setat capătul opus al legăturii WAN (inclusiv stabilirea ratei de ceas clock rate 64000, Router_ISP fiind echipamentul DCE) și interfața LAN către rețeaua de Internet simulată (10.0.0.0/8):
 
 ```
 enable
@@ -321,7 +321,7 @@ copy running-config startup-config
 ```
 ### 3. Configurarea Serverului Extern
 
-Pentru a simula o resursă din Internet, Serverul Extern a primit o adresă IP statică din clasa publică alocată de ISP:
+* Pentru a simula o resursă din Internet, Serverul Extern a primit o adresă IP statică din clasa publică alocată de ISP:
 
 | Parametru | Valoare |
 |---|---|
@@ -445,7 +445,7 @@ copy running-config startup-config
 ```
 
 **Verificare:**
-S-a inițiat un test de conectivitate *(Ping)* de pe PC1-IT (IP privat: *192.168.10.2*) către *Server-Extern* (IP public: *10.0.0.10*). Răspunsul favorabil confirmă că routerul preia pachetele, le traduce corect și le rutează înapoi către sursă.
+* S-a inițiat un test de conectivitate *(Ping)* de pe PC1-IT (IP privat: *192.168.10.2*) către *Server-Extern* (IP public: *10.0.0.10*). Răspunsul favorabil confirmă că routerul preia pachetele, le traduce corect și le rutează înapoi către sursă.
 
 ---
 
