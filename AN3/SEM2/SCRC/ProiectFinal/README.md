@@ -454,7 +454,7 @@ S-a inițiat un test de conectivitate *(Ping)* de pe PC1-IT (IP privat: *192.168
 **Obiectiv:** Implementarea politicilor de securitate între VLAN-uri folosind liste de acces extinse (Extended ACLs) pe router, pentru a restrânge traficul nedorit și a permite doar serviciile necesare.
 
 ### 1. Definirea Politicilor pentru Departamentul HR (ACL 120)
-Conform cerințelor, departamentul HR nu trebuie să aibă acces la rețeaua IT, dar trebuie să poată comunica cu restul resurselor (Servere, Guest, Internet).
+* Conform cerințelor, departamentul HR nu trebuie să aibă acces la rețeaua IT, dar trebuie să poată comunica cu restul resurselor (Servere, Guest, Internet).
 
 ```cisco
 enable
@@ -512,7 +512,7 @@ copy running-config startup-config
 
 ### 2. Izolarea Vizitatorilor / GUEST (ACL 130)
 
-Rețeaua destinată oaspeților este cea mai restrictivă — nu au acces în rețelele angajaților (IT și HR) și au acces extrem de limitat la serverul intern.
+* Rețeaua destinată oaspeților este cea mai restrictivă — nu au acces în rețelele angajaților (IT și HR) și au acces extrem de limitat la serverul intern.
 
 #### Logica regulilor (în ordine)
 
@@ -538,7 +538,7 @@ access-list 130 permit ip any any
 
 ### 4. Aplicarea regulilor „La Ușă"
 
-Listele de acces sunt inutile dacă nu sunt atribuite unei interfețe. Regulile se aplică pe subinterfețele corespunzătoare fiecărui VLAN, în direcția **IN** (la intrare) — routerul verifică și distruge pachetele interzise **exact în momentul în care acestea intră în router**, fără să le mai lase să circule prin restul rețelei.
+* Listele de acces sunt inutile dacă nu sunt atribuite unei interfețe. Regulile se aplică pe subinterfețele corespunzătoare fiecărui VLAN, în direcția **IN** (la intrare) — routerul verifică și distruge pachetele interzise **exact în momentul în care acestea intră în router**, fără să le mai lase să circule prin restul rețelei.
 
 > ⚠️ Rețeaua IT nu are niciun ACL aplicat, bucurându-se de acces complet conform cerințelor.
 
@@ -581,4 +581,4 @@ copy running-config startup-config
 
 ### 5. **Concluzie Testare**
 
-Testele efectuate din command prompt și browser confirmă că izolarea funcționează perfect: Ping-urile interzise primesc răspunsul Destination host unreachable direct de la gateway, în timp ce navigarea web și accesul spre Internet au rămas complet funcționale.
+* Testele efectuate din command prompt și browser confirmă că izolarea funcționează perfect: Ping-urile interzise primesc răspunsul Destination host unreachable direct de la gateway, în timp ce navigarea web și accesul spre Internet au rămas complet funcționale.
