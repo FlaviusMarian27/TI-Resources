@@ -145,15 +145,15 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
 
 ##### 1. `show vlan brief`
 
-    **Rezultat așteptat:**
-    - Cele 4 VLAN-uri (10, 20, 30, 40) apar cu statusul `active`
-    - Pe SW1 → porturile VLAN 10 și 20 sunt vizibile
-    - Pe SW2 → porturile VLAN 30 și 40 sunt vizibile
-    - ⚠️ Porturile configurate ca Trunk **vor dispărea** din această listă — comportament normal
+**Rezultat așteptat:**
+- Cele 4 VLAN-uri (10, 20, 30, 40) apar cu statusul `active`
+- Pe SW1 → porturile VLAN 10 și 20 sunt vizibile
+- Pe SW2 → porturile VLAN 30 și 40 sunt vizibile
+- ⚠️ Porturile configurate ca Trunk **vor dispărea** din această listă — comportament normal
 
 ##### 2. `show interfaces trunk`
 
-    **Rezultat așteptat:**
-    - Afișează interfețele Trunk active cu encapsularea `802.1q`
-    - SW1: `Fa0/3`
-    - SW2: `Fa0/1` și `Gig0/1`
+**Rezultat așteptat:**
+- Afișează interfețele Trunk active cu encapsularea `802.1q`
+- SW1: `Fa0/3`
+- SW2: `Fa0/1` și `Gig0/1`
