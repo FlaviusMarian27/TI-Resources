@@ -224,3 +224,55 @@ copy running-config startup-config
 * **Rezultat așteptat:**
     * Interfața `GigabitEthernet0/0` cu statusul `up/up`
     * Cele 4 subinterfețe (`.10`, `.20`, `.30`, `.40`) fiecare cu IP-ul atribuit și statusul `up/up`
+
+---
+
+# Faza 4: Configurarea Serviciilor Interne (DHCP, DNS, HTTP)
+
+**Obiectiv:** Configurarea `Server-Intern` pentru a oferi servicii web și rezoluție de nume (DNS), precum și alocarea dinamică de adrese IP (DHCP) pentru stațiile din rețea, folosind funcția de DHCP Relay pe router.
+
+### 1. Configurarea de bază a Serverului Intern
+Deoarece acest server oferă servicii esențiale, i-a fost alocat un IP static în VLAN 40:
+* **IP Address:** `192.168.40.10`
+* **Subnet Mask:** `255.255.255.0`
+* **Default Gateway:** `192.168.40.1`
+* **DNS Server:** `192.168.40.10` (serverul acționează ca propriul său DNS)
+
+### 2. Activarea Serviciilor Web și DNS
+* **HTTP/HTTPS:** Serviciile au fost activate (On) pentru a permite accesarea paginii web a firmei.
+* **DNS:** A fost creat un *A Record* care mapează numele `www.firma.local` la adresa IP a serverului (`192.168.40.10`).
+
+### 3. Configurarea Bazinelor DHCP (DHCP Pools)
+Pe server au fost create 3 bazine distincte pentru a oferi IP-uri automate departamentelor:
+
+| Nume Pool | Default Gateway | DNS Server | Start IP | Subnet Mask | Max Users |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **IT_POOL** | 192.168.10.1 | 192.168.40.10 | 192.168.10.2 | 255.255.255.0 | 100 |
+| **HR_POOL** | 192.168.20.1 | 192.168.40.10 | 192.168.20.2 | 255.255.255.0 | 100 |
+| **GUEST_POOL**| 192.168.30.1 | 192.168.40.10 | 192.168.30.2 | 255.255.255.0 | 100 |
+
+### 4. Configurarea DHCP Relay (IP Helper) pe Router
+Deoarece broadcast-urile DHCP nu trec de la sine dintr-un VLAN în altul (clienții fiind în VLAN 10, 20, 30, iar serverul în VLAN 40), am configurat funcția de DHCP Relay pe subinterfețele routerului `Router_Firma`:
+
+```cisco
+enable
+configure terminal
+
+interface gig0/0.10
+ip helper-address 192.168.40.10
+exit
+
+interface gig0/0.20
+ip helper-address 192.168.40.10
+exit
+
+interface gig0/0.30
+ip helper-address 192.168.40.10
+exit
+
+end
+copy running-config startup-config
+
+```
+
+---
