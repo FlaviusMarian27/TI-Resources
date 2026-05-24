@@ -35,14 +35,14 @@
 
 # Faza 2: Configurarea Switch-urilor (VLAN și Trunking)
 
-[cite_start]**Obiectiv:** Segmentarea logică a rețelei fizice în 4 rețele virtuale izolate (VLAN-uri) pentru a grupa echipamentele pe departamente [cite: 96, 107-108]. [cite_start]Configurarea porturilor în modurile **Access** (pentru stațiile finale) și **Trunk** (pentru legăturile dintre echipamentele de rețea) [cite: 112-117].
+**Obiectiv:** Segmentarea logică a rețelei fizice în 4 rețele virtuale izolate (VLAN-uri) pentru a grupa echipamentele pe departamente. Configurarea porturilor în modurile **Access** (pentru stațiile finale) și **Trunk** (pentru legăturile dintre echipamentele de rețea).
 
 ---
 
 ### 1. Noțiuni Teoretice pe Scurt
-* **VLAN (Virtual Local Area Network):** O tehnologie care permite "felierea" unui switch fizic în mai multe switch-uri virtuale independente. [cite_start]Calculatoarele din VLAN-uri diferite nu pot comunica direct între ele la nivelul Switch-ului, oferind securitate nativă [cite: 96, 107-108].
-* **Port de Access:** Un port configurat să aparțină unui singur VLAN. [cite_start]Se folosește exclusiv pentru conectarea dispozitivelor finale (PC-uri, Imprimante, Servere) [cite: 114-115].
-* **Port de Trunk:** O „autostradă” de date. [cite_start]Un port special care permite trecerea pachetelor din toate VLAN-urile simultan prin același cablu fizic, folosind tag-uri de identificare (standardul 802.1Q) [cite: 116-117].
+* **VLAN (Virtual Local Area Network):** O tehnologie care permite "felierea" unui switch fizic în mai multe switch-uri virtuale independente. Calculatoarele din VLAN-uri diferite nu pot comunica direct între ele la nivelul Switch-ului, oferind securitate nativă.
+* **Port de Access:** Un port configurat să aparțină unui singur VLAN. Se folosește exclusiv pentru conectarea dispozitivelor finale (PC-uri, Imprimante, Servere).
+* **Port de Trunk:** O „autostradă” de date. Un port special care permite trecerea pachetelor din toate VLAN-urile simultan prin același cablu fizic, folosind tag-uri de identificare (standardul 802.1Q).
 
 ---
 
