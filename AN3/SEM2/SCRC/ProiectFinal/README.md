@@ -157,3 +157,70 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
     * Afișează interfețele Trunk active cu encapsularea `802.1q`
     * SW1: `Fa0/3`
     * SW2: `Fa0/1` și `Gig0/1`
+
+---
+
+## Faza 3: Inter-VLAN Routing (Router-on-a-Stick)
+
+[cite_start]**Obiectiv:** Permiterea comunicării între diferitele VLAN-uri prin intermediul unei singure conexiuni fizice la router, folosind tehnica "Router-on-a-Stick" [cite: 26-27].
+
+---
+
+### 1. Noțiuni Teoretice pe Scurt
+* **De ce avem nevoie de router?** Echipamentele din VLAN-uri diferite funcționează ca și cum ar fi în rețele complet separate. Un switch normal (Layer 2) nu știe cum să trimită mesaje dintr-o rețea în alta. Pentru asta este nevoie de un echipament de rutare (Layer 3).
+* **Ce este Router-on-a-Stick?** În loc să tragem câte un cablu fizic din switch în router pentru fiecare departament în parte (ceea ce ar costa mult și ar consuma rapid porturile), tragem un singur cablu configurat ca Trunk. Pe router, tăiem portul fizic respectiv în porturi logice numite **subinterfețe** (`.10`, `.20`, etc.). [cite_start]Fiecare subinterfață va acționa ca un Gateway (poartă de ieșire) pentru VLAN-ul ei [cite: 27-28].
+* **Encapsulation dot1Q:** Este comanda prin care routerul învață să "citească" și să "lipească" etichetele specifice standardului 802.1Q fiecărui pachet de date, asigurându-se astfel că mesajul pleacă spre departamentul corect.
+
+---
+
+### 2. Ghid de Configurare Pas cu Pas
+
+**Atenție:** Atunci când accesați CLI-ul unui router nou și apare mesajul `Would you like to enter the initial configuration dialog? [yes/no]:`, tastați mereu **no** pentru a putea face configurările manual.
+
+#### 🖥️ Configurația pe `Router_Firma`
+
+```cisco
+enable
+configure terminal
+
+! --- 1. Activarea portului fizic magistral ---
+! Subinterfețele nu pot funcționa dacă interfața principală este oprită
+interface gig0/0
+ no shutdown
+ exit
+
+! --- 2. Configurarea Default Gateway-urilor pentru fiecare VLAN ---
+! Gateway pentru VLAN 10 - Departamentul IT
+interface gig0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ exit
+
+! Gateway pentru VLAN 20 - Departamentul HR
+interface gig0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ exit
+
+! Gateway pentru VLAN 30 - Rețeaua GUEST
+interface gig0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ exit
+
+! Gateway pentru VLAN 40 - Zona SERVERS
+interface gig0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.40.1 255.255.255.0
+ exit
+
+! --- 3. Salvarea permanentă a setărilor ---
+end
+copy running-config startup-config
+
+```
+
+### 3. `show ip interface brief`
+* **Rezultat așteptat:**
+    * Interfața `GigabitEthernet0/0` cu statusul `up/up`
+    * Cele 4 subinterfețe (`.10`, `.20`, `.30`, `.40`) fiecare cu IP-ul atribuit și statusul `up/up`
