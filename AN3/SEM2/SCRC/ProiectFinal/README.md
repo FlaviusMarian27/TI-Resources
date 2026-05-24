@@ -1,9 +1,9 @@
 # Pasul 1: Topologia Fizică și Conectarea Echipamentelor
 
-[cite_start]**Obiectiv:** Implementarea topologiei hardware conform scenariului, delimitând rețeaua internă a firmei de rețeaua externă (ISP / Internet)[cite: 95, 103].
+**Obiectiv:** Implementarea topologiei hardware conform scenariului, delimitând rețeaua internă a firmei de rețeaua externă (ISP / Internet).
 
 ### 1. Echipamente utilizate
-[cite_start]Conform cerințelor obligatorii[cite: 106]:
+Conform cerințelor obligatorii:
 * **Rețeaua internă (Firma):** 
   * 1x Router (Cisco 1941) - `Router_Firma`
   * 2x Switch-uri (Cisco 2960) - `SW1` și `SW2`
