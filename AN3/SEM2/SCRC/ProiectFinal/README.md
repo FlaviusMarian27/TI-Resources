@@ -338,7 +338,7 @@ Pentru a simula o resursă din Internet, Serverul Extern a primit o adresă IP s
 **Obiectiv:** Configurarea protocolului de rutare OSPF pentru ca routerul firmei să poată descoperi dinamic calea către rețeaua externă (Internet), iar ISP-ul să cunoască rețeaua de legătură WAN.
 
 ### 1. Configurarea OSPF pe Router_Firma
-Am activat procesul OSPF și am anunțat strict rețeaua de legătură WAN (folosind Wildcard Mask `0.0.0.3` aferentă măștii `/30`). Rețelele interne (VLAN-urile) nu au fost anunțate în OSPF pentru a respecta cerințele de securitate și pregătirea pentru NAT.
+* Am activat procesul OSPF și am anunțat strict rețeaua de legătură WAN (folosind Wildcard Mask `0.0.0.3` aferentă măștii `/30`). Rețelele interne (VLAN-urile) nu au fost anunțate în OSPF pentru a respecta cerințele de securitate și pregătirea pentru NAT.
 ```cisco
 enable
 configure terminal
@@ -354,7 +354,7 @@ copy running-config startup-config
 ```
 
 ### 2. Configurarea OSPF pe Router_ISP
-Pe routerul furnizorului am anunțat atât legătura WAN, cât și rețeaua Internetului simulat (10.0.0.0/8 cu Wildcard 0.255.255.255), permițând astfel propagarea rutei externe către routerul firmei.
+* Pe routerul furnizorului am anunțat atât legătura WAN, cât și rețeaua Internetului simulat (10.0.0.0/8 cu Wildcard 0.255.255.255), permițând astfel propagarea rutei externe către routerul firmei.
 
 ```cisco
 enable
