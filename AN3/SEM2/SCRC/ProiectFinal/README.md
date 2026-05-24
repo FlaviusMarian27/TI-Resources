@@ -2,6 +2,8 @@
 
 **Obiectiv:** Implementarea topologiei hardware conform scenariului, delimitând rețeaua internă a firmei de rețeaua externă (ISP / Internet).
 
+![Topologie rețea](schema.png)
+
 ### 1. Echipamente utilizate
 Conform cerințelor obligatorii:
 * **Rețeaua internă (Firma):** 
