@@ -58,33 +58,33 @@ configure terminal
 
 ! --- 1. Crearea și denumirea VLAN-urilor obligatorii ---
 vlan 10
- name IT
+name IT
 vlan 20
- name HR
+name HR
 vlan 30
- name GUEST
+name GUEST
 vlan 40
- name SERVERS
+name SERVERS
 exit
 
 ! --- 2. Alocarea porturilor de Access pentru utilizatori ---
 ! Portul Fa0/1 devine membru exclusiv în VLAN 10 (IT)
 interface fa0/1
- switchport mode access
- switchport access vlan 10
- exit
+switchport mode access
+switchport access vlan 10
+exit
 
 ! Portul Fa0/2 devine membru exclusiv în VLAN 20 (HR)
 interface fa0/2
- switchport mode access
- switchport access vlan 20
- exit
+switchport mode access
+switchport access vlan 20
+exit
 
 ! --- 3. Configurarea portului de interconectare (Trunk) ---
 ! Portul Fa0/3 face legătura cu SW2 și va transporta toate VLAN-urile
 interface fa0/3
- switchport mode trunk
- exit
+switchport mode trunk
+exit
 
 ! --- 4. Salvarea permanentă a setărilor ---
 end
@@ -100,38 +100,38 @@ configure terminal
 
 ! --- 1. Crearea și denumirea VLAN-urilor obligatorii ---
 vlan 10
- name IT
+name IT
 vlan 20
- name HR
+name HR
 vlan 30
- name GUEST
+name GUEST
 vlan 40
- name SERVERS
+name SERVERS
 exit
 
 ! --- 2. Alocarea porturilor de Access pentru utilizatori și servere ---
 ! Portul Fa0/2 devine membru exclusiv în VLAN 30 (GUEST)
 interface fa0/2
- switchport mode access
- switchport access vlan 30
- exit
+switchport mode access
+switchport access vlan 30
+exit
 
 ! Portul Fa0/4 devine membru exclusiv în VLAN 40 (SERVERS)
 interface fa0/4
- switchport mode access
- switchport access vlan 40
- exit
+switchport mode access
+switchport access vlan 40
+exit
 
 ! --- 3. Configurarea porturilor de Trunk ---
 ! Portul Fa0/1 preia conexiunea Trunk venită de la SW1
 interface fa0/1
- switchport mode trunk
- exit
+switchport mode trunk
+exit
 
 ! Portul Gig0/1 face legătura cu Router_Firma și trimite traficul spre rutare
 interface gig0/1
- switchport mode trunk
- exit
+switchport mode trunk
+exit
 
 ! --- 4. Salvarea permanentă a setărilor ---
 end
@@ -145,15 +145,15 @@ După rularea comenzilor de mai sus, verifică configurarea în modul privilegia
 
 ##### 1. `show vlan brief`
 
-**Rezultat așteptat:**
-- Cele 4 VLAN-uri (10, 20, 30, 40) apar cu statusul `active`
-- Pe SW1 → porturile VLAN 10 și 20 sunt vizibile
-- Pe SW2 → porturile VLAN 30 și 40 sunt vizibile
-- ⚠️ Porturile configurate ca Trunk **vor dispărea** din această listă — comportament normal
+    **Rezultat așteptat:**
+    - Cele 4 VLAN-uri (10, 20, 30, 40) apar cu statusul `active`
+    - Pe SW1 → porturile VLAN 10 și 20 sunt vizibile
+    - Pe SW2 → porturile VLAN 30 și 40 sunt vizibile
+    - ⚠️ Porturile configurate ca Trunk **vor dispărea** din această listă — comportament normal
 
 ##### 2. `show interfaces trunk`
 
-**Rezultat așteptat:**
-- Afișează interfețele Trunk active cu encapsularea `802.1q`
-- SW1: `Fa0/3`
-- SW2: `Fa0/1` și `Gig0/1`
+    **Rezultat așteptat:**
+    - Afișează interfețele Trunk active cu encapsularea `802.1q`
+    - SW1: `Fa0/3`
+    - SW2: `Fa0/1` și `Gig0/1`
