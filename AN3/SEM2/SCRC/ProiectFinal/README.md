@@ -556,3 +556,29 @@ exit
 end
 copy running-config startup-config
 ```
+
+### 5. Verificare
+
+#### PC3-Guest — Command Prompt
+
+| Comandă | Rezultat așteptat | Motiv |
+|---|---|---|
+| `ping 192.168.10.2` | `Destination host unreachable` | Blocat de Regula 1 |
+| `ping 192.168.40.10` | `Destination host unreachable` | Blocat de Regula 4 |
+| `ping 10.0.0.10` | `Reply` | Permis de Regula 5 |
+
+#### PC3-Guest — Web Browser
+
+| URL | Rezultat așteptat | Motiv |
+|---|---|---|
+| `http://www.firma.local` | Pagina web a Packet Tracer apare | Permis de Regula 3 |
+
+#### PC2-HR — Command Prompt
+
+| Comandă | Rezultat așteptat | Motiv |
+|---|---|---|
+| `ping 192.168.10.2` | `Destination host unreachable` | Blocat de Regula 5 |
+
+### 5. **Concluzie Testare**
+
+Testele efectuate din command prompt și browser confirmă că izolarea funcționează perfect: Ping-urile interzise primesc răspunsul Destination host unreachable direct de la gateway, în timp ce navigarea web și accesul spre Internet au rămas complet funcționale.
