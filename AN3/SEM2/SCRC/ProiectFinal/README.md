@@ -332,3 +332,38 @@ Pentru a simula o resursă din Internet, Serverul Extern a primit o adresă IP s
 **Verificare:** Link-ul fizic (cablul Serial) a devenit activ (`up/up`), confirmând stabilitatea conexiunii dintre Firmă și ISP.
 
 ---
+
+# Faza 6: Rutarea Dinamică (OSPF)
+
+**Obiectiv:** Configurarea protocolului de rutare OSPF pentru ca routerul firmei să poată descoperi dinamic calea către rețeaua externă (Internet), iar ISP-ul să cunoască rețeaua de legătură WAN.
+
+### 1. Configurarea OSPF pe Router_Firma
+Am activat procesul OSPF și am anunțat strict rețeaua de legătură WAN (folosind Wildcard Mask `0.0.0.3` aferentă măștii `/30`). Rețelele interne (VLAN-urile) nu au fost anunțate în OSPF pentru a respecta cerințele de securitate și pregătirea pentru NAT.
+```cisco
+enable
+configure terminal
+router ospf 1
+ network 220.110.0.0 0.0.0.3 area 0
+ exit
+end
+copy running-config startup-config
+```
+
+### 2. Configurarea OSPF pe Router_ISP
+Pe routerul furnizorului am anunțat atât legătura WAN, cât și rețeaua Internetului simulat (10.0.0.0/8 cu Wildcard 0.255.255.255), permițând astfel propagarea rutei externe către routerul firmei.
+
+```
+enable
+configure terminal
+router ospf 1
+ network 220.110.0.0 0.0.0.3 area 0
+ network 10.0.0.0 0.255.255.255 area 0
+ exit
+end
+copy running-config startup-config
+```
+
+* **Verificare:**
+    * Afișarea tabelei de rutare pe Router_Firma (folosind comanda show ip route) a validat succesul configurării. Ruta 10.0.0.0/8 apare învățată prin protocolul OSPF (notată cu litera O), iar adiacența între vecini a fost stabilită cu succes (LOADING to FULL).
+
+---
