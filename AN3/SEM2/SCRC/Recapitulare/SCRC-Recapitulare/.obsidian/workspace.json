@@ -1,0 +1,190 @@
+{
+  "main": {
+    "id": "b7cc0caf9b2c6313",
+    "type": "split",
+    "children": [
+      {
+        "id": "b6ee4b16fe88e4d6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5e33c03d298f71e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2.1 Network Apps.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2.1 Network Apps"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ded7c5a21a31182b",
+    "type": "split",
+    "children": [
+      {
+        "id": "0b9208da34c54f4c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "62b8f03941f66adf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorator de fișiere"
+            }
+          },
+          {
+            "id": "3d5864c3794d5364",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Caută"
+            }
+          },
+          {
+            "id": "295a2f4beb240714",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcaje"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b9a68c4fc0f5c8fb",
+    "type": "split",
+    "children": [
+      {
+        "id": "a463413d763f1e34",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "98fc312fc225797f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "2.1 Network Apps.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Referințe pentru 2.1 Network Apps"
+            }
+          },
+          {
+            "id": "281d009a1e1dad3e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2.1 Network Apps.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Legături de ieșire din 2.1 Network Apps"
+            }
+          },
+          {
+            "id": "61ab9b9dfd4e37df",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etichete"
+            }
+          },
+          {
+            "id": "347cbf29f6979924",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Toate proprietățile"
+            }
+          },
+          {
+            "id": "592d4a60d48c06e0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "2.1 Network Apps.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Sumar 2.1 Network Apps"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Deschide comutarea rapidă": false,
+      "graph:Deschide graficul": false,
+      "canvas:Creează o pânză nouă": false,
+      "daily-notes:Deschide nota de azie": false,
+      "templates:Inserează șablon": false,
+      "command-palette:Deschide paleta de comenzi": false,
+      "bases:Creează o bază nouă": false
+    }
+  },
+  "active": "5e33c03d298f71e0",
+  "lastOpenFiles": [
+    "2.1 Network Apps.md"
+  ]
+}
