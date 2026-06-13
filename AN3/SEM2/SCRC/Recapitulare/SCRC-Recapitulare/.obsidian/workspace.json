@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "3.123 Transport Layer.md",
+                "file": "3.1 23 Transport Layer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "3.123 Transport Layer"
+              "title": "3.1 23 Transport Layer"
             }
           },
           {
@@ -35,8 +35,7 @@
               "title": "3.4 Reliable Data Transfer (RDT)"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -198,10 +197,10 @@
       "bases:Creează o bază nouă": false
     }
   },
-  "active": "cf5844f47b5365bc",
+  "active": "1d431f5201733cc3",
   "lastOpenFiles": [
     "3.4 Reliable Data Transfer (RDT).md",
-    "3.123 Transport Layer.md",
+    "3.1 23 Transport Layer.md",
     "UDPStr.png",
     "2.4 DNS.md",
     "DNSIS.png",
