@@ -1,0 +1,1 @@
+Formatting '/home/flavius/Documents/GNS3-Project/Laborator2/Partea3/project-files/qemu/c5dae0f9-ed0f-4c7c-9de4-1536bbff4b3e/hda_disk.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=1048576000 backing_file=/home/flavius/GNS3/images/QEMU/linux-tinycore-linux-6.4-firefox-33.1.1-2.img backing_fmt=qcow2 lazy_refcounts=off refcount_bits=16

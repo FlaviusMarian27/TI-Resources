@@ -1,0 +1,4 @@
+Start QEMU with /bin/qemu-system-i386 -name 'Firefox31.1.1~2-1' -m 256M -smp cpus=1,sockets=1 -enable-kvm -boot order=c -drive file=/home/flavius/Documents/GNS3-Project/Laborator2/Partea3/project-files/qemu/3f56a85e-ac0d-4a29-997b-338cd76d9de0/hda_disk.qcow2,if=ide,index=0,media=disk,id=drive0 -uuid 3f56a85e-ac0d-4a29-997b-338cd76d9de0 -vnc localhost:0 -monitor tcp:127.0.0.1:35005,server,nowait -net none -device e1000,mac=0c:56:a8:5e:00:00,netdev=gns3-0 -netdev socket,id=gns3-0,udp=127.0.0.1:10009,localaddr=127.0.0.1:10008 -vga std -usbdevice tablet -machine usb=on -device usb-tablet
+
+Execution log:
+qemu-system-i386: terminating on signal 15 from pid 17192 (/usr/share/gns3/gns3-server/bin/python)
