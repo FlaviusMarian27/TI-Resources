@@ -90,7 +90,7 @@
 
 ## Pasul 2: Calculam numarul de host-uri per subnet
 
-### $\text{hostcount} = 2^{32-\text{CIDR\_bits}} - 2 = 2^{32-19} - 2 = 2^{13} - 2 = 8192 - 2 = 8190$
+### $\text{hostcount} = 2^{32-\text{CIDR}_{\text{bits}}} - 2 = 2^{32-19} - 2 = 2^{13} - 2 = 8192 - 2 = 8190$
 
 
 - scadem adresa de retea si cea de broadcast.
