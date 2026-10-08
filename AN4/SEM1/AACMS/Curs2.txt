@@ -1,0 +1,9 @@
+docker compose --profile all pull
+
+docker compose --profile all build
+
+docker compose --profile all up -d
+
+docker ps
+
+docker compose --profile all down -v --rmi all
