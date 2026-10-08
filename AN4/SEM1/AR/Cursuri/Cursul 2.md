@@ -58,17 +58,9 @@
 - regula spune că trebuie să avem o succesiune de biții de 1 neîntrerupți, urmați de o secvență de 0-uri.
 
 
-## IP Address &
-## Netmask
-## --------------------
-## Network prefix
+## IP Address & Netmask = Network prefix
 
-
-
-## IP Address &
-## ~ Netmask
-## --------------------
-## Host part
+## IP Address & ~ Netmask = Host part
 
 
 ![Subnet](Images/SubnetCalcul.png)
