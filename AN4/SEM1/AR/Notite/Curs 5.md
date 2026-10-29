@@ -67,3 +67,44 @@
 - **O singură regulă DNAT pe un Remote Port**, dar mai multe pot duce la același Local Address/Port.
 - **DMZ = indiferent de port**, DNAT = pe un port anume.
 - **Gateway** e o denumire relativă la LAN, cu IP din **aceeași clasă** ca LAN-ul.
+
+
+
+
+----
+
+
+### Interfețe de management (slide 70)
+
+Sunt interfețele prin care se **configurează, gestionează și monitorizează** un echipament.
+
+**Switch și router**
+
+- **Interfață serială**, pentru configurarea inițială în linie de comandă.
+- **Interfață logică la nivel IP**, configurabilă prin linie de comandă sau web (după capabilitățile producătorului). Are fie IP din fabrică, fie se configurează inițial prin interfața serială.
+- Unele au **interfață Ethernet-IP dedicată**, numită **OOB (Out-of-Band)**. E **strict pentru configurare** și **nu participă** la activitatea de bază a switch-ului/routerului.
+- **Switch L2:** o singură interfață logică de management. **Switch L3:** mai multe.
+
+**Servere**
+
+- Interfață de rețea fizică **dedicată** sau **partajată** cu cele obișnuite.
+- **Dell** = **iDRAC** (Integrated Dell Remote Access Controller). **HP** = **iLO** (Integrated Lights-Out).
+- Sistemul de management e **izolat de restul serverului**, deși stă în aceeași carcasă. **Nu interacționează direct cu sistemul de operare.**
+- Se activează **independent, la punerea sub tensiune**, chiar dacă serverul e oprit sau nu are SO.
+- După **licență**, pot oferi **acces remote la display** și **echipamente virtuale** (stick USB virtual, unitate optică virtuală).
+
+**Alte echipamente:** majoritatea au interfață de configurare și monitorizare Ethernet-IP.
+
+### Securitate (slide 71)
+
+- Sistemele de management sunt implementate cu module software/hardware **slabe în resurse** și, implicit, **slabe în politici de securitate**.
+- Prin ele se pot **schimba radical configurațiile**, inclusiv **reset la setările din fabrică**. La servere se pot **șterge datele de pe mediile de stocare**.
+- **Practica:** rețeaua de management e **separată complet** de rețeaua de date, **cel puțin logic** (prin **VLAN-uri separate**), cu acces **restricționat la administratorii de rețea**.
+
+⚠️ **Capcane:**
+
+- **OOB = interfață dedicată, doar pentru configurare**, nu pentru traficul obișnuit.
+- **iDRAC = Dell, iLO = HP.** Nu le inversa.
+- iDRAC/iLO sunt **izolate de SO** și **pornesc și când serverul e oprit**.
+- **Switch L2 = o singură interfață logică, L3 = mai multe.**
+- Rețeaua de management se separă **cel puțin logic** (VLAN), nu neapărat fizic.

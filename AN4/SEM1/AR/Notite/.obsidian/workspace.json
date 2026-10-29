@@ -77,8 +77,7 @@
               "title": "Curs 5"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -245,12 +244,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "a98e96b8bd8340f3",
+  "active": "5547a882bfdeeded",
   "lastOpenFiles": [
-    "Curs 4.md",
-    "Curs 5.md",
-    "Curs 1.md",
     "Curs 2.md",
+    "Curs 1.md",
+    "Curs 5.md",
+    "Curs 4.md",
     "Curs 3.md",
     "Images/ClaseIP.png",
     "Images/MAC_address.png",
