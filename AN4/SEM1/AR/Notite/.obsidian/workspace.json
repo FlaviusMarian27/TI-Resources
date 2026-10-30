@@ -77,7 +77,8 @@
               "title": "Curs 5"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -244,10 +245,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "5547a882bfdeeded",
+  "active": "dcb2caa71de42042",
   "lastOpenFiles": [
-    "Curs 2.md",
     "Curs 1.md",
+    "Curs 2.md",
     "Curs 5.md",
     "Curs 4.md",
     "Curs 3.md",
