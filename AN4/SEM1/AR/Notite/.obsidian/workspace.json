@@ -78,7 +78,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -245,8 +245,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "dcb2caa71de42042",
+  "active": "5f4b0ed76abfc390",
   "lastOpenFiles": [
+    "file:/home/flavius/Downloads/README.md",
     "Curs 1.md",
     "Curs 2.md",
     "Curs 5.md",
