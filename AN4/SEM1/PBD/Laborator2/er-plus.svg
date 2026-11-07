@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="1020" viewBox="0 0 820 1020" font-family="Arial, Helvetica, sans-serif">
+  <rect x="2" y="2" width="816" height="1016" rx="12" fill="#ffffff" stroke="#d0d0d0"/>
+
+  <!-- 1. Entitate tare vs slaba -->
+  <text x="30" y="34" font-size="17" font-weight="bold" fill="#333">1. Entitate tare vs entitate slabă</text>
+  <rect x="80" y="70" width="150" height="56" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="155" y="104" font-size="15" text-anchor="middle" fill="#333">Bancă</text>
+  <line x1="230" y1="98" x2="275" y2="98" stroke="#333" stroke-width="1.3"/>
+  <ellipse cx="345" cy="98" rx="70" ry="24" fill="#fff" stroke="#c00000" stroke-width="3"/>
+  <text x="345" y="103" font-size="15" text-anchor="middle" fill="#333" text-decoration="underline">id_banca</text>
+  <text x="245" y="160" font-size="15" font-weight="bold" text-anchor="middle" fill="#333">Entitate tare</text>
+  <text x="245" y="180" font-size="13" text-anchor="middle" fill="#555">dreptunghi simplu, are cheie proprie</text>
+
+  <rect x="530" y="70" width="190" height="56" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <rect x="537" y="77" width="176" height="42" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="625" y="104" font-size="15" text-anchor="middle" fill="#333">Cont bancar</text>
+  <text x="625" y="160" font-size="15" font-weight="bold" text-anchor="middle" fill="#333">Entitate slabă</text>
+  <text x="625" y="180" font-size="13" text-anchor="middle" fill="#555">dreptunghi dublu, depinde de altă entitate</text>
+
+  <!-- 2. Fan trap -->
+  <line x1="30" y1="210" x2="790" y2="210" stroke="#e5e5e5"/>
+  <text x="30" y="240" font-size="17" font-weight="bold" fill="#333">2. Capcana evantai (fan trap)</text>
+  <text x="30" y="262" font-size="13" fill="#555">Din Grup pleacă două relații 1:N. Angajatul e legat de grup, dar nu știi din ce companie face parte.</text>
+
+  <text x="62" y="300" font-size="15" font-weight="bold" fill="#c00000">Greșit (evantai)</text>
+  <rect x="62" y="315" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="124" y="345" font-size="15" text-anchor="middle" fill="#333">Companie</text>
+  <line x1="187" y1="340" x2="217" y2="340" stroke="#333" stroke-width="1.3"/>
+  <polygon points="217,340 267,314 317,340 267,366" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="267" y="345" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="317" y1="340" x2="347" y2="340" stroke="#333" stroke-width="1.3"/>
+  <rect x="347" y="315" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="409" y="345" font-size="15" text-anchor="middle" fill="#333">Grup</text>
+  <line x1="472" y1="340" x2="502" y2="340" stroke="#333" stroke-width="1.3"/>
+  <polygon points="502,340 552,314 602,340 552,366" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="552" y="345" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="602" y1="340" x2="632" y2="340" stroke="#333" stroke-width="1.3"/>
+  <rect x="632" y="315" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="694" y="345" font-size="15" text-anchor="middle" fill="#333">Angajat</text>
+  <text x="202" y="332" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="332" y="332" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="487" y="332" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="617" y="332" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <polyline points="124,365 124,392 694,392 694,365" fill="none" stroke="#c00000" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="409" y="414" font-size="13" text-anchor="middle" fill="#c00000">? între Companie și Angajat nu există cale</text>
+
+  <text x="62" y="455" font-size="15" font-weight="bold" fill="#00a550">Corect (lanț)</text>
+  <rect x="62" y="470" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="124" y="500" font-size="15" text-anchor="middle" fill="#333">Grup</text>
+  <line x1="187" y1="495" x2="217" y2="495" stroke="#333" stroke-width="1.3"/>
+  <polygon points="217,495 267,469 317,495 267,521" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="267" y="500" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="317" y1="495" x2="347" y2="495" stroke="#333" stroke-width="1.3"/>
+  <rect x="347" y="470" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="409" y="500" font-size="15" text-anchor="middle" fill="#333">Companie</text>
+  <line x1="472" y1="495" x2="502" y2="495" stroke="#333" stroke-width="1.3"/>
+  <polygon points="502,495 552,469 602,495 552,521" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="552" y="500" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="602" y1="495" x2="632" y2="495" stroke="#333" stroke-width="1.3"/>
+  <rect x="632" y="470" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="694" y="500" font-size="15" text-anchor="middle" fill="#333">Angajat</text>
+  <text x="202" y="487" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="332" y="487" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="487" y="487" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="617" y="487" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="409" y="552" font-size="13" text-anchor="middle" fill="#555">Grupul angajatului îl afli prin companie: Angajat → Companie → Grup</text>
+
+  <!-- 3. Chasm trap -->
+  <line x1="30" y1="580" x2="790" y2="580" stroke="#e5e5e5"/>
+  <text x="30" y="610" font-size="17" font-weight="bold" fill="#333">3. Capcana prăpastie (chasm trap)</text>
+  <text x="30" y="632" font-size="13" fill="#555">Calea există în desen, dar nu pentru toate instanțele (participare opțională).</text>
+
+  <text x="62" y="670" font-size="15" font-weight="bold" fill="#c00000">Greșit (prăpastie)</text>
+  <rect x="62" y="685" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="124" y="715" font-size="15" text-anchor="middle" fill="#333">Companie</text>
+  <line x1="187" y1="710" x2="217" y2="710" stroke="#333" stroke-width="1.3"/>
+  <polygon points="217,710 267,684 317,710 267,736" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="267" y="715" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="317" y1="710" x2="347" y2="710" stroke="#333" stroke-width="1.3"/>
+  <rect x="347" y="685" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="409" y="715" font-size="15" text-anchor="middle" fill="#333">Angajat</text>
+  <line x1="472" y1="710" x2="502" y2="710" stroke="#333" stroke-width="1.3"/>
+  <polygon points="502,710 552,684 602,710 552,736" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="552" y="714" font-size="12" text-anchor="middle" fill="#333">gestionează</text>
+  <line x1="602" y1="710" x2="632" y2="710" stroke="#333" stroke-width="1.3"/>
+  <rect x="632" y="685" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="694" y="715" font-size="15" text-anchor="middle" fill="#333">Fabrică</text>
+  <text x="202" y="702" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="332" y="702" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="487" y="702" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="617" y="702" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="409" y="768" font-size="13" text-anchor="middle" fill="#c00000">? o fabrică fără angajat responsabil: nu știi din ce companie face parte</text>
+
+  <text x="62" y="810" font-size="15" font-weight="bold" fill="#00a550">Corect (relație directă adăugată)</text>
+  <rect x="62" y="825" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="124" y="855" font-size="15" text-anchor="middle" fill="#333">Companie</text>
+  <line x1="187" y1="850" x2="217" y2="850" stroke="#333" stroke-width="1.3"/>
+  <polygon points="217,850 267,824 317,850 267,876" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="267" y="855" font-size="14" text-anchor="middle" fill="#333">are</text>
+  <line x1="317" y1="850" x2="347" y2="850" stroke="#333" stroke-width="1.3"/>
+  <rect x="347" y="825" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="409" y="855" font-size="15" text-anchor="middle" fill="#333">Angajat</text>
+  <line x1="472" y1="850" x2="502" y2="850" stroke="#333" stroke-width="1.3"/>
+  <polygon points="502,850 552,824 602,850 552,876" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="552" y="854" font-size="12" text-anchor="middle" fill="#333">gestionează</text>
+  <line x1="602" y1="850" x2="632" y2="850" stroke="#333" stroke-width="1.3"/>
+  <rect x="632" y="825" width="125" height="50" fill="none" stroke="#1f5fae" stroke-width="3"/>
+  <text x="694" y="855" font-size="15" text-anchor="middle" fill="#333">Fabrică</text>
+  <text x="202" y="842" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="332" y="842" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+  <text x="487" y="842" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">1</text>
+  <text x="617" y="842" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">N</text>
+
+  <polyline points="124,875 124,935 359,935" fill="none" stroke="#333" stroke-width="1.3"/>
+  <polygon points="359,935 409,909 459,935 409,961" fill="none" stroke="#00a550" stroke-width="3"/>
+  <text x="409" y="940" font-size="14" text-anchor="middle" fill="#333">deține</text>
+  <polyline points="459,935 694,935 694,875" fill="none" stroke="#333" stroke-width="1.3"/>
+  <text x="138" y="905" font-size="14" font-weight="bold" fill="#333">1</text>
+  <text x="680" y="905" font-size="14" font-weight="bold" text-anchor="end" fill="#333">N</text>
+  <text x="409" y="990" font-size="13" text-anchor="middle" fill="#555">Relația directă Companie–Fabrică face calea completă, chiar și pentru fabricile fără angajat</text>
+</svg>
