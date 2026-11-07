@@ -35,30 +35,30 @@
 
 ## Reprezentare grafică
 
-![[er-componente.svg]]
+[Componentele diagramei E-R](https://claude.ai/chat/er-componente.svg)
 
 ## Capcane de examen
 
-> [!warning] Entitate slabă vs atribut multivaloare Ambele se desenează "dublu", dar sunt lucruri diferite: entitatea slabă = **dreptunghi dublu**, atributul cu valoare multiplă = **oval dublu**.
+> [!WARNING] **Entitate slabă vs atribut multivaloare** Ambele se desenează "dublu", dar sunt lucruri diferite: entitatea slabă = **dreptunghi dublu**, atributul cu valoare multiplă = **oval dublu**.
 
-> [!warning] Dublu, punctat, subliniat
+> [!WARNING] **Dublu, punctat, subliniat**
 > 
 > - Multivaloare: oval **dublu**
 > - Derivat: oval **punctat**
 > - Cheie: **subliniat**
 
-> [!warning] Ce tip de atribut e fiecare exemplu
+> [!WARNING] **Ce tip de atribut e fiecare exemplu**
 > 
 > - Vârsta = **derivat** (din data nașterii), nu atribut simplu.
 > - Nr. telefon = **multivaloare**.
 > - Adresa = **compus**.
 > - Nr. matricol = **cheie**.
 
-> [!warning] Entitatea slabă Se identifică **doar prin relația cu altă entitate** (Cont bancar depinde de Bancă).
+> [!WARNING] **Entitatea slabă** Se identifică **doar prin relația cu altă entitate** (Cont bancar depinde de Bancă).
 
-> [!warning] N:1 este inversul lui 1:N Exemplele din lab sunt diferite: **Client-Comandă** pentru 1:N, **Student-Curs** pentru N:1. Nu le amesteca.
+> [!WARNING] **N:1 este inversul lui 1:N** Exemplele din lab sunt diferite: **Client-Comandă** pentru 1:N, **Student-Curs** pentru N:1. Nu le amesteca.
 
-> [!warning] Reprezentare vs semnificație Entitate = dreptunghi, atribut = oval, relație = romb. Cardinalitatea (1 / N) se scrie pe linia dintre entitate și romb.
+> [!WARNING] **Reprezentare vs semnificație** Entitate = dreptunghi, atribut = oval, relație = romb. Cardinalitatea (1 / N) se scrie pe linia dintre entitate și romb.
 
 ## De reținut pe scurt
 
@@ -71,9 +71,9 @@
 
 # Plus (nu e în PDF)
 
-> [!info] Atenție Tot ce e mai jos e din **cunoștințe generale**, nu din PDF-ul de lab. Verifică definițiile cu ce a zis profu la curs.
+> [!NOTE] Tot ce e mai jos e din **cunoștințe generale**, nu din PDF-ul de lab. Verifică definițiile cu ce a zis profu la curs.
 
-![[er-plus.svg]]
+[Entitate tare și capcanele de modelare](https://claude.ai/chat/er-plus.svg)
 
 ## Entitate tare (strong entity)
 
@@ -97,7 +97,7 @@ Apar când diagrama sugerează o legătură între două entități, dar **nu po
 - **Exemplu**: Companie 1:N Angajat, Angajat 1:N Fabrică (gestionează). O fabrică **fără angajat responsabil** nu are cale spre companie.
 - **Cum o repari**: adaugi o **relație directă** între capete (Companie 1:N Fabrică).
 
-> [!warning] Capcane de examen
+> [!WARNING] **Capcane de examen**
 > 
 > - **Evantai**: cele două relații pleacă din **aceeași entitate** și calea între capete **lipsește complet**.
 > - **Prăpastie**: calea **există**, dar nu e completă pentru toate instanțele (participare opțională).
