@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="880" viewBox="0 0 820 880" font-family="Arial, Helvetica, sans-serif">
+  <rect x="2" y="2" width="816" height="876" rx="12" fill="#ffffff" stroke="#d0d0d0"/>
+  <g transform="translate(0,20)">
+
+    <!-- linii entitate - relatie -->
+    <g stroke="#333" stroke-width="1.5" fill="none">
+      <line x1="130" y1="105" x2="130" y2="147"/>
+      <line x1="130" y1="203" x2="130" y2="250"/>
+      <line x1="130" y1="300" x2="130" y2="344"/>
+      <line x1="130" y1="400" x2="130" y2="445"/>
+      <line x1="130" y1="495" x2="130" y2="562"/>
+      <line x1="130" y1="618" x2="130" y2="655"/>
+    </g>
+
+    <!-- linii entitate - atribute -->
+    <g stroke="#333" stroke-width="1.3" fill="none">
+      <line x1="205" y1="80" x2="340" y2="52"/>
+      <line x1="205" y1="80" x2="340" y2="108"/>
+
+      <line x1="205" y1="275" x2="340" y2="225"/>
+      <line x1="205" y1="275" x2="340" y2="275"/>
+      <line x1="205" y1="275" x2="340" y2="325"/>
+
+      <line x1="205" y1="470" x2="340" y2="420"/>
+      <line x1="205" y1="470" x2="340" y2="470"/>
+      <line x1="205" y1="470" x2="370" y2="530"/>
+      <line x1="510" y1="530" x2="605" y2="490"/>
+      <line x1="510" y1="530" x2="605" y2="530"/>
+      <line x1="510" y1="530" x2="605" y2="570"/>
+
+      <line x1="205" y1="680" x2="340" y2="630"/>
+      <line x1="205" y1="680" x2="340" y2="680"/>
+      <line x1="205" y1="680" x2="340" y2="735"/>
+      <line x1="540" y1="735" x2="620" y2="715"/>
+      <line x1="540" y1="735" x2="620" y2="755"/>
+    </g>
+
+    <!-- entitati -->
+    <g fill="#fff" stroke="#1f5fae" stroke-width="3">
+      <rect x="55" y="55" width="150" height="50"/>
+      <rect x="55" y="250" width="150" height="50"/>
+      <rect x="55" y="445" width="150" height="50"/>
+      <rect x="55" y="655" width="150" height="50"/>
+    </g>
+    <g font-size="16" font-weight="bold" text-anchor="middle" fill="#333">
+      <text x="130" y="86">Grup</text>
+      <text x="130" y="281">Companie</text>
+      <text x="130" y="476">Fabrică</text>
+      <text x="130" y="686">Articol</text>
+    </g>
+
+    <!-- relatii -->
+    <g fill="#fff" stroke="#00a550" stroke-width="3">
+      <polygon points="85,175 130,147 175,175 130,203"/>
+      <polygon points="85,372 130,344 175,372 130,400"/>
+      <polygon points="85,590 130,562 175,590 130,618"/>
+    </g>
+    <g font-size="14" text-anchor="middle" fill="#333">
+      <text x="130" y="180">are</text>
+      <text x="130" y="377">are</text>
+      <text x="130" y="595">produce</text>
+    </g>
+
+    <!-- cardinalitati -->
+    <g font-size="15" font-weight="bold" fill="#333">
+      <text x="140" y="130">1</text>
+      <text x="140" y="238">N</text>
+      <text x="140" y="326">1</text>
+      <text x="140" y="432">N</text>
+      <text x="140" y="522">N</text>
+      <text x="140" y="645">N</text>
+    </g>
+
+    <!-- atribute Grup -->
+    <g fill="#fff" stroke="#c00000" stroke-width="3">
+      <ellipse cx="440" cy="52" rx="100" ry="22"/>
+      <ellipse cx="440" cy="108" rx="100" ry="22"/>
+    </g>
+    <g font-size="15" text-anchor="middle" fill="#333">
+      <text x="440" y="57" text-decoration="underline">id_grup</text>
+      <text x="440" y="113">nume</text>
+    </g>
+
+    <!-- atribute Companie -->
+    <g fill="#fff" stroke="#c00000" stroke-width="3">
+      <ellipse cx="440" cy="225" rx="100" ry="22"/>
+      <ellipse cx="440" cy="275" rx="100" ry="22"/>
+      <ellipse cx="440" cy="325" rx="100" ry="24"/>
+    </g>
+    <ellipse cx="440" cy="325" rx="92" ry="17" fill="none" stroke="#c00000" stroke-width="3"/>
+    <g font-size="15" text-anchor="middle" fill="#333">
+      <text x="440" y="230" text-decoration="underline">id_companie</text>
+      <text x="440" y="280">nume_companie</text>
+      <text x="440" y="330">nume_fondator</text>
+    </g>
+    <text x="555" y="330" font-size="13" fill="#555">multivaloare (unul sau mai mulți)</text>
+
+    <!-- atribute Fabrica -->
+    <g fill="#fff" stroke="#c00000" stroke-width="3">
+      <ellipse cx="440" cy="420" rx="100" ry="22"/>
+      <ellipse cx="440" cy="470" rx="100" ry="22"/>
+      <ellipse cx="440" cy="530" rx="70" ry="22"/>
+      <ellipse cx="690" cy="490" rx="85" ry="17"/>
+      <ellipse cx="690" cy="530" rx="85" ry="17"/>
+      <ellipse cx="690" cy="570" rx="85" ry="17"/>
+    </g>
+    <g font-size="15" text-anchor="middle" fill="#333">
+      <text x="440" y="425" text-decoration="underline">id_fabrica</text>
+      <text x="440" y="475">nume_fabrica</text>
+      <text x="440" y="535">adresa</text>
+    </g>
+    <g font-size="14" text-anchor="middle" fill="#333">
+      <text x="690" y="495">nume_strada</text>
+      <text x="690" y="535">numar_strada</text>
+      <text x="690" y="575">cod_postal</text>
+    </g>
+
+    <!-- atribute Articol -->
+    <g fill="#fff" stroke="#c00000" stroke-width="3">
+      <ellipse cx="440" cy="630" rx="100" ry="22"/>
+      <ellipse cx="440" cy="680" rx="100" ry="22"/>
+      <ellipse cx="440" cy="735" rx="100" ry="22"/>
+      <ellipse cx="700" cy="715" rx="80" ry="18"/>
+      <ellipse cx="700" cy="755" rx="80" ry="18"/>
+    </g>
+    <g font-size="15" text-anchor="middle" fill="#333">
+      <text x="440" y="635" text-decoration="underline">id_articol</text>
+      <text x="440" y="685">nume_articol</text>
+      <text x="440" y="740">termen_valabilitate</text>
+    </g>
+    <g font-size="14" text-anchor="middle" fill="#333">
+      <text x="700" y="720">data_fabricare</text>
+      <text x="700" y="760">data_expirare</text>
+    </g>
+
+    <!-- legenda -->
+    <line x1="30" y1="795" x2="790" y2="795" stroke="#e5e5e5"/>
+    <rect x="40" y="815" width="36" height="22" fill="#fff" stroke="#1f5fae" stroke-width="2.5"/>
+    <text x="84" y="831" font-size="13" fill="#333">Entitate</text>
+    <ellipse cx="190" cy="826" rx="22" ry="12" fill="#fff" stroke="#c00000" stroke-width="2.5"/>
+    <text x="220" y="831" font-size="13" fill="#333">Atribut</text>
+    <ellipse cx="320" cy="826" rx="22" ry="12" fill="#fff" stroke="#c00000" stroke-width="2.5"/>
+    <ellipse cx="320" cy="826" rx="17" ry="8" fill="none" stroke="#c00000" stroke-width="2"/>
+    <text x="350" y="831" font-size="13" fill="#333">Multivaloare</text>
+    <text x="465" y="831" font-size="13" fill="#333" text-decoration="underline">id_</text>
+    <text x="490" y="831" font-size="13" fill="#333">Cheie (subliniat)</text>
+    <polygon points="620,826 640,814 660,826 640,838" fill="#fff" stroke="#00a550" stroke-width="2.5"/>
+    <text x="670" y="831" font-size="13" fill="#333">Relație</text>
+  </g>
+</svg>
