@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Laborator2/TemaLab.md",
+                "file": "Laborator3/Notes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "TemaLab"
+              "title": "Notes"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Laborator2/TemaLab.md",
+                "file": "Laborator3/Notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Laborator2/TemaLab.md",
+                "file": "Laborator3/Notes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Laborator2/TemaLab.md",
+                "file": "Laborator3/Notes.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,11 +190,12 @@
   },
   "active": "076b530561742a2e",
   "lastOpenFiles": [
+    "Laborator2/TemaLab.md",
+    "Laborator3/Notes.md",
     "Laborator2/er-tema-organizatie-rezolvare-2.svg",
     "Laborator2/er-tema-organizatie-capcana.svg",
     "Laborator2/er-tema-organizatie.svg",
     "Laborator2/Notes.md",
-    "Laborator2/TemaLab.md",
     "Laborator2/CerintaLab.txt",
     "Laborator2/er-plus.svg",
     "Laborator2/er-componente.svg",
