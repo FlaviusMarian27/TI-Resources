@@ -2,3 +2,4 @@ Start QEMU with /bin/qemu-system-x86_64 -name Debian12.6-1 -m 512M -smp cpus=1,s
 
 Execution log:
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: terminating on signal 15 from pid 14229 (/usr/share/gns3/gns3-server/bin/python)
