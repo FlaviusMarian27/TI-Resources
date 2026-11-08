@@ -1,0 +1,1 @@
+Formatting '/home/flavius/Documents/TI-Resources/AN4/SEM1/AR/Laborator7/project-files/qemu/9bb84561-e852-4ead-bec7-0c6faeb49310/hda_disk.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=4294967296 backing_file=/home/flavius/GNS3/images/QEMU/vios_l2-adventerprisek9-m.ssa.high_iron_20200929.qcow2 backing_fmt=qcow2 lazy_refcounts=off refcount_bits=16
