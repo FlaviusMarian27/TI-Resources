@@ -3,7 +3,7 @@
 
 Normalizați baza de date aferentă diagramei ER realizate la primul laborator, folosind tehnicile **1NF** și **2NF**.
 
-![Diagrama E-R de la primul laborator](Laborator2/er-tema-organizatie.svg)
+![Diagrama E-R de la primul laborator](../Laborator2/er-tema-organizatie.svg)
 
 ## Regulile folosite (din laboratorul 2)
 
