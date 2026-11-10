@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Laborator4/Notes.md",
+                "file": "Laborator4/TemaLab.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Notes"
+              "title": "TemaLab"
             }
           }
         ]
@@ -190,8 +190,9 @@
   },
   "active": "076b530561742a2e",
   "lastOpenFiles": [
-    "Laborator3/TemaLab.md",
     "Laborator4/Notes.md",
+    "Laborator4/TemaLab.md",
+    "Laborator3/TemaLab.md",
     "Laborator3/Notes.md",
     "Laborator2/TemaLab.md",
     "Laborator2/er-tema-organizatie-rezolvare-2.svg",
