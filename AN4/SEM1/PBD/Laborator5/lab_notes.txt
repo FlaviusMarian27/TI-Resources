@@ -1,0 +1,219 @@
+- analiza cerintele -> proiectare conceptuala -> proiectarea logica -> FIZICA
+
+-----------------------------------------------------------------------------
+
+DDL
+
+1) CREATE  TABLE nume_tabela
+(
+    nume_atribut tip constrangeri
+                           |
+                           V
+                        Primary Key not NULL foreign key
+)
+
+
+2) DROP TABLE nume_tabela
+3) ALTER TABLE tabela:
+
+
+------------------------------------------------------------------------------
+
+DML
+
+1)INSERT INTO tabela (atribute) VALUES (lista_valori)
+2)UPDATE tabela SET atribut = noua valoare WHERE conditie;
+3)DELETE FROM tabela WHERE conditie
+4)SELECT (lista de atribute) FROM (lista tabele) WHERE conditie
+                                                 GROUP BY atribute
+                                                 ORDER BY
+                                                 JOIN ...
+
+rezultatul lui select este mereu o tabela virtuala
+
+=> vedere simpla sau complexa
+
+simpla trebuie sa avem o singura tabela, fara GROUP BY, fara functii agregate(AVG,COUNT,MAX,MIN,SUM)
+complex le poate avea pe toate
+
+
+SELECT (lista,atribute) GROUP BY atribut =>functii agregat pe atributele ce nu sunt in GROUP BY
+
+SELECTuri IMBRICATE
+
+Exemplu:
+SELECT Enume, departament, functie, salar FROM EMP WHERE functie=ANY (SELECT functie FROM EMP WHERE Ename='SCOTT');
+
+                                                                  |
+                                                                  |_ cel putin o valoare
+                                                                  ALL -> TOATE valorile
+
+
+Sa se selecteze toti angajatii care au salariul mai mare decat media salariilor pe departament.
+
+SELECT Ename, salariu FROM ENP WHERE salariu > ALL( SELECT AVG(salariu) FROM EMP GROUP BY EMP.id_dep)
+
+
+
+Angajati                                            Departament
+
+PK                                FK                  PK
+
+id | nume | salariu | functie | id_dep |            id_dep | nume_dep
+
+
+1) Selectare nume,  functie si salariu angajati?
+
+SELECT nume, functie, salariu FROM Angajati
+
+
+
+2) Numarul total de angajati?
+
+SELECT COUNT(*) FROM Angajati
+
+            (id)
+
+
+3) SELECT nume, functie, nume_dep FROM Angajati A, Departament D WHERE A id_dep = D id_dep
+
+4) total salarii pe departamente ?
+
+SELECT id_dep; SUM 
+
+
+
+
+LABORATOR SAPTAMANA 6 ----------------------------------------------------------------------------------------------------------------------------
+
+
+Partea 2
+
+Constrangeri
+- NOT NULL
+- PRIMARY / FOREIGN KEY
+- UINQUE
+- DEFAULT 
+- CHECK conditie
+
+
+(nume strada), numar strada, cod_posta)
+
+Strada Principala, nr. 100, 300000
+
+CHECK (REGEX P_LIKE 
+      (adresa, '^[[:alpha:] 0-9 .-]* , Nr [1-9][0-9]*, [0-9]{6}
+
+ALTER TABLE nume_tabela
+    ADD nume_constrangeri
+    DROP
+
+
+
+TRANZACTII
+
+- un grup de instructiuni executate ca un intreg unitar
+- daca o singura tranzactie esueaza => toata tranzactia esueaza 
+
+
+A = atomicitate
+C = consistenta: modificarile chiar au loc
+I = izolare: 2 tranzactii rulate secvential = 2 tranzactii rulate in paralel
+D = durabilitate: rezultate garantate si in caz de erori de sistem de gestiune.
+
+
+1) SET TRANSACTION
+        nume_tranzactie
+        [READ_ONLY / READ_WRITE]
+
+2) COMMIT
+3) ROLLBACK
+4) SAVEPOINT
+
+
+
+Persoane
+
+ID |   NUME   | Adresa   |
+1      Mihai    ABC, 110
+2      Ana      ABD, 110
+3      Marian   ABC, 115
+
+
+
+BEGIN
+
+    SAVEPOINT SP0;
+    INSERT INTO PERSOANE VALUES (10,'Ion','Mare,1');
+    SAVEPOINT SP1;
+    UPDATE PERSOANE SET NUME='Ana Popescu' WHERE id=2;
+    SAVEPOINT SP2;
+    DELETE FROM PERSOANA WHERE ID=3;
+    ROLLBACK TO SP2;
+    COMMIT;
+
+END
+
+---------------------------------------------------------------
+
+BEGIN
+
+    SAVEPOINT SP0;
+    INSERT INTO PERSOANE VALUES (10,'Ion','Mare,1');
+    SAVEPOINT SP1;
+    UPDATE PERSOANE SET NUME='Ana Popescu' WHERE id=2;
+    SAVEPOINT SP2;
+    COMMIT;
+    DELETE FROM PERSOANA WHERE ID=3;
+    ROLLBACK TO SP2;
+    COMMIT;
+
+END
+
+----------------------------------------------------------------
+
+BEGIN
+
+    SAVEPOINT SPO;
+    INSERT INTO PERSOANE VALUES (10,'Ion','Mare,1');
+    SAVEPOINT SP1;
+    UPDATE PERSOANE SET NUME='Ana Popescu'
+    WHERE id=2;
+    SAVEPOINT SP2;
+    DELETE FROM PERSOANA WHERE ID=3;
+    ROLLBACK TO SP2;
+    INSERT INTO PERSOANE VALVES (3,'Maria','....');
+    COMMIT;
+
+    EXCEPTION WHEN OTHERS THEN ROLLBACK;
+
+END
+
+
+
+Tema
+
+
+ALTER TABLE ARTICOL
+ADD CONSTRAINT check_Data_articol CHECK (EXTRACT(YEAR FROM data_expirare) >= 2026);
+
+
+
+ALTER TABLE FABRICA
+ADD CONSTRAINT check_numar_div_adresa_5 CHECK (MOD(TO_NUMBER(REGEXP_SUBSTR(ADRESA, '[0-9]+')), 5) = 0);
+ENABLE NOVALIDATE;
+
+
+BEGIN
+    SAVEPOINT SP0;
+    INSERT INTO FABRICA VALUES (25,'Fabrica Bucuresti','Str. Mihai Viteazu 10, 330001',12);
+    SAVEPOINT SP1;
+    UPDATE FABRICA SET NUME='Fabrica Iasi' WHERE id_fabrica=24;
+    SAVEPOINT SP2;
+    UPDATE FABRICA SET NUME = 'Fabrica Modificata' WHERE ID_FABRICA = 23;
+    ROLLBACK TO SP2;
+    COMMIT;
+END;
+/
+
+
