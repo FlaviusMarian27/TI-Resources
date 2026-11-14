@@ -4,81 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "0faf0c316dca7e7e",
+        "id": "ea2a01dc8b85555a",
         "type": "tabs",
         "children": [
           {
-            "id": "5547a882bfdeeded",
+            "id": "eac5d4d46936f18e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Curs 1.md",
+                "file": "Curs 7.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Curs 1"
-            }
-          },
-          {
-            "id": "dcb2caa71de42042",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Curs 2.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Curs 2"
-            }
-          },
-          {
-            "id": "5f4b0ed76abfc390",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Curs 3.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Curs 3"
-            }
-          },
-          {
-            "id": "f424494a5019bee9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Curs 4.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Curs 4"
-            }
-          },
-          {
-            "id": "a98e96b8bd8340f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Curs 5.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Curs 5"
+              "title": "Curs 7"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -245,14 +188,25 @@
       "bases:Create new base": false
     }
   },
-  "active": "5f4b0ed76abfc390",
+  "active": "eac5d4d46936f18e",
   "lastOpenFiles": [
-    "file:/home/flavius/Downloads/README.md",
-    "Curs 1.md",
-    "Curs 2.md",
+    "Images/Arhitectura_și_funcționarea_sistemului_DNS.png",
+    "Images/Unconfirmed 794379.crdownload",
+    "Images/SOA_RECORD_CURS_AR.png",
+    "Images/Tabel_Root_SV.png",
+    "Images/map_root_servers.png",
+    "Images/Unconfirmed 586447.crdownload",
+    "Images/Unconfirmed 355975.crdownload",
+    "Images/DNS_INT.png",
+    "Images/Unconfirmed 214737.crdownload",
+    "Images/DNS_AR.png",
+    "Curs 7.md",
     "Curs 5.md",
     "Curs 4.md",
     "Curs 3.md",
+    "Curs 2.md",
+    "file:/home/flavius/Downloads/README.md",
+    "Curs 1.md",
     "Images/ClaseIP.png",
     "Images/MAC_address.png",
     "Images/OSI_TCP.png",
