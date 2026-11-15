@@ -1,0 +1,5 @@
+Start QEMU with /bin/qemu-system-x86_64 -name Debian12.6-1 -m 512M -smp cpus=1,sockets=1 -enable-kvm -machine smm=off -boot order=c -device virtio-scsi-pci,id=scsi0 -drive file=/home/flavius/Documents/TI-Resources/AN4/SEM1/AR/Laborator8/project-files/qemu/6f2ebf3f-6555-4f32-a326-601ff6c8a561/hda_disk.qcow2,if=none,id=drive0,index=0,media=disk -device scsi-hd,drive=drive0 -uuid 6f2ebf3f-6555-4f32-a326-601ff6c8a561 -serial telnet:127.0.0.1:5017,server,nowait -monitor tcp:127.0.0.1:42895,server,nowait -net none -device virtio-net-pci,mac=0c:2e:bf:3f:00:00,speed=10000,duplex=full,netdev=gns3-0 -netdev socket,id=gns3-0,udp=127.0.0.1:10095,localaddr=127.0.0.1:10094 -device virtio-net-pci,mac=0c:2e:bf:3f:00:01,speed=10000,duplex=full,netdev=gns3-1 -netdev socket,id=gns3-1,udp=127.0.0.1:10097,localaddr=127.0.0.1:10096 -display none
+
+Execution log:
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: terminating on signal 15 from pid 13804 (/usr/share/gns3/gns3-server/bin/python)
