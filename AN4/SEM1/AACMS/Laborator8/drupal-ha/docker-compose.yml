@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: drupal
+      POSTGRES_USER: drupal
+      POSTGRES_PASSWORD: drupal
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  drupal1:
+    image: drupal:10-apache
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    volumes:
+      - sitesdefault:/var/www/html/sites/default
+      - ./themes:/var/www/html/themes
+
+  drupal2:
+    image: drupal:10-apache
+    depends_on:
+      - db
+    volumes:
+      - sitesdefault:/var/www/html/sites/default
+      - ./themes:/var/www/html/themes
+
+  drupal3:
+    image: drupal:10-apache
+    depends_on:
+      - db
+    volumes:
+      - sitesdefault:/var/www/html/sites/default
+      - ./themes:/var/www/html/themes
+
+  lb:
+    image: nginx:alpine
+    depends_on:
+      - drupal1
+      - drupal2
+      - drupal3
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  dbdata:
+  sitesdefault:
