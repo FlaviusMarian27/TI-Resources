@@ -1,0 +1,344 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambul}
+\newcommand{\cursnr}{Curs 8 -- Server Web}
+\begin{document}
+\titlu{Server Web și Reverse proxy}{Administrarea rețelelor \textbullet{} Curs 8 \textbullet{} Secțiunea VII (slide 81--105)}
+
+\section{Definiții (slide 82)}
+\begin{itemize}
+  \item \textbf{Server web} $=$ aplicație server care servește conținut \textbf{HTML} unui client numit \textbf{browser}. Browserul descarcă fișierele HTML și le interpretează.
+  \item Comunică prin \textbf{http} și \textbf{https} (varianta criptată). Ambele sunt protocoale de \textbf{nivel aplicație}, transportate prin \textbf{TCP}.
+  \item Poate asculta pe orice port TCP, dar de obicei \textbf{80 pentru http} și \textbf{443 pentru https}.
+  \item Primul server web (httpd) a fost creat în \textbf{1990} de \textbf{Tim Berners-Lee} la \textbf{CERN}.
+\end{itemize}
+
+\section{URI / URL / URN (slide 83--84)}
+\begin{itemize}
+  \item \textbf{URI} $=$ string cu sintaxă bine definită care identifică o resursă în rețea. Poate specifica locația, numele sau ambele.
+  \item Sintaxa generală (RFC 3986): \cod{scheme:[//authority]path[?query][\#fragment]}
+  \begin{itemize}
+    \item \textbf{scheme}: protocolul (http, https, ftp, mailto, ldap, ldaps).
+    \item \textbf{authority}: \cod{[user:password@]host[:port]}.
+    \item \textbf{path}: calea resursei.
+    \item \textbf{query}: parametri opționali trimiși serverului.
+    \item \textbf{fragment}: o subsecțiune din rezultat.
+  \end{itemize}
+  \item \textbf{URL} $=$ caz particular de URI: identifică resursa, locația și protocolul/metoda de acces.
+  \item \textbf{URN} $=$ caz particular de URI: identifică resursa \textbf{după nume}, fără locație, protocol sau metodă de acces.
+  \item Orice URL e URI, dar \textbf{nu orice URI e URL}, pentru că URN nu e URL.
+  \item Exemple URL din slide: \cod{https://myuser:mypassword@example.org/myindex.html}, \cod{ftp://\ldots}, \cod{mailto:\ldots}, \cod{file:///home/valy/ptr.c}, \cod{ssh://git@gitlab.upt.ro:8822/\ldots}.
+  \item Exemple URN: \cod{urn:isbn:\ldots}, \cod{urn:uuid:\ldots}.
+\end{itemize}
+
+\img[0.62]{Images/URL_URI_URN.jpg}{Ilustrație suplimentară (nu e din slide). „anchor” $=$ \textbf{fragment} pe slide; pe slide e \cod{mailto:}, fără \cod{//}.}
+
+\section{Protocolul HTTP (slide 85--90)}
+\begin{itemize}
+  \item Nivel aplicație (OSI 7), între browser și server web. Transport \textbf{ASCII text}. Standardizat de IANA prin RFC-uri.
+  \item Schema \cod{http} implică comunicare pe \textbf{portul 80 TCP}.
+  \item Paradigma \textbf{client-server, request-response}. Dialogul e inițiat de client, \textbf{după} ce clientul a stabilit conexiunea TCP.
+\end{itemize}
+
+\subsection*{Request}
+\begin{lstlisting}
+<method> <request-target> <HTTP-version>
+<headers>
+
+<body>
+\end{lstlisting}
+\begin{itemize}
+  \item Linia goală \textbf{face parte din protocol și e necesară}.
+  \item \textbf{request-target} $=$ calea resursei (URL-ul).
+  \item \textbf{HTTP-version} $=$ HTTP/1.1, HTTP/2, HTTP/3.
+  \item \textbf{headers} $=$ metadata, perechi \cod{Header-name: Header-value} (ex.\ \cod{Host: staff.cs.upt.ro}, \cod{User-Agent: Mozilla/5.0}, \cod{Accept: text/html}).
+  \item \textbf{body} $=$ payload.
+  \item Exemplu GET din slide:
+\end{itemize}
+\begin{lstlisting}
+GET /~valy/ HTTP/1.1
+Host: staff.cs.upt.ro
+Connection: close
+\end{lstlisting}
+
+\subsection*{Metode}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}p{2.4cm} Y@{}}
+\toprule
+\textbf{Metodă} & \textbf{Rol}\\
+\midrule
+\textbf{GET} & cere o resursă (fișier html identificat prin URL). Poate avea directive în headers, dar \textbf{nu are body}\\
+\textbf{HEAD} & ca GET, dar răspunsul \textbf{nu conține datele}, doar header-ele\\
+\textbf{POST} & trimite date de la browser la server, ca să încarce sau să înlocuiască o resursă\\
+\textbf{DELETE} & șterge o resursă\\
+\textbf{PATCH} & actualizează \textbf{parțial} o resursă\\
+\textbf{OPTIONS} & cere lista capabilităților serverului și a metodelor http suportate\\
+\textbf{TRACE} & depanare, de tip \textbf{echo}: datele trimise de client sunt returnate de server\\
+\textbf{CONNECT} & creează un \textbf{tunel} prin serverul web, de obicei pentru transfer prin proxy\\
+\bottomrule
+\end{tabularx}
+
+\img[0.6]{Images/REST_API.jpg}{Ilustrație suplimentară (nu e din slide). Arată și \textbf{PUT}, care \textbf{nu} apare în lista de metode din slide-ul 86.}
+
+\subsection*{Response}
+\begin{lstlisting}
+<HTTP-version> <status-code> <reason-phrase>
+<headers>
+
+<body>
+\end{lstlisting}
+\begin{itemize}
+  \item \textbf{status-code} $=$ cod numeric, tot ASCII.
+  \item \textbf{reason-phrase} $=$ text explicativ scurt al codului.
+\end{itemize}
+
+\subsection*{Coduri de stare (slide 89--90)}
+\begin{itemize}
+  \item \textbf{1XX -- informativ}
+  \begin{itemize}
+    \item \textbf{100 Continue}: clientul a trimis o cerere fără body, iar serverul așteaptă și body-ul.
+    \item \textbf{101 Switching protocols}: clientul a cerut schimbarea protocolului, iar serverul a acceptat.
+  \end{itemize}
+  \item \textbf{2XX -- succes}
+  \begin{itemize}
+    \item \textbf{200 OK}: răspuns standard, poate avea body.
+    \item \textbf{202 Accepted}: datele cerute sunt în procesare.
+    \item \textbf{204 No Content}: cererea e procesată corect, dar răspunsul nu are conținut.
+  \end{itemize}
+  \item \textbf{3XX -- redirectare}
+  \begin{itemize}
+    \item \textbf{301 Moved Permanently}: resursa e mutată permanent la alt URI.
+    \item \textbf{307 Temporary Redirect}: mutată temporar, în viitor se folosește același URI inițial.
+    \item \textbf{308 Permanent Redirect}: ca 301, dar mai restrictiv.
+  \end{itemize}
+  \item \textbf{4XX -- eroare client}
+  \begin{itemize}
+    \item \textbf{400 Bad Request}: sintaxă greșită, dimensiune prea mare sau incorectă, request invalid.
+    \item \textbf{401 Unauthorized}: clientul nu s-a autentificat corect.
+    \item \textbf{403 Forbidden}: acces restricționat, fie clientul nu a inițiat autentificarea, fie e autentificat dar nu are drepturi.
+    \item \textbf{404 Not Found}: resursa nu e la URL-ul cerut.
+    \item \textbf{406 Not Acceptable}: resursa există, dar nu poate fi accesată în formatul cerut prin header.
+    \item \textbf{407 Proxy Authentication Required}: autentificare validă cerută de un proxy.
+    \item \textbf{408 Request Timeout}: serverul nu a răspuns în timp util și clientul nu mai așteaptă.
+  \end{itemize}
+  \item \textbf{5XX -- eroare server}
+  \begin{itemize}
+    \item \textbf{500 Internal Server Error}: eroare generică, situație de excepție neprelucrabilă.
+    \item \textbf{501 Not Implemented}: serverul nu recunoaște metoda din request sau nu poate răspunde în acel moment.
+    \item \textbf{502 Bad Gateway}: serverul contactat e configurat ca proxy, iar backend-ul nu răspunde sau nu poate fi contactat.
+    \item \textbf{Service Unavailable}: server prea încărcat sau în mentenanță, de obicei temporar.
+  \end{itemize}
+\end{itemize}
+
+\section{Protocolul HTTPS (slide 91--93)}
+\begin{itemize}
+  \item Extensie a http în care mesajele sunt \textbf{criptate cu TLS} (Transport Layer Security). Scop: limitarea interceptării prin atacuri \textbf{man-in-the-middle}.
+  \item Schema \cod{https}, \textbf{portul 443 TCP}.
+  \item Înainte de mesajele http se face o conexiune TLS care stabilește cheile și algoritmul de criptare și \textbf{confirmă identitatea serverului prin certificat}.
+  \item \textbf{TLS e protocol binar} (nu ASCII ca http).
+\end{itemize}
+
+\subsection*{Pașii TLS handshake}
+\begin{enumerate}
+  \item Conexiune \textbf{TCP} între browser și server.
+  \item Clientul trimite \textbf{ClientHello}: versiunea TLS suportată (1.2, 1.3), algoritmii de criptare suportați și \textbf{ClientRandom} (secvență aleatorie generată de browser, folosită la cheile de sesiune).
+  \item Serverul răspunde cu \textbf{ServerHello}: versiunea TLS aleasă (poate refuza sesiunea dacă nu suportă nicio versiune), \textbf{ServerRandom} și \textbf{certificatul digital} (cheia publică a serverului plus identitatea, semnate de un \textbf{CA}).
+  \item Clientul verifică certificatul:
+  \begin{itemize}
+    \item e semnat de un CA valid (root sau intermediar). Browserele au lista CA-urilor \textbf{root}, pentru validare locală rapidă. Pentru CA-urile \textbf{intermediare} se contactează CA-ul respectiv;
+    \item numele din certificat coincide cu numele accesat;
+    \item perioada de valabilitate;
+    \item \textbf{opțional}: verificarea revocării, de exemplu prin \textbf{OCSP} (Online Certificate Status Protocol).
+  \end{itemize}
+  \item \textbf{Schimbul de chei}: se negociază o cheie secretă între browser și server. Se generează cu algoritmi care folosesc \textbf{ClientRandom și ServerRandom}, rezultând \textbf{session-key}.
+  \item Browserul trimite \textbf{Finished}, criptat cu session-key.
+  \item Serverul decriptează și răspunde cu \textbf{Finished} criptat.
+  \item Conexiune TLS stabilită. De acum mesajele http se transportă \textbf{criptate, în format binar}.
+\end{enumerate}
+
+\img[0.8]{Images/TLS_handshake.jpg}{Ilustrație suplimentară (nu e din slide): TLS 1.2 vs.\ 1.3. Pentru examen valorează cei \textbf{8 pași din slide}, nu ordinea din poză.}
+
+\subsection*{Fișierele de care are nevoie serverul (slide 93)}
+\begin{enumerate}
+  \item \textbf{private.key}: cheia privată. Decriptează secretul trimis de client (clientul criptează cu cheia publică a serverului). Servește și la verificarea internă a certificatului.
+  \item \textbf{cert.pem}: certificatul serverului, semnat de CA. Demonstrează identitatea față de client.
+  \item \textbf{chain.pem}: certificatul \textbf{CA-ului intermediar} care a emis certificatul serverului. Trebuie să fie semnat de un root CA.
+  \item \textbf{fullchain.pem}: certificatul CA-ului intermediar plus certificatul serverului. \textbf{Nu conține root CA}, pentru că acesta e deja în trust store-ul browserului.
+\end{enumerate}
+
+\section{Apache web server (slide 94--101)}
+
+\subsection*{Virtual host (slide 94--95)}
+\begin{itemize}
+  \item Un server web poate servi \textbf{mai multe site-uri pe același IP}, după valoarea din câmpul host (authority). Fiecare site are un \textbf{VirtualHost}. Altfel ar fi nevoie de un server web și un IP pentru fiecare site.
+  \item \cod{<VirtualHost *:80>} $=$ valabil pe \textbf{toate IP-urile} sistemului (\cod{*}), pe portul 80.
+  \item \textbf{ServerName}: serverul îl compară cu header-ul \cod{Host:} din request. Dacă coincid, servește site-ul respectiv.
+  \item \textbf{ServerAdmin}: adresa de mail a administratorului.
+  \item \textbf{DocumentRoot}: calea de pe disk a fișierelor site-ului. Se caută întâi \cod{index.html} sau \cod{index.htm} (prima pagină).
+  \item \textbf{ErrorLog} și \textbf{CustomLog}: fișierele de log.
+  \item \textbf{\cod{<Directory>}}: proprietăți pentru \textbf{directoare din sistemul de fișiere} (nu sunt secțiuni ale aplicației web).
+  \item \textbf{\cod{<Location>}}: proprietăți pentru \textbf{secțiuni/locații ale aplicației web}. În exemplu, \cod{<Location /uploads/>} are propriul CustomLog.
+\end{itemize}
+\begin{lstlisting}
+<VirtualHost *:80>
+    ServerName actm.cs.upt.ro
+    ServerAdmin valentin.stangaciu@cs.upt.ro
+    DocumentRoot /var/www/html/vhosts/actm.cs.upt.ro
+    <Directory /var/www/html/vhosts/actm.cs.upt.ro>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/actm.cs.upt.ro_error.log
+    CustomLog ${APACHE_LOG_DIR}/actm.cs.upt.ro_access.log combined
+    <Location /uploads/>
+        CustomLog /var/log/apache2/uploads_access.log combined
+    </Location>
+</VirtualHost>
+\end{lstlisting}
+
+\img[0.8]{Images/Apache_flow.jpg}{Ilustrație suplimentară (nu e din slide). Slide-ul spune că serverul servește \textbf{strict cod HTML}; PHP nu apare în curs.}
+
+\subsection*{HTTPS în Apache (slide 96)}
+\begin{lstlisting}
+<VirtualHost *:443>
+    SSLEngine on
+    SSLCertificateFile      /etc/letsencrypt/live/web.cs.upt.ro/cert.pem
+    SSLCertificateKeyFile   /etc/letsencrypt/live/web.cs.upt.ro/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/web.cs.upt.ro/chain.pem
+</VirtualHost>
+\end{lstlisting}
+
+\subsection*{Restricționarea accesului (slide 97)}
+\begin{lstlisting}
+<Location /user>
+    Deny from all
+    Allow from 193.226.12.0/24
+    Allow from 172.16.0.0/16
+</Location>
+\end{lstlisting}
+\begin{itemize}
+  \item De obicei se începe cu \cod{Deny from all}, apoi se adaugă \cod{Allow from <ip sau clasă de ip>}. Practic e un fel de firewall.
+  \item Alternativ, tag-uri \cod{<Require \ldots>}: \cod{require any}, \cod{require valid user}, \cod{require ip}, \cod{require auth\_imap}, \cod{require ldap-group}.
+\end{itemize}
+
+\subsection*{Redirectare (slide 98)}
+\begin{lstlisting}
+Redirect /site/ https://cs.upt.ro
+Redirect / https://myserver.cs.upt.ro
+\end{lstlisting}
+\begin{itemize}
+  \item Primul argument e locația accesată, al doilea destinația. Orice conexiune la \cod{http://myserver.cs.upt.ro/site} merge la \cod{https://cs.upt.ro}.
+  \item E \textbf{vizibilă în browser: se schimbă URL-ul}.
+  \item \cod{Redirect / https://\ldots} redirectează automat tot traficul \textbf{http $\rightarrow$ https}, deci clienții folosesc conexiune securizată.
+\end{itemize}
+
+\subsection*{Reverse proxy (slide 99--100)}
+\begin{itemize}
+  \item Serverul web \textbf{nu servește el pagina}, ci trimite cererea către alt server web (\textbf{backend server}). Spre deosebire de redirectare, \textbf{nu e vizibil clientului}. Serverul proxy rescrie URL-ul.
+  \item De obicei proxy-ul e în rețeaua \textbf{publică}, iar backend-ul în rețeaua \textbf{privată}, „în spatele” lui.
+  \item Se implementează cu \textbf{ProxyPass} și \textbf{ProxyPassReverse}, sintaxă \cod{path url}.
+\end{itemize}
+\begin{lstlisting}
+ProxyPass        /new/ http://192.168.7.31/
+ProxyPassReverse /new/ http://192.168.7.31/
+\end{lstlisting}
+\begin{itemize}
+  \item \textbf{ProxyPass}: cererile venite pe \cod{/new/} sunt trimise către backend. Transparent pentru browser. Backend-ul \textbf{nu trebuie să fie vizibil în Internet}.
+  \begin{itemize}
+    \item \cod{http://myserver.cs.upt.ro/new/index.html} $\rightarrow$ \cod{http://192.168.7.31/index.html}
+    \item \cod{http://myserver.cs.upt.ro/new/general/api} $\rightarrow$ \cod{http://192.168.7.31/general/api}
+  \end{itemize}
+  \item \textbf{ProxyPassReverse}: efect invers. Rescrie calea din \textbf{răspunsul} backend-ului, ca să conțină numele din ServerName. Exemplu: \cod{http://192.168.7.31/mysite.html} $\rightarrow$ \cod{http://myserver.cs.upt.ro/new/mysite.html}.
+  \item Fără ProxyPassReverse, clientul primește direct URL-ul backend-ului, ceea ce nu are sens, pentru că răspunsul pare să vină de la alt host.
+  \item Doar cu ProxyPass și ProxyPassReverse ai proxy cu \textbf{URL-uri statice}. Pentru \textbf{URL-uri dinamice} e nevoie de modulul \textbf{Rewrite}.
+\end{itemize}
+
+\img[0.75]{Images/Forward_Reverse_Proxy.jpg}{Ilustrație suplimentară (nu e din slide). Din curs contează doar \textbf{reverse proxy} (dreapta): clienți pe Internet, backend în rețea privată.}
+
+\subsection*{Load balancing (slide 101)}
+\begin{itemize}
+  \item Se folosește \textbf{împreună cu directivele de proxy} și extinde proxy-ul la mai multe backend-uri.
+  \item \cod{<Proxy "balancer://myapp">} cu mai multe \textbf{BalancerMember} (oricâte) și \cod{ProxySet lbmethod=byrequests}. Slide-ul spune că e o regulă de tip \textbf{round-robin}. „myapp” e doar numele balancer-ului.
+  \item Apoi se configurează obligatoriu \cod{ProxyPass} și \cod{ProxyPassReverse}, ca la un singur backend.
+  \item Se poate folosi un balancer \textbf{și cu un singur backend}.
+\end{itemize}
+\begin{lstlisting}
+<Proxy "balancer://myapp">
+    BalancerMember "http://192.168.25.22"
+    BalancerMember "http://192.168.25.28"
+    ProxySet lbmethod=byrequests
+</Proxy>
+ProxyPass        /new/ "balancer://myapp/"
+ProxyPassReverse /new/ "balancer://myapp/"
+\end{lstlisting}
+
+\img[0.7]{Images/Load_balancing.jpg}{Ilustrație suplimentară (nu e din slide): schema generală a unui load balancer.}
+
+\section{Certificate Let's Encrypt cu certbot (slide 102--105)}
+
+\subsection*{Generalități}
+\begin{itemize}
+  \item Certificatele https se obțin de la un CA pentru: un domeniu (\cod{example.com}), un subdomeniu, un \textbf{wildcard de rang 1} (\cod{*.example.com}) sau un wildcard de rang 2 pentru un subdomeniu (\cod{*.subdomeniu.example.com}).
+  \item Sunt emise pe \textbf{perioadă limitată} și se reînnoiesc. De obicei sunt \textbf{contra cost}.
+  \item \textbf{Self-signed} (nesemnat de CA): asigură \textbf{doar criptarea}, \textbf{nu verificarea identității} serverului. Generează eroare/warning în browser. Browserul poate permite continuarea sau poate refuza accesul.
+  \item CA-uri gratuite, pe perioade scurte: \textbf{Let's Encrypt, ZeroSSL}.
+  \item \textbf{Let's Encrypt}: certificate pe \textbf{90 de zile}, gratuit. \textbf{Fără interfață de management și fără avertizare de expirare}, deci administratorul gestionează certificatul. Accesibil prin \textbf{RestAPI} sau clienți dedicați precum \textbf{certbot}.
+  \item Pentru emitere, LetsEncrypt verifică prin \textbf{challenge-uri} că cel care cere administrează domeniul. Procesul e automatizat cu certbot.
+\end{itemize}
+
+\subsection*{HTTP-01 challenge (slide 103)}
+\begin{itemize}
+  \item Serverul trebuie să servească un fișier la \cod{http://<domeniu>/.well-known/acme-challenge/<token>}. Token $=$ hash generat de LetsEncrypt. În fișier: token plus \textbf{thumbprint} (hash) generat din cheia privată a contului/cererii.
+  \item Comanda:
+\end{itemize}
+\begin{lstlisting}
+certbot certonly --standalone --preferred-challenges http -d host.example.com
+\end{lstlisting}
+\begin{itemize}
+  \item Certbot pornește un \textbf{server web temporar pe portul 80}, generează cheia privată, creează fișierul cu token și trimite cererea. LetsEncrypt accesează \cod{host.example.com}. Dacă prin DNS ajunge la serverul pornit de certbot, confirmă controlul și emite certificatul. Altfel procesul se anulează.
+\end{itemize}
+
+\subsection*{DNS challenge (slide 104--105)}
+\begin{itemize}
+  \item Verificarea se face printr-un \textbf{record TXT} la un subdomeniu dedicat, cu un hash aleator generat de certbot:
+\end{itemize}
+\begin{lstlisting}
+_acme-challenge.subdomeniu.example.com   IN   TXT   "hash-challenge-from-letsencrypt"
+\end{lstlisting}
+\begin{itemize}
+  \item Serverele LetsEncrypt verifică challenge-ul pe \textbf{servere DNS globale recursive}: \textbf{Google (8.8.8.8, 8.8.4.4) și Cloudflare (1.1.1.1, 1.0.0.1)}, \textbf{nu} interoghează direct serverul authoritative.
+  \item Administratorul trebuie să \textbf{aștepte propagarea} modificării. Se recomandă \textbf{TTL mic} pentru \cod{\_acme-challenge}.
+  \item Comanda wildcard:
+\end{itemize}
+\begin{lstlisting}
+certbot certonly --manual --preferred-challenges=dns --email=email@example.com --agree-tos -d *.example.com
+\end{lstlisting}
+\begin{enumerate}
+  \item Se rulează comanda.
+  \item Certbot contactează LetsEncrypt, emite o cheie privată și afișează hash-ul challenge-ului. Apoi \textbf{se suspendă} și așteaptă administratorul.
+  \item Administratorul adaugă recordul TXT în DNS-ul authoritative.
+  \item Verifică propagarea în Google și Cloudflare, cu \cod{dig}, toolbox.googleapps.com sau dnschecker.org.
+  \item Alege continuarea, după ce e sigur că s-a propagat.
+  \item Certbot validează domeniul și emite certificatul.
+\end{enumerate}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{URL $\subset$ URI.} URN e URI, dar nu e URL.
+  \item \textbf{GET nu are body.} HEAD întoarce doar header-ele. TRACE $=$ echo. CONNECT $=$ tunel prin proxy. PATCH $=$ actualizare \textbf{parțială}.
+  \item \textbf{http $=$ ASCII text, TLS $=$ binar.}
+  \item \textbf{401 $\neq$ 403:} la 401 nu te-ai autentificat corect. La 403 accesul e interzis chiar dacă ești autentificat și identificat.
+  \item \textbf{301 $=$ permanent, 307 $=$ temporar} (se păstrează URI-ul inițial), \textbf{308 $=$ ca 301 dar mai restrictiv}.
+  \item \textbf{502} apare când serverul e proxy și backend-ul nu răspunde. Slide-ul 90 scrie greșit „502 -- Service Unavailable” pentru ultimul cod. La examen reții descrierea de pe slide (server încărcat sau în mentenanță, de obicei temporar).
+  \item \textbf{4XX $=$ vina clientului, 5XX $=$ vina serverului.}
+  \item \textbf{Redirect vizibil} (URL-ul se schimbă în browser), \textbf{reverse proxy invizibil} (transparent pentru client).
+  \item \textbf{ProxyPass} trimite cererea la backend, \textbf{ProxyPassReverse} rescrie răspunsul. Fără el, clientul vede URL-ul backend-ului. Pe slide-uri apare scris „ProxyPas”, o greșeală de tipar.
+  \item \textbf{\cod{<Directory>} $=$ sistemul de fișiere, \cod{<Location>} $=$ locație în aplicația web.}
+  \item \cod{lbmethod=byrequests} $=$ \textbf{round-robin}. Balancer-ul merge și cu un singur backend.
+  \item \textbf{fullchain.pem} $=$ intermediar plus server, \textbf{fără root CA}.
+  \item \textbf{Self-signed} $=$ doar criptare, fără verificarea identității.
+  \item \textbf{Let's Encrypt $=$ 90 de zile}, fără interfață de management și fără avertizare de expirare.
+  \item \textbf{HTTP-01}: fișier la \cod{/.well-known/acme-challenge/<token>}, certbot pornește un server pe \textbf{portul 80}. \textbf{DNS challenge}: record \textbf{TXT} la \cod{\_acme-challenge}, verificat pe \textbf{Google și Cloudflare}. \textbf{Wildcard} se face prin DNS challenge.
+  \item \textbf{ClientRandom $+$ ServerRandom} $\rightarrow$ \textbf{session-key}. Clientul criptează cu cheia \textbf{publică} a serverului, serverul decriptează cu cheia \textbf{privată}.
+\end{itemize}
+\end{capcana}
+\end{document}
