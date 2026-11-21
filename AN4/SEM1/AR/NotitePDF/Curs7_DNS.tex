@@ -1,0 +1,221 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Latin Modern Mono}
+\usepackage[provide=*]{babel}
+\babelprovide[import,main]{romanian}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+
+\definecolor{accent}{HTML}{1F5F8B}
+\definecolor{trap}{HTML}{B3261E}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0pt}{}[\vspace{0.2em}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{1.6em}{0.8em}
+\setlist{itemsep=0.25em,topsep=0.3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[L]{Administrarea rețelelor}
+\fancyhead[R]{Curs 7 -- DNS}
+\fancyfoot[C]{\thepage}
+
+\lstset{basicstyle=\ttfamily\small,backgroundcolor=\color{black!4},frame=single,
+  rulecolor=\color{black!20},xleftmargin=0.5em,xrightmargin=0.5em,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,breaklines=true}
+
+\newtcolorbox{capcana}[1][Capcană de examen]{enhanced,colback=trap!5,colframe=trap,
+  fonttitle=\bfseries,title={\,#1},boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+% imagine: se afișează doar dacă fișierul există
+\newcommand{\img}[3][0.85]{\IfFileExists{#2}{\begin{center}
+  \includegraphics[width=#1\linewidth]{#2}\\[-0.2em]{\small\itshape #3}\end{center}}{}}
+
+\newcommand{\cod}[1]{\texttt{#1}}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\color{accent} DNS -- Domain Name System}\\[0.4em]
+  {\large Administrarea rețelelor \textbullet{} Curs 7 \textbullet{} Secțiunea VI}
+\end{center}
+
+\section{Ce este DNS}
+\begin{itemize}
+  \item Translatează un nume într-o adresă IP. Poate face și procesul invers, numit \textbf{Reverse DNS}.
+  \item Este un sistem distribuit de servere și protocoale care gestionează baze de date cu nume de calculatoare, servere sau servicii din Internet.
+  \item Fiecare nume poate primi o \textbf{adresă IP publică (DNS public)} sau o \textbf{adresă IP privată (server DNS privat într-o rețea privată)}.
+  \item \textbf{Rolul principal}: să rezolve un nume de domeniu într-o adresă IP.
+  \item Scop: utilizatorul nu mai trebuie să memoreze adrese IP.
+  \item Clientul trimite un nume și primește \textbf{IP-ul asociat}, pe care apoi îl folosește pentru a accesa serviciul.
+  \item Aplicații server: \textbf{bind, CoreDNS, UnboundDNS, PowerDNS, DNS Server (Windows Server)}.
+  \item Folosește \textbf{portul 53}, de obicei pe \textbf{UDP}, dar funcționează și pe \textbf{TCP}.
+  \item Structură ierarhică, arborescentă, pe 3 niveluri:
+  \begin{itemize}
+    \item \textbf{ROOT}: serverele de bază.
+    \item \textbf{TLDs}: rezolvă ultimul nume de după ultimul punct.
+    \item \textbf{Authoritative}: rezolvă domeniile obișnuite.
+  \end{itemize}
+\end{itemize}
+
+\img[0.8]{Images/DNS_AR.png}{Ierarhia serverelor DNS (curs AR, slide 74)}
+\img[0.62]{Images/DNS_INT.jpg}{Schema procesului DNS pe Internet}
+
+\section{ROOT DNS Servers}
+\begin{itemize}
+  \item \textbf{Rol}: Root nu rezolvă domeniul complet, ci doar îți spune care server \textbf{TLD} se ocupă de ultima etichetă (de exemplu \cod{.ro}).
+  \item Există \textbf{13 servere root} (a--m), fiecare cu \textbf{IP fix și nume de domeniu fix} (\cod{a.root-servers.net} \ldots{} \cod{m.root-servers.net}).
+  \item Fiecare dintre cele 13 este implementat \textbf{redundant în mai multe zone geografice} (harta este pe root-servers.org).
+  \item Fiecare device care se poate conecta la Internet are \textbf{o listă inițială cu serverele root}, inclusă în sistemul de operare.
+  \item Serverele root sunt \textbf{nerecursive}.
+  \item Operatori (tabelul de pe slide): a și j = Verisign; b = USC-ISI; c = Cogent; d = Univ.\ Maryland; e = NASA; f = ISC; g = US DoD; h = US Army; i = Netnod; k = RIPE NCC; l = ICANN; m = WIDE Project.
+\end{itemize}
+
+\img[0.72]{Images/map_root_servers.jpg}{Harta serverelor root}
+\img[0.78]{Images/Tabel_Root_SV.png}{Tabelul serverelor root (slide 75)}
+
+\section{TLD Servers}
+\begin{itemize}
+  \item Sunt pe \textbf{al doilea nivel după ROOT}. Rezolvă ultimul domeniu de după ultimul punct din URL.
+  \item IP-urile lor sunt introduse în baza de date a serverelor ROOT.
+  \item ROOT rezolvă doar TLD-ul și \textbf{deleagă} restul către ele.
+  \item Categorii:
+  \begin{itemize}
+    \item \textbf{ccTLD} (country): cod de țară, de obicei 2 litere (\cod{.ro}, \cod{.de}, \cod{.hu}, \cod{.ch}).
+    \item \textbf{Infrastructure}: \cod{.arpa}, primul domeniu creat, gestionat de IANA.
+    \item \textbf{gTLD} (generic), gestionate de IANA: \cod{.com}, \cod{.org}, \cod{.net}, \cod{.edu}, \cod{.gov}, \cod{.mil}, \cod{.top}, \cod{.xyz}, \cod{.win}\ldots
+    \item \textbf{grTLD} (generic restricted): \cod{.name}, \cod{.biz}.
+    \item \textbf{sTLD} (sponsored): \cod{.aero}, \cod{.asia}, \cod{.coop}, \cod{.jobs}.
+    \item \textbf{tTLD} (test): \cod{.test}.
+    \item \textbf{Reserved}: pentru rețele interne, teste, aplicații private. \textbf{Nu sunt rezolvate de ROOT}: \cod{.example}, \cod{.invalid}, \cod{.local}, \cod{.localhost}, \cod{.onion}, \cod{.internal}, \cod{.alt}.
+  \end{itemize}
+  \item TLD-ul nu rezolvă tot URL-ul. \textbf{Deleagă} către serverul de nume (NS) al primului domeniu de după TLD, citind de la dreapta la stânga.
+  \item NS-urile către care deleagă TLD-ul se numesc \textbf{servere autorizate (authoritative)}.
+\end{itemize}
+
+\Needspace{14\baselineskip}
+\section{DNS Records (RR)}
+Pentru fiecare domeniu sau subdomeniu se creează o \textbf{zonă} (similar cu o bază de date text) cu Resource Records.
+
+\medskip
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{@{}l l X@{}}
+\toprule
+\textbf{Record} & \textbf{Denumire} & \textbf{Ce face}\\
+\midrule
+\textbf{NS}    & Name Server & IP-ul unui server DNS autorizat pentru domeniu/subdomeniu\\
+\textbf{A}     & Address Record & Adresă IPv4 pentru un host obișnuit\\
+\textbf{AAAA}  & Address Record & La fel ca A, dar IPv6\\
+\textbf{CNAME} & Canonical name record & Alias (alt nume) pentru un record deja definit, de obicei de tip A. Practic îl redenumim.\\
+\textbf{MX}    & Mail exchange record & Listă de servere de mail pentru domeniu/subdomeniu. Serverul de mail este un host cu MTA (Mail Transfer Agent) pe \textbf{portul 25 (smtp)}\\
+\textbf{SRV}   & Service locator & Locația (IP) unui serviciu\\
+\textbf{TXT}   & Text record & Informații text generale, pentru aplicații utilizator\\
+\textbf{SPF}   & Sender Policy Framework & Ca TXT, tot text, folosit în aplicații de mail\\
+\textbf{SOA}   & „State of Authority'' (cum scrie slide-ul) & Probabil cel mai important record din zonă. Spune că serverul curent este autoritatea pentru zonă\\
+\bottomrule
+\end{tabularx}
+
+\bigskip
+\textbf{Sintaxa SRV:}
+\begin{lstlisting}
+_service._proto.name. ttl IN SRV priority weight port target
+\end{lstlisting}
+\textbf{Exemplu (slide):}
+\begin{lstlisting}
+_sip._tcp.example.com. 86400 IN SRV 20 0 5060 backupbox.example.com
+\end{lstlisting}
+
+\Needspace{18\baselineskip}
+\section{SOA Record}
+Record \textbf{obligatoriu} în orice zonă DNS.
+
+\img[0.6]{Images/SOA_RECORD_CURS_AR.png}{Structura SOA și exemplul pentru cs.upt.ro (slide 78)}
+
+\subsection*{Câmpuri}
+\begin{itemize}
+  \item \textbf{TTL}: perioada în secunde cu care serverul DNS superior (cel care a delegat) își actualizează cache-ul pentru zonă, în mod obișnuit, exceptând erorile.
+  \item \textbf{Owner name}: zona. De obicei se scrie \cod{@}, care reprezintă direct numele zonei.
+  \item \textbf{Class}: tipul zonei, de obicei \cod{IN} (Internet).
+  \item \textbf{MNAME}: serverul NS \textbf{primar} al zonei, definit ulterior în zonă.
+  \item \textbf{RNAME}: mailul administratorului, scris cu altă sintaxă:
+  \begin{itemize}
+    \item \textbf{primul punct} de la stânga la dreapta devine \cod{@};
+    \item dacă vrei punct în partea de dinainte de \cod{@}, îl scrii cu escape \cod{\textbackslash.};
+    \item \cod{admin@cs.upt.ro} $\rightarrow$ \cod{admin.cs.upt.ro};
+    \item \cod{ion.popescu@cs.upt.ro} $\rightarrow$ \cod{ion\textbackslash.popescu.cs.upt.ro}.
+  \end{itemize}
+\end{itemize}
+
+\textbf{Exemplu pentru \cod{cs.upt.ro}:}
+\begin{lstlisting}
+$TTL 86400
+@   IN SOA   ns.cs.upt.ro. admin.cs.upt.ro. (
+         2020080302 ;Serial
+         7200       ;Refresh
+         3600       ;Retry
+         1209600    ;Expire
+         3600       ;Negative response caching TTL
+)
+\end{lstlisting}
+
+\begin{itemize}
+  \item \textbf{Serial Number}:
+  \begin{itemize}
+    \item se schimbă la fiecare modificare a zonei;
+    \item format \textbf{AAAALLZZNN}: AAAALLZZ = data modificării (an, lună, zi), NN = număr incrementat la fiecare modificare din aceeași zi;
+    \item identifică modificările pe serverul primar (master). Când un \textbf{secondary} vede că serialul s-a schimbat, pornește actualizarea zonei prin \textbf{zone transfer}.
+  \end{itemize}
+  \item \textbf{Refresh}: la cât timp (secunde) citesc serverele secundare zona de la primar.
+  \item \textbf{Retry}: după cât timp (secunde) reîncearcă secundarele dacă primarul nu răspunde.
+  \item \textbf{Expire}: timeout. După această perioadă de inactivitate a primarului, secundarele \textbf{nu mai răspund la interogări}.
+  \item \textbf{Minimum TTL}: similar cu TTL-ul inițial. TTL-ul final $=$ \textbf{minim(TTL, MINIMUM TTL)}.
+\end{itemize}
+
+\section{SOA cu configurație minimă}
+\begin{lstlisting}
+      IN NS    ns.cs.upt.ro.
+      IN NS    ns.upt.ro.
+      IN NS    ns1.upt.ro
+      IN A     193.226.12.8
+ns    IN A     193.226.12.13
+ns2   IN A     193.226.12.3
+web   IN A     193.226.12.8
+www   IN CNAME web
+webmail IN CNAME www
+\end{lstlisting}
+\begin{itemize}
+  \item Zona are 3 NS-uri, un A pentru domeniul însuși (fără nume în față) și A-uri pentru \cod{ns}, \cod{ns2} și \cod{web}.
+  \item \cod{www} este alias pentru \cod{web}, iar \cod{webmail} este alias pentru \cod{www}.
+\end{itemize}
+
+\img[0.8]{Images/Arhitectura_DNS_infografic.jpg}{Infografic: arhitectura și funcționarea sistemului DNS}
+
+\begin{capcana}
+\begin{itemize}
+  \item Rootul \textbf{nu rezolvă domenii complete}: se oprește la TLD și este \textbf{nerecursiv}.
+  \item Cel mai din dreapta din URL este \textbf{TLD-ul}. Rootul nu apare în URL.
+  \item \textbf{13} servere root (a--m), dar implementate redundant geografic.
+  \item Portul 53 este \textbf{de obicei UDP}, dar merge și pe TCP. Portul 25 este pentru MX/SMTP.
+  \item Domeniile \textbf{Reserved} (\cod{.local}, \cod{.onion}, \cod{.example}\ldots) \textbf{nu sunt rezolvate de ROOT}; nu le confunda cu \cod{.test} (tTLD).
+  \item \cod{.arpa} este \textbf{infrastructure}, nu gTLD. \textbf{grTLD} (\cod{.name}, \cod{.biz}) $\neq$ \textbf{sTLD} (\cod{.aero}, \cod{.asia}, \cod{.coop}, \cod{.jobs}).
+  \item \textbf{CNAME} este alias pentru un record existent, de obicei A.
+  \item \textbf{SOA este obligatoriu} în orice zonă.
+  \item \textbf{RNAME}: primul punct $=$ \cod{@}; punctul din numele dinainte de \cod{@} se scrie \cod{\textbackslash.}
+  \item \textbf{Serial} $=$ AAAALLZZNN; schimbarea lui declanșează zone transfer pe secundare.
+  \item \textbf{Refresh} $\neq$ \textbf{Retry} $\neq$ \textbf{Expire}. TTL final $=$ minim(TTL, MINIMUM TTL).
+\end{itemize}
+\end{capcana}
+
+\end{document}
