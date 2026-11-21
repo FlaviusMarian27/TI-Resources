@@ -1,4 +1,6 @@
 
+# Definiție
+
 - **Server web** = este o aplicație de tip server care servește conținut HTML unui client numit **browser**.
 - Browser-ul descarcă fișierele HTML și le interpretează.
 - Comunică prin **http** și **https**, ambele protocoale fiind de layer 7.
@@ -206,3 +208,4 @@
 - **Let's Encrypt = 90 de zile**, fără interfață de management și fără avertizare de expirare.
 - **HTTP-01** servește fișierul la `/.well-known/acme-challenge/<token>` și certbot pornește un server pe **portul 80**. **DNS challenge** = record **TXT** la `_acme-challenge`, verificat pe **Google și Cloudflare**. **Wildcard** se face prin DNS challenge.
 - **ClientRandom + ServerRandom** → **session-key**. Clientul criptează cu cheia **publică** a serverului, serverul decriptează cu cheia **privată**.
+
