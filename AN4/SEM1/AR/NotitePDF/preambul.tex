@@ -1,0 +1,53 @@
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Latin Modern Mono}
+\usepackage[provide=*]{babel}
+\babelprovide[import,main]{romanian}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+
+\definecolor{accent}{HTML}{1F5F8B}
+\definecolor{trap}{HTML}{B3261E}
+
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0pt}{}[\vspace{0.2em}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{1.6em}{0.8em}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+\setlist{itemsep=0.25em,topsep=0.3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[L]{Administrarea rețelelor}
+\fancyhead[R]{\cursnr}
+\fancyfoot[C]{\thepage}
+
+\lstset{basicstyle=\ttfamily\small,backgroundcolor=\color{black!4},frame=single,
+  rulecolor=\color{black!20},xleftmargin=0.5em,xrightmargin=0.5em,
+  columns=fullflexible,keepspaces=true,showstringspaces=false,breaklines=true}
+
+\newtcolorbox{capcana}[1][Capcane de examen]{enhanced,colback=trap!5,colframe=trap,
+  fonttitle=\bfseries,title={\,#1},boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\newcommand{\img}[3][0.85]{\IfFileExists{#2}{\begin{center}
+  \includegraphics[width=#1\linewidth]{#2}\\[-0.2em]{\small\itshape #3}\end{center}}{}}
+\newcommand{\cod}[1]{\texttt{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\titlu}[2]{\begin{center}{\Huge\bfseries\color{accent} #1}\\[0.4em]{\large #2}\end{center}}
+
+% titlurile nu rămân singure la capăt de pagină
+\let\oldsection\section
+\renewcommand{\section}{\Needspace{9\baselineskip}\oldsection}
+\let\oldsubsection\subsection
+\renewcommand{\subsection}{\Needspace{6\baselineskip}\oldsubsection}

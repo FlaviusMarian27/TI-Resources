@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambul}
+\newcommand{\cursnr}{Curs 3 -- Hub, switch, ARP}
+\begin{document}
+\titlu{Hub, switch și ARP}{Administrarea rețelelor \textbullet{} Curs 3}
+
+\section{Hub, switch (slide 45--48)}
+
+\subsection*{Rețeaua veche cu cablu coaxial (în serie)}
+\begin{itemize}
+  \item \textbf{Single point of failure:} o problemă pe cablu sau la o placă de rețea strică comunicația pe toată rețeaua.
+  \item Practic, PC-urile erau legate în serie.
+  \item \textbf{Doar broadcast, necontrolat:} chiar dacă vorbesc doar 2 calculatoare, ceilalți interceptează.
+  \item \textbf{Securitate:} un „spion” se injectează ușor pe cablu și vede tot. \textbf{Spoofing} ușor (impersonarea nodurilor).
+  \item \textbf{Instabilă:} afectată de perturbații electromagnetice.
+\end{itemize}
+
+\subsection*{Rețea cu hub}
+\begin{itemize}
+  \item Coaxialul se înlocuiește cu \textbf{cablu cu 4 perechi torsadate $+$ conectori RJ-45} și un \textbf{hub}. Rezultă o rețea \textbf{stea}.
+  \item \textbf{Rezolvă:} single point of failure (afectat e doar calculatorul cu probleme) și perturbațiile electromagnetice.
+  \item \textbf{Hub $=$ echipament activ la L1 OSI}, doar nivel electric, fără „inteligență”.
+  \item \textbf{NU rezolvă:} domeniul de broadcast (pachetul ajunge la toate calculatoarele, fie unicast, multicast sau broadcast) și spionarea (un cablu adițional în hub vede toată rețeaua, cu posibilitate de spoofing).
+  \item Practic, dacă te conectai la oricare port, puteai să asculți ce vorbesc celelalte porturi.
+\end{itemize}
+
+\subsection*{Rețea cu switch}
+\begin{itemize}
+  \item \textbf{Switch $=$ echipament activ la L2 OSI.}
+  \item Identifică \textbf{MAC-urile} de pe porturi și ține o \textbf{tabelă MAC} (temporară).
+  \item Citește frame-ul Ethernet (MAC sursă și destinație) și trimite pachetul \textbf{doar pe portul} unde e MAC-ul destinație.
+  \item Reduce broadcast-ul, îmbunătățește rata de transfer, \textbf{rezolvă spionarea unicast} și \textbf{parțial spoofing-ul}.
+  \item Performanța depinde de \textbf{câte pachete Ethernet procesează pe unitatea de timp}, nu doar de viteza porturilor.
+  \item Există switch-uri care își trimit între ele tabelele de rutare prin anumite protocoale.
+  \item Contează mărimea tabelei și puterea cu care poate trimite switch-ul (câte pachete/sec).
+  \item Avem:
+  \begin{itemize}
+    \item \textbf{Unmanaged:} doar funcția de bază, nu se configurează și nu se monitorizează, cost mic, rețele simple.
+    \item \textbf{Managed:} configurabil și monitorizabil prin \textbf{serial UART, web, telnet, ssh}. Oferă facilități de securitate și stabilitate. Cost mai mare (enterprise mult mai mare).
+  \end{itemize}
+  \item Te poți conecta remote (telnet, SSH, Web).
+  \item Când se aprinde becul pe portul respectiv, înseamnă că a reușit să comunice cu celălalt device și are adresa MAC.
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{Hub $=$ L1, switch $=$ L2.}
+  \item Hub-ul rezolvă single point of failure, dar \textbf{nu} broadcast-ul și \textbf{nu} spionarea.
+  \item Switch-ul rezolvă spionarea, dar spoofing-ul doar \textbf{parțial}.
+  \item \textbf{Managed} înseamnă configurare (serial, web, telnet, ssh). \textbf{Unmanaged} nu se configurează.
+\end{itemize}
+\end{capcana}
+
+\section{ARP (slide 50--54)}
+
+\subsection*{Idee}
+\begin{itemize}
+  \item \textbf{ARP} descoperă \textbf{adrese MAC} pe baza IP-ului. C1 vrea să trimită un pachet IP către C2, dar pachetele IP merg în frame-uri Ethernet adresate cu MAC, deci C1 trebuie să știe MAC-ul lui C2.
+  \item Paradigma \textbf{request-response}. Slide-ul îl plasează la \textbf{nivelul 3} și zice că e transportat de pachete \textbf{Ethernet de broadcast}. Pachetul are structură fixă.
+\end{itemize}
+
+\medskip
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabularx}{\linewidth}{@{}p{3.1cm} Y Y@{}}
+\toprule
+ & \textbf{ARP Request} & \textbf{ARP Response}\\
+\midrule
+\textbf{OpCode} & 1 & 2\\
+\textbf{Ethernet} & \textbf{broadcast}, MAC dest \cod{FF:FF:FF:FF:FF:FF} & \textbf{unicast} către cel care a întrebat\\
+\textbf{Source MAC / IP} & cel care trimite cererea & cel care răspunde (IP $=$ Destination Protocol Address din request)\\
+\textbf{Destination MAC} (în ARP) & \cod{00:00:00:00:00:00} (necunoscută) & MAC-ul celui care a trimis request-ul\\
+\textbf{Destination IP} & IP-ul căruia i se cere MAC-ul & IP-ul celui care a trimis request-ul\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\subsection*{Variante și mecanisme}
+\begin{itemize}
+  \item \textbf{ARP Probe:} request broadcast \textbf{înainte} de setarea IP-ului, ca să verifice dacă IP-ul e deja folosit în rețea. Dacă apare răspuns, IP-ul e deja ocupat.
+  \item \textbf{GARP (Gratuitous ARP / ARP Announcement):} dispozitivul își anunță \textbf{neîntrebat} MAC-ul prin broadcast ARP Request. Se recunoaște prin \textbf{IP sursă $=$ IP destinație}.
+  \item \textbf{ARP Proxy:} routerul răspunde la ARP Request pentru IP-uri din \textbf{altă rețea}, cu \textbf{propriul MAC}, și ține o tabelă internă pentru IP-urile din afară. Practic, router-ul răspunde cu MAC-ul lui pentru toate PC-urile sale.
+  \item \textbf{ARP Caching:} dispozitivul ține o tabelă MAC-IP, ca să reducă cererile. O intrare se invalidează prin \textbf{timeout} sau când se constată că \textbf{nu mai merg conexiunile} cu perechea IP-MAC. Tabela se actualizează și la \textbf{GARP}.
+  \item \textbf{ARP Spoofing:} un alt dispozitiv răspunde \textbf{mai repede} decât cel real, ca să îl înlocuiască în rețea.
+\end{itemize}
+
+\subsection*{Comenzi Linux}
+\begin{itemize}
+  \item \cod{arp -an}: afișează tabela. \cod{<incomplete>} în loc de MAC $=$ s-a cerut comunicația cu acel IP, dar nu s-a descoperit MAC-ul.
+  \item \cod{arp -i eno1 -s 192.168.4.123 1C:00:34:22:11:AA}: adaugă manual o pereche IP-MAC.
+  \item \cod{arp -d 192.168.4.123}: șterge o înregistrare.
+  \item \cod{arping}: trimite forțat cerere ARP către un IP, așteaptă răspunsul și măsoară timpul. E ca \cod{ping}, dar \textbf{nu folosește ICMP}.
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{Request:} OpCode 1, Ethernet broadcast, dar Destination MAC din pachetul ARP $=$ \cod{00:..:00}.
+  \item \textbf{Response:} OpCode 2, \textbf{unicast}.
+  \item \textbf{GARP} se recunoaște după IP sursă $=$ IP destinație, nu după OpCode.
+  \item \textbf{Probe} $=$ înainte de a seta IP-ul. \textbf{GARP} $=$ anunț după.
+  \item \textbf{Proxy ARP} răspunde cu \textbf{MAC-ul routerului}.
+  \item \textbf{\cod{arping} $\neq$ ICMP.}
+  \item Intrarea ARP se invalidează prin \textbf{timeout} sau când conexiunea nu mai merge.
+\end{itemize}
+\end{capcana}
+\end{document}

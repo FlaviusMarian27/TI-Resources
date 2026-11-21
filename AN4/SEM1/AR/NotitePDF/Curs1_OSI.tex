@@ -1,0 +1,111 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambul}
+\newcommand{\cursnr}{Curs 1 -- Stiva OSI}
+\begin{document}
+\titlu{Stiva OSI}{Administrarea rețelelor \textbullet{} Curs 1}
+
+\section{Modelul OSI}
+\begin{itemize}
+  \item Un model teoretic, cu 7 nivele independente, care comunică prin pachete (date utile $+$ date de încapsulare).
+  \item \textbf{SDU} $=$ pachetul primit de nivelul $j$ de la nivelul de sus ($j+1$).
+  \item \textbf{PDU} $=$ pachetul cu încapsulare trimis de nivelul $j$ către nivelul de jos ($j-1$).
+\end{itemize}
+
+\img[0.4]{Images/SDU_PDU.png}{SDU și PDU}
+
+\begin{itemize}
+  \item \textbf{Scop:} interoperabilitate între protocoale diferite. Împarte un protocol în sub-protocoale abstracte și independente.
+  \item Nivelul $j$ al nodului $i$ comunică cu nivelul $j$ al nodului $k$.
+  \item \textbf{Istoric (posibile întrebări de memorie):}
+  \begin{itemize}
+    \item Studiu lansat în \textbf{1977} de ISO împreună cu CCITT (viitorul ITU-T).
+    \item Definit prima dată de \textbf{Hubert Zimmermann}, în \textbf{1978}.
+    \item Arhitectura pe 7 nivele: \textbf{Charles Bachman}, Honeywell.
+    \item Standardizat în \textbf{1984}: \textbf{ISO 7498} și ITU-T \textbf{X.200}.
+    \item ISO/IEC 7498 are 4 părți: \textbf{-1} Basic Model, \textbf{-2} Security Architecture, \textbf{-3} Naming and Addressing, \textbf{-4} Management framework.
+  \end{itemize}
+\end{itemize}
+
+\bigskip
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{@{}p{2.3cm} Y p{2.1cm} p{3.0cm}@{}}
+\toprule
+\textbf{Nivel} & \textbf{Rol din slide} & \textbf{PDU} & \textbf{Exemple}\\
+\midrule
+\textbf{L1 Physical} & Transmite/recepționează date \textbf{nestructurate} pe mediu (radio, electric, optic). Specifică tensiuni, viteze, distanțe, modulație, cabluri, conectori etc. & bit, simbol & SPI, I2C, 802.11, 802.15.4, 802.3\\
+\textbf{L2 Data Link} & Comunicare \textbf{stabilă între 2 noduri conectate direct} (node-to-node). Poate face și flow control. & \textbf{frame} & MAC și LLC din 802.15.4, HDLC\\
+\textbf{L3 Network} & Comunicare între noduri conectate \textbf{indirect} sau în \textbf{rețele diferite}; rutare, adresă unică per nod. & \textbf{packet} & IP, ICMP, IPX\\
+\textbf{L4 Transport} & Legătură sigură între 2 noduri (aceeași rețea sau rețele diferite): segmentare, retransmisii, ack, multiplexare. & \textbf{segment, datagramă} & TCP, UDP (din slide 19)\\
+\textbf{L5 Session} & Gestionează \textbf{sesiunile} (perioade de schimb continuu de informație) și \textbf{autentificarea}. & date structurate & RPC, PAP\\
+\textbf{L6 Presentation} & Encodare, serializare, date structurate, \textbf{criptare/decriptare}, tipuri de date. & -- & BER\\
+\textbf{L7 Application} & Aplicația în sine, \textbf{nu există reglementare}. & -- & http, smtp, ntp, mqtt\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\subsection*{Detalii pe care le pot lua la grilă}
+\begin{itemize}
+  \item \textbf{L2 are 2 subnivele} (ex.\ IEEE 802):
+  \begin{itemize}
+    \item \textbf{MAC} $=$ politici de acces la mediu (CSMA, TDMA).
+    \item \textbf{LLC} $=$ reguli de încapsulare (encodare/decodare frame-uri), detecție și corecție de erori.
+    \item LLC \textbf{poate} (dar nu e obligatoriu) să ofere segmentare, frame sequencing, cereri de retransmisie.
+  \end{itemize}
+  \item \textbf{L3:} mesajul are minim date $+$ adresă sursă $+$ adresă destinație. Rutarea găsește o cale multi-nod. Segmentarea, detecția/corecția erorilor și retransmisia sunt \textbf{opționale}.
+  \item \textbf{L4:} modelul definește \textbf{5 clase de implementare, TP0--TP4}, pentru că nu toate protocoalele pot implementa toate cerințele. \textbf{CONS} $=$ connection-oriented, \textbf{CLNS} $=$ connection-less.
+\end{itemize}
+
+\section{Stiva TCP/IP}
+\begin{itemize}
+  \item Se numește \textbf{Internet Protocol Suite}. Componentele principale: \textbf{TCP, UDP, IP}.
+  \item \textbf{Nu respectă perfect OSI}: nu implementează toate nivelele direct și individual.
+\end{itemize}
+
+\img[0.7]{Images/OSI_TCP.png}{Stiva OSI vs.\ TCP/IP}
+
+\subsection*{Network Access Layer $=$ L1 $+$ L2 din OSI}
+\begin{itemize}
+  \item Fizic diferă după mediu: cablu $=$ \textbf{Ethernet (IEEE 802.3)}, wireless $=$ \textbf{WiFi (IEEE 802.11)}.
+  \item Adresare \textbf{MAC pe 6 bytes}.
+  \item Oferă o interfață comună către nivelul superior (IP).
+\end{itemize}
+
+\subsection*{Internet Layer $=$ L3 complet din OSI}
+\begin{itemize}
+  \item Adresare prin \textbf{IP $+$ netmask}, plus \textbf{rutare}.
+  \item Oferă baza pentru TCP/UDP. Mai conține \textbf{ICMP, IGMP}.
+  \item \textbf{NU} oferă comunicație sigură, \textbf{NU} face retransmisii, \textbf{NU} asigură ordinea pachetelor.
+\end{itemize}
+
+\subsection*{Transport Layer}
+\begin{itemize}
+  \item Adresare prin \textbf{port} (număr întreg). \textbf{PORT $+$ IP $=$ SOCKET}.
+\end{itemize}
+
+\medskip
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}p{3.4cm} Y Y@{}}
+\toprule
+ & \textbf{TCP} & \textbf{UDP}\\
+\midrule
+Tip & connection-oriented (TP4 -- CONS) & connection-less (TP4 -- CLNS)\\
+Conexiune & logică, necesară înainte de date utile, monitorizată & nu există\\
+Confirmare & pentru fiecare pachet & nu\\
+Retransmisie & da, pentru pachete pierdute/eronate & nu\\
+Segmentare/asamblare în ordine & da & nu\\
+Duplicate & le identifică și le elimină & nu\\
+Ordinea & respectată & nu e asigurată\\
+Rezultat & comunicație \textbf{fiabilă} & --\\
+\bottomrule
+\end{tabularx}
+
+\bigskip
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{IP $\neq$ fiabil.} Fiabilitatea e la TCP, nu la Internet Layer.
+  \item \textbf{TCP $=$ CONS, UDP $=$ CLNS}, ambele sub TP4.
+  \item \textbf{Network Access îmbină L1 $+$ L2} (nu doar L2).
+\end{itemize}
+\end{capcana}
+\end{document}

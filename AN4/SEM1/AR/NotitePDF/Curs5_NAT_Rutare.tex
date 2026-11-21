@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambul}
+\newcommand{\cursnr}{Curs 5 -- NAT, rutare, management}
+\begin{document}
+\titlu{NAT, rutare și interfețe de management}{Administrarea rețelelor \textbullet{} Curs 5}
+
+\section{NAT și gateway (slide 60--61)}
+\begin{itemize}
+  \item \textbf{NAT} maschează și mapează adresele IP dintr-o rețea internă într-un alt spațiu de adrese extern. Modifică \textbf{header-ul IP} al pachetului, printr-un dispozitiv conectat la ambele rețele, un \textbf{router}.
+  \item \textbf{Mecanism:} înlocuiește IP-ul clientului din LAN cu \textbf{IP-ul public al routerului}.
+  \item Routerul ține o \textbf{tabelă de conexiuni}, ca să trimită răspunsurile la nodul corect.
+  \item Nodurile publice \textbf{nu văd} rețeaua privată, doar IP-ul public al routerului.
+  \item Routerul e hardware-software la \textbf{nivelul 3}, pentru că lucrează direct pe pachete IP.
+  \item \textbf{Mascarada (IP masquerading) $=$ SNAT (Source NAT).} Consecință: nodurile interne \textbf{pot accesa} rețeaua publică, dar \textbf{nu pot fi accesate} din ea. Slide-ul îl numește „Once-to-many NAT”.
+  \item \textbf{Gateway} $=$ calculatorul cu rol de router. Denumirea e \textbf{relativă la rețeaua locală}, iar el are un IP din \textbf{aceeași clasă} cu restul LAN-ului.
+  \item \textbf{LAN} $=$ rețea privată.
+  \item \textbf{WAN} $=$ rețea publică.
+\end{itemize}
+
+\section{Rutare și tabela de rutare (slide 62--63)}
+\begin{itemize}
+  \item \textbf{Rutarea} e necesară când destinația e într-un \textbf{alt subnet} (prefix de rețea diferit).
+  \item Fiecare nod are o \textbf{tabelă de rutare}: rute pentru destinații diferite, fiecare cu IP-ul unui gateway, plus o \textbf{rută implicită (default route / default gateway)}. Ea preia tot ce nu se potrivește cu nicio altă rută.
+  \item \textbf{Linux:} \cod{route} (de ex.\ \cod{route -n}) sau \cod{ip route show}.
+\end{itemize}
+
+\subsection*{Exemplul din slide, \cod{ip route show}}
+\begin{enumerate}
+  \item \cod{default via 192.168.0.1 dev eno1 ... src 192.168.0.20 metric 100} $=$ gateway-ul implicit.
+  \item \cod{192.168.0.0/16 dev eno1 ...} $=$ ruta pentru subnetul interfeței eno1. Traficul către acest subnet pleacă direct pe eno1.
+  \item \cod{192.168.122.0/24 dev virbr0 ...} $=$ ruta pentru subnetul interfeței virbr0.
+  \item \cod{192.168.248.190 via 192.168.0.1 dev eno1} $=$ traficul către acest IP merge \textbf{prin gateway}. \textbf{Anulează regula 1} pentru acest IP. Fără ea, IP-ul ar fi contactat direct, fiindcă e în același 192.168.0.0/16.
+\end{enumerate}
+
+\subsection*{\cod{route -n} (aceleași rute scrise altfel)}
+\begin{itemize}
+  \item Coloane: Destination, Gateway, Genmask, Flags, Metric, Ref, Use, Iface.
+  \item Destinația \textbf{0.0.0.0} nu e o adresă validă, e o convenție pentru „\textbf{toate adresele}”.
+  \item În exemplu: \cod{UG} la default, \cod{U} la rețele directe, \cod{UGH} la ruta spre un host.
+  \item \textbf{Metric} $=$ costul rutei, deci prioritatea. \textbf{Cu cât e mai mic, cu atât ruta e preferată.} Ruta cu metric mai mare se folosește doar dacă prima nu e disponibilă (nu se poate ajunge la ea sau interfața e \textbf{DOWN}).
+  \item Metric permite 2 rute default cu gateway-uri diferite și costuri diferite.
+\end{itemize}
+
+\section{DNAT, port forwarding, DMZ (slide 64)}
+\begin{itemize}
+  \item Implicit, nodurile din rețeaua privată \textbf{nu pot fi accesate} din cea publică. Accesarea IP-ului public ajunge la \textbf{router}.
+  \item \textbf{DNAT (destination NAT), port forwarding:} o conexiune venită pe IP-ul public, pe un \textbf{Remote Port}, e trimisă mai departe către un \textbf{Local Address} și \textbf{Local Port} din LAN.
+  \begin{itemize}
+    \item Local Port \textbf{poate fi diferit} de Remote Port.
+    \item Pe un Remote Port se poate pune \textbf{o singură regulă} DNAT.
+    \item Se pot pune \textbf{oricâte reguli} către același Local Address și/sau Local Port.
+    \item E \textbf{transparent} pentru host-ul public: el vede doar routerul.
+  \end{itemize}
+  \item \textbf{DMZ (Demilitarized Zone):} caz \textbf{generalizat} de DNAT. Există un \textbf{DMZ host} din LAN, iar orice conexiune la router, \textbf{indiferent de port}, e trimisă la el.
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{SNAT/masquerading:} interiorul iese afară, dar \textbf{nu poate fi accesat} din exterior.
+  \item \textbf{Metric mai mic $=$ prioritate mai mare.}
+  \item \textbf{0.0.0.0 în \cod{route -n}} $=$ toate adresele, nu o adresă validă.
+  \item \textbf{Ruta către un host anume} (\cod{... via gateway}) are prioritate față de ruta implicită.
+  \item \textbf{O singură regulă DNAT pe un Remote Port}, dar mai multe pot duce la același Local Address/Port.
+  \item \textbf{DMZ $=$ indiferent de port}, DNAT $=$ pe un port anume.
+  \item \textbf{Gateway} e o denumire relativă la LAN, cu IP din \textbf{aceeași clasă} ca LAN-ul.
+\end{itemize}
+\end{capcana}
+
+\section{Interfețe de management (slide 70)}
+Sunt interfețele prin care se \textbf{configurează, gestionează și monitorizează} un echipament.
+
+\subsection*{Switch și router}
+\begin{itemize}
+  \item \textbf{Interfață serială}, pentru configurarea inițială în linie de comandă.
+  \item \textbf{Interfață logică la nivel IP}, configurabilă prin linie de comandă sau web (după capabilitățile producătorului). Are fie IP din fabrică, fie se configurează inițial prin interfața serială.
+  \item Unele au \textbf{interfață Ethernet-IP dedicată}, numită \textbf{OOB (Out-of-Band)}. E \textbf{strict pentru configurare} și \textbf{nu participă} la activitatea de bază a switch-ului/routerului.
+  \item \textbf{Switch L2:} o singură interfață logică de management. \textbf{Switch L3:} mai multe.
+\end{itemize}
+
+\subsection*{Servere}
+\begin{itemize}
+  \item Interfață de rețea fizică \textbf{dedicată} sau \textbf{partajată} cu cele obișnuite.
+  \item \textbf{Dell} $=$ \textbf{iDRAC} (Integrated Dell Remote Access Controller). \textbf{HP} $=$ \textbf{iLO} (Integrated Lights-Out).
+  \item Sistemul de management e \textbf{izolat de restul serverului}, deși stă în aceeași carcasă. \textbf{Nu interacționează direct cu sistemul de operare.}
+  \item Se activează \textbf{independent, la punerea sub tensiune}, chiar dacă serverul e oprit sau nu are SO.
+  \item După \textbf{licență}, pot oferi \textbf{acces remote la display} și \textbf{echipamente virtuale} (stick USB virtual, unitate optică virtuală).
+\end{itemize}
+
+\subsection*{Alte echipamente}
+Majoritatea au interfață de configurare și monitorizare Ethernet-IP.
+
+\subsection*{Securitate (slide 71)}
+\begin{itemize}
+  \item Sistemele de management sunt implementate cu module software/hardware \textbf{slabe în resurse} și, implicit, \textbf{slabe în politici de securitate}.
+  \item Prin ele se pot \textbf{schimba radical configurațiile}, inclusiv \textbf{reset la setările din fabrică}. La servere se pot \textbf{șterge datele de pe mediile de stocare}.
+  \item \textbf{Practica:} rețeaua de management e \textbf{separată complet} de rețeaua de date, \textbf{cel puțin logic} (prin \textbf{VLAN-uri separate}), cu acces \textbf{restricționat la administratorii de rețea}.
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{OOB $=$ interfață dedicată, doar pentru configurare}, nu pentru traficul obișnuit.
+  \item \textbf{iDRAC $=$ Dell, iLO $=$ HP.} Nu le inversa.
+  \item iDRAC/iLO sunt \textbf{izolate de SO} și \textbf{pornesc și când serverul e oprit}.
+  \item \textbf{Switch L2 $=$ o singură interfață logică, L3 $=$ mai multe.}
+  \item Rețeaua de management se separă \textbf{cel puțin logic} (VLAN), nu neapărat fizic.
+\end{itemize}
+\end{capcana}
+\end{document}

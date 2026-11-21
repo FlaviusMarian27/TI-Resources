@@ -1,0 +1,221 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambul}
+\newcommand{\cursnr}{Curs 2 -- Adresare MAC, IP, Subnetting}
+\begin{document}
+\titlu{Adresare MAC, IP și Subnetting}{Administrarea rețelelor \textbullet{} Curs 2}
+
+\section{Adresare MAC}
+\begin{itemize}
+  \item Este folosită la \textbf{L2 OSI $=$ Network Access Layer din TCP/IP}.
+  \item Fiecare echipament din rețea are o adresă MAC, \textbf{unică per dispozitiv}.
+  \item Este o adresă hardware, care se poate schimba.
+  \item Pentru identificarea device-urilor din aceeași rețea. Se vede \textbf{doar în interiorul rețelei locale}, nu după rutarea L3.
+  \item \textbf{IEEE} gestionează formatul. Cel mai folosit este standardul EUI-48 și mai puțin EUI-64.
+  \item \textbf{Notație:} fiecare byte pe 2 caractere hex, separat cu \cod{:} sau \cod{-}. Ex.\ \cod{45:A0:23:98:17:02}. Bytes se numără de la stânga, începând cu \textbf{1}.
+  \item \textbf{Capacitate:} $2^{48}$ adrese unice, estimat suficient $\sim$100 de ani, până în \textbf{2080}. Următorul format: \textbf{EUI-64}, cu 2 bytes în plus.
+\end{itemize}
+
+\img[0.55]{Images/MAC_address.png}{MAC address EUI-48}
+
+\subsection*{Structura}
+\begin{itemize}
+  \item \textbf{Primii 3 bytes $=$ OUI} (producătorul), asignat de IEEE.
+  \item \textbf{Ultimii 3 bytes $=$ NIC} (dispozitivul), gestionat de producător, cu condiția să fie unic.
+  \item \textbf{2 biți din primul byte} au sens special, deci ID-ul producătorului are efectiv \textbf{22 de biți} (24 $-$ 2).
+\end{itemize}
+
+\subsection*{Cei doi biți speciali (primul byte)}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabularx}{\linewidth}{@{}p{1.1cm} p{2.4cm} Y Y@{}}
+\toprule
+\textbf{Bit} & \textbf{Nume} & \textbf{Valoare 0} & \textbf{Valoare 1}\\
+\midrule
+\textbf{b0} & I/G (individual/group) & \textbf{unicast}: un dispozitiv fizic unic; switch-ul trimite doar pe portul lui & \textbf{multicast}: către un grup de adrese cu OUI fix și toate NIC-urile posibile. Este rezervat pentru anumite protocoale.\\
+\textbf{b1} & U/L (universal/local) & \textbf{UAA}, administrat global de IEEE, dispozitiv real, unic global & \textbf{LAA}, administrat local sau setat programatic, \textbf{nu e garantat unic}; dispozitive virtuale (interfețe de mașini virtuale, interfețe virtuale locale). Practic nu este ceva fizic, este un VM sau un docker, de exemplu.\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\begin{itemize}
+  \item \textbf{Exemplu unicast:} \cod{3c:7c:3f:4e:df:89}, cu \cod{3c = 00111100}.
+  \item \textbf{Exemplu multicast:} \cod{01:00:5E:00:00:00}, care acoperă intervalul \cod{01:00:5E:00:00:00} -- \cod{01:00:5E:7F:FF:FF}. Adresele multicast sunt rezervate unor protocoale.
+  \item \textbf{Broadcast:} \cod{FF:FF:FF:FF:FF:FF}. Merge la toate dispozitivele conectate direct la rețea. Cel mai des îl folosește \textbf{ARP} sau chiar \textbf{DHCP}.
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item \textbf{b0 $=$ unicast/multicast, b1 $=$ universal/local.} Se încurcă ușor.
+  \item \textbf{Bitul 0 $=$ unicast și universal; bitul 1 $=$ multicast și local.}
+  \item \textbf{22 de biți, nu 24}, pentru ID-ul producătorului.
+  \item \textbf{MAC-ul NU trece de router.}
+  \item \textbf{MAC local $=$ nu e garantat unic}, tipic pentru dispozitive virtuale.
+  \item \textbf{OUI $=$ producător, NIC $=$ dispozitiv.} Nu invers.
+\end{itemize}
+\end{capcana}
+
+\section{Adresarea IP}
+\begin{itemize}
+  \item Lucrează la \textbf{L3 OSI} $=$ \textbf{Internet Layer} din TCP/IP.
+  \item Ideal pentru identificarea unui device din altă rețea.
+  \item Un echipament poate avea \textbf{una sau mai multe adrese IP}. Sunt alocate \textbf{logic, prin software}, nu pe hardware ca MAC-ul.
+  \item \textbf{MAC} adresează dispozitive din aceeași rețea. \textbf{IP} adresează logic și dispozitive din \textbf{alte rețele interconectate}.
+  \item \textbf{IPv4} $=$ 32 biți (4 bytes), \textbf{IPv6} $=$ 128 biți.
+  \item \textbf{IPv6} este foarte nesecurizat.
+  \item \textbf{Notație:} dot-decimal, un byte per grup. Ex.\ \cod{192.168.230.123}. Mai rar, hex pe 32 de biți: \cod{192.168.230.123} $=$ \cod{C0A8E67B}.
+\end{itemize}
+
+\subsection*{IANA $=$ Internet Assigned Numbers Authority}
+\begin{itemize}
+  \item \textbf{IANA} gestionează global adresele IP și deleagă la \textbf{5 RIR}:
+  \begin{itemize}
+    \item \textbf{AFRINIC}: Mauritius
+    \item \textbf{ARIN}: Virginia, USA
+    \item \textbf{APNIC}: Brisbane, Australia
+    \item \textbf{LACNIC}: Montevideo, Uruguay
+    \item \textbf{RIPE NCC}: Amsterdam, Netherlands
+  \end{itemize}
+  \item \textbf{Responsabilități IANA:} adresele IP, numele de domenii (root nameservers din DNS), protocoalele și semnificația porturilor, publicația \textbf{RFC}.
+\end{itemize}
+
+\subsection*{Biți de rețea și de host}
+\begin{itemize}
+  \item \textbf{Biți de rețea} $=$ cei mai semnificativi (din stânga). Toate host-urile din aceeași rețea au aceeași valoare pe ei. Identificatorul rețelei.
+  \item \textbf{Biți de host} $=$ cei mai puțin semnificativi (din dreapta). Sunt unici per host.
+  \item \textbf{Masca de rețea} face împărțirea dintre ei.
+\end{itemize}
+
+\subsection*{Clasele}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabularx}{\linewidth}{@{}l l l Y@{}}
+\toprule
+\textbf{Clasă} & \textbf{Interval} & \textbf{Mască implicită} & \textbf{Biți rețea / host}\\
+\midrule
+A & \cod{0.0.0.0 -- 127.255.255.255} & \cod{255.0.0.0} & 8 / 24\\
+B & \cod{128.0.0.0 -- 191.255.255.255} & \cod{255.255.0.0} & 16 / 16\\
+C & \cod{192.0.0.0 -- 223.255.255.255} & \cod{255.255.255.0} & 24 / 8\\
+D & \cod{224.0.0.0 -- 239.255.255.255} & nedefinită & multicast\\
+E & \cod{240.0.0.0 -- 255.255.255.255} & nedefinită & experimental/cercetare\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\img[0.6]{Images/ClaseIP.png}{Clase pentru adresele IPv4}
+
+\subsection*{Intervale rezervate IANA}
+\small
+\begin{tabularx}{\linewidth}{@{}p{5.4cm} Y@{}}
+\toprule
+\textbf{Interval} & \textbf{Rol}\\
+\midrule
+\cod{0.0.0.0/8} & software, rețele locale în aceeași mașină, nerutabile\\
+\cod{10.0.0.0/8} & privat\\
+\cod{100.64.0.0/10} & privat în cadrul unui ISP\\
+\cod{127.0.0.0/8} & \textbf{loopback}, în cadrul aceluiași host, nerutabil nici măcar în afara host-ului\\
+\cod{169.254.0.0/16} & nu e o clasă propriu-zisă; adrese asignate automat intern de host când nu se asignează corect o adresă în rețea\\
+\cod{172.16.0.0/12} & privat (172.16.0.0 -- 172.31.255.255)\\
+\cod{192.0.0.0/24} & privat, doar cazuri speciale\\
+\cod{192.0.2.0/24}, \cod{198.51.100.0/24}, \cod{203.0.113.0/24} & exemple în documentații\\
+\cod{192.88.99.0/24} & interfață cu IPv6, nu se mai folosește\\
+\cod{192.168.0.0/16} & privat\\
+\cod{198.18.0.0/15} & benchmarking, doar în medii de test controlate\\
+\cod{224.0.0.0/4} & clasa D, multicast\\
+\cod{240.0.0.0/4} & clasa E, uz viitor/cercetare\\
+\cod{255.255.255.255/32} & broadcast local\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\subsection*{Private vs.\ publice (slide 36--37)}
+\begin{itemize}
+  \item \textbf{Private} (LAN, nerutabile pe Internet):
+  \begin{itemize}
+    \item \cod{10.0.0.0/8} (clasa A)
+    \item \cod{172.16.0.0/12} (clasa B)
+    \item \cod{192.168.0.0/16} (clasa C)
+  \end{itemize}
+  \item Teoretic poți folosi orice adrese într-un LAN, dar \textbf{se recomandă clasele private} definite de IANA. Altfel pot apărea probleme de \textbf{rutare}.
+  \item \textbf{Publice} $=$ rutabile pe Internet. Nu se recomandă în rețele private (probleme serioase de rutare).
+\end{itemize}
+
+\begin{capcana}
+\begin{itemize}
+  \item Slide 34 are o greșeală de tipar la \cod{100.64.0.0/10}: scrie capătul \cod{100.27.255.255}, dar corect e \cod{100.127.255.255}. Reține că /10 pornește de la 100.64.
+  \item \textbf{172.16--172.31 sunt private, 172.32 nu.} Același lucru la 172.15.
+  \item \textbf{127.x $=$ loopback}, nu 0.x. 0.0.0.0/8 e pentru software local.
+  \item \textbf{169.254.x.x} nu e o clasă de IP, ci un interval pentru când adresa nu a fost asignată corect.
+  \item \textbf{IANA $\neq$ IEEE:} IANA gestionează IP-uri, domenii și porturi. IEEE gestionează formatul MAC.
+  \item \textbf{Clasa D $=$ multicast}, nu „broadcast”.
+\end{itemize}
+\end{capcana}
+
+\section{Subnetting}
+\subsection*{Mască și prefix (slide 31--32)}
+\begin{itemize}
+  \item \textbf{Subnetting} $=$ împărțirea logică a unei clase de IP în subdiviziuni numite \textbf{subnet-uri}.
+  \item \textbf{Doar dispozitivele din același subnet comunică direct, fără router.} Sunt în aceeași rețea logică dacă au același \textbf{routing prefix}.
+  \item \textbf{Masca} $=$ o secvență neîntreruptă de \textbf{1} urmată de o secvență neîntreruptă de \textbf{0}:
+  \begin{itemize}
+    \item 1-urile dau prefixul de rutare.
+    \item 0-urile dau host identifier-ul.
+  \end{itemize}
+  \item \textbf{Măști valide:} \cod{255.255.255.0}, \cod{255.255.255.192}.
+  \item \textbf{Măști invalide} (din slide): \cod{255.255.255.193} și \cod{255.255.253.0}.
+  \item \textbf{Prefix de rețea} $=$ IP \textbf{AND} mască.
+  \item \textbf{Host} $=$ IP \textbf{AND} (NOT mască).
+  \item \textbf{Exemplu din slide:} \cod{172.45.30.177/255.255.255.224} $\rightarrow$ prefix \cod{172.45.30.160}, host \cod{0.0.0.17}.
+\end{itemize}
+
+\subsection*{CIDR (slide 33)}
+\begin{itemize}
+  \item \cod{/n} $=$ numărul de biți de 1 din mască.
+  \item \cod{255.255.255.0} $=$ \cod{/24}, \cod{255.255.255.224} $=$ \cod{/27}.
+\end{itemize}
+
+\subsection*{Număr de host-uri (slide 38)}
+\begin{itemize}
+  \item \textbf{hostcount $= 2^{32-n} - 2$.} Se scad adresa de rețea și broadcast-ul.
+  \item \textbf{Exemple:} \cod{/8} $=$ 16.777.214, \cod{/16} $=$ 65.534, \cod{/24} $=$ 254.
+\end{itemize}
+
+\subsection*{Cazul general (slide 39--40), exemplul \cod{172.25.167.98/19}}
+\begin{enumerate}
+  \item \textbf{Clasa de bază} $=$ /16 (sau /8). Nu /24, pentru că /19 e mai larg decât /24.
+  \item \textbf{Host-uri per subnet:} $2^{32-19} - 2 = $ \textbf{8190}.
+  \item \textbf{Biți împrumutați:} $19 - 16 = $ \textbf{3}.
+  \item \textbf{Subnet-uri:} $2^{19-16} = $ \textbf{8}.
+  \item \textbf{Salt între subnet-uri:} $8192 / 256 = $ \textbf{32} în al 3-lea octet. Subnet-urile încep la \cod{172.25.0.0}, \cod{172.25.32.0}, \cod{172.25.64.0}, \ldots, \cod{172.25.224.0}.
+  \item \textbf{Adresa \cod{172.25.167.98}} cade în Subnet 6 (\cod{172.25.160.0} -- \cod{172.25.191.255}).
+\end{enumerate}
+
+\subsection*{Comunicare (slide 41)}
+\begin{itemize}
+  \item \cod{172.25.31.200/19} și \cod{172.25.32.200/19} \textbf{NU} comunică direct. Prefixele sunt \cod{172.25.0.0} și \cod{172.25.32.0}.
+\end{itemize}
+
+\subsection*{Cazuri speciale (slide 42)}
+\begin{itemize}
+  \item \textbf{/32} $=$ un singur host, fără adresă de rețea și broadcast.
+  \item \textbf{/31} $=$ rețea de exact \textbf{2 host-uri}, fără rețea/broadcast.
+  \item \textbf{Broadcast de subnet} $=$ ajunge doar la host-urile din subnetul respectiv.
+  \item \textbf{255.255.255.255} $=$ broadcast pentru toată rețeaua locală, indiferent de subnet.
+\end{itemize}
+
+\subsection*{Metodă rapidă (e doar aritmetica din slide-uri)}
+\begin{enumerate}
+  \item Din \cod{/n} află \textbf{mărimea blocului} $= 2^{32-n}$, pe octetul unde cade masca.
+  \item Împarte octetul IP-ului la bloc și ia partea întreagă. Rezultatul $\times$ bloc $=$ \textbf{adresa de rețea}.
+  \item \textbf{Broadcast} $=$ următorul bloc $- 1$.
+\end{enumerate}
+
+\begin{capcana}
+\begin{itemize}
+  \item Slide 40: la Subnet 7 broadcast-ul e scris \cod{172.25.223.254}, iar corect e \textbf{\cod{172.25.223.255}}.
+  \item Slide 41: calculul pentru al doilea IP e scris cu \cod{172.45\ldots}, dar adresa e \cod{172.25.32.200}. Nu te lua după tipar.
+  \item \textbf{/31 și /32 nu respectă „$-$2”.}
+  \item \textbf{Nu uita „$-$2” la restul.} Cea mai frecventă greșeală.
+  \item Compară mereu \textbf{prefixele}, nu doar IP-urile „apropiate”.
+\end{itemize}
+\end{capcana}
+\end{document}
